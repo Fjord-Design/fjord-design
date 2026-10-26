@@ -10,6 +10,8 @@ This workspace contains the typed Svelte reference and Storybook setup. `ThemeSc
 
 `Card`, `Separator` and `Tabs` provide layout and content navigation. Import `@fjord/svelte/layout-components.css` after the shared styles. Tabs support automatic or manual activation and horizontal or vertical keyboard navigation; inactive panels stay mounted. The Components/Card Separator Tabs story shows the API and its limits.
 
+`Dialog`, `Alert` and `Tooltip` use native modal, live-region and description semantics. Import `@fjord/svelte/overlay-components.css` after the shared styles. Dialog requires a localized title and close label; Tooltip needs one named trigger and supplementary text. The Components/Dialog Alert Tooltip story demonstrates the API and its limits.
+
 Run commands from the repository root:
 
 ```sh

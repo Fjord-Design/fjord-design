@@ -1,0 +1,131 @@
+.fjord-dialog {
+  box-sizing: border-box;
+  inline-size: min(34rem, calc(100% - 2 * var(--fjord-space-4)));
+  max-block-size: calc(100% - 2 * var(--fjord-space-4));
+  overflow: auto;
+  padding: var(--fjord-space-5);
+  border: var(--fjord-border-hairline) solid var(--fjord-line);
+  border-radius: var(--fjord-radius-window);
+  background: var(--fjord-bg-raised);
+  color: var(--fjord-ink);
+  box-shadow: var(--fjord-shadow-overlay);
+  font-family: var(--fjord-button-primary-font-family);
+}
+.fjord-dialog::backdrop {
+  background: var(--fjord-scrim);
+}
+.fjord-dialog-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--fjord-space-4);
+}
+.fjord-dialog-head h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.fjord-dialog-close {
+  font: inherit;
+  padding: var(--fjord-space-2) var(--fjord-space-3);
+  border: var(--fjord-border-hairline) solid var(--fjord-line-strong);
+  border-radius: var(--fjord-radius-full);
+  color: var(--fjord-ink);
+  background: var(--fjord-bg-surface);
+  cursor: pointer;
+}
+.fjord-dialog-close:hover {
+  background: var(--fjord-bg-hover);
+}
+.fjord-dialog-close:focus-visible {
+  outline: var(--fjord-border-focus) solid var(--fjord-focus-ring);
+  outline-offset: var(--fjord-focus-offset);
+}
+.fjord-dialog-description {
+  margin-block: var(--fjord-space-3);
+  color: var(--fjord-ink-muted);
+}
+.fjord-dialog-body {
+  margin-block-start: var(--fjord-space-4);
+  overflow-wrap: anywhere;
+}
+.fjord-alert {
+  box-sizing: border-box;
+  padding: var(--fjord-space-4);
+  border-radius: var(--fjord-radius-panel);
+  background: var(--fjord-info-soft);
+  color: var(--fjord-info);
+  font-family: var(--fjord-button-primary-font-family);
+  overflow-wrap: anywhere;
+}
+.fjord-alert p {
+  margin: var(--fjord-space-1) 0 0;
+}
+.fjord-alert[data-variant="success"] {
+  background: var(--fjord-success-soft);
+  color: var(--fjord-success);
+}
+.fjord-alert[data-variant="warning"] {
+  background: var(--fjord-warning-soft);
+  color: var(--fjord-warning);
+}
+.fjord-alert[data-variant="danger"] {
+  background: var(--fjord-danger-soft);
+  color: var(--fjord-danger);
+}
+.fjord-tooltip-wrap {
+  display: inline-block;
+  position: relative;
+  max-inline-size: 100%;
+}
+.fjord-tooltip {
+  position: absolute;
+  z-index: var(--fjord-z-tooltip);
+  inset-block-end: 100%;
+  inset-inline-start: 0;
+  inline-size: max-content;
+  max-inline-size: min(18rem, calc(100vw - 2 * var(--fjord-space-4)));
+  box-sizing: border-box;
+  padding: var(--fjord-space-2) var(--fjord-space-3);
+  border: var(--fjord-border-hairline) solid var(--fjord-line);
+  border-radius: var(--fjord-radius-panel);
+  background: var(--fjord-bg-raised);
+  color: var(--fjord-ink);
+  box-shadow: var(--fjord-shadow-raised);
+  font: var(--fjord-button-primary-font-size)/1.5
+    var(--fjord-button-primary-font-family);
+  overflow-wrap: anywhere;
+}
+.fjord-tooltip-wrap[data-align="end"] .fjord-tooltip {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+@media (any-pointer: coarse) {
+  .fjord-dialog-close {
+    min-block-size: var(--fjord-target-touch);
+    min-inline-size: var(--fjord-target-touch);
+  }
+}
+@media (forced-colors: active) {
+  .fjord-dialog,
+  .fjord-alert,
+  .fjord-tooltip {
+    color: CanvasText;
+    background: Canvas;
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+  .fjord-dialog::backdrop {
+    background: Canvas;
+  }
+  .fjord-dialog-description {
+    color: CanvasText;
+  }
+  .fjord-dialog-close {
+    color: ButtonText;
+    background: ButtonFace;
+    border-color: ButtonText;
+  }
+  .fjord-dialog-close:focus-visible {
+    outline-color: Highlight;
+  }
+}

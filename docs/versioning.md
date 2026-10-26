@@ -12,7 +12,7 @@ The resolver accepts `0.3.x` contracts. Every source and override must declare s
 
 The [dependency policy](dependency-policy.md) governs library and development-tool releases, including the selected Svelte reference and its TypeScript 7 support arrangement. Dependency versions are independent of token-contract versions.
 
-Contract 0.3.0 includes the layout roles, semantic usage/state source, semantic CLI, System preference and scoped identity contract. All source/override metadata must declare a supported 0.3.x contract. `tokens/contract.json` identifies `usage.json`; consumers import the scoped semantic stylesheet and may choose `mode="system"`. Existing token names and merge order remain unchanged. The Svelte package is versioned independently; 0.5.0 adds Card, Separator and Tabs.
+Contract 0.3.0 includes the layout roles, semantic usage/state source, semantic CLI, System preference and scoped identity contract. All source/override metadata must declare a supported 0.3.x contract. `tokens/contract.json` identifies `usage.json`; consumers import the scoped semantic stylesheet and may choose `mode="system"`. Existing token names and merge order remain unchanged. The Svelte package is versioned independently; 0.6.0 adds Dialog, Alert and Tooltip.
 
 ## Release rules
 

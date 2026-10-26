@@ -13,6 +13,9 @@ export { default as Switch } from "./Switch.svelte";
 export { default as Card } from "./Card.svelte";
 export { default as Separator } from "./Separator.svelte";
 export { default as Tabs } from "./Tabs.svelte";
+export { default as Dialog } from "./Dialog.svelte";
+export { default as Alert } from "./Alert.svelte";
+export { default as Tooltip } from "./Tooltip.svelte";
 export type { IconName, IconSize } from "./icons.generated.js";
 export type {
   Mode,

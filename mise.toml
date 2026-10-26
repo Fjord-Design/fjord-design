@@ -20,7 +20,7 @@ run = "python3 -m fjord_tokens validate"
 
 [tasks.check]
 description = "Run all local checks"
-depends = ["test", "validate", "fonts:validate", "foundations:validate", "semantics:validate", "test:theme-preference", "test:form-fields", "test:choice-controls", "test:layout-components", "format:check", "reference:check"]
+depends = ["test", "validate", "fonts:validate", "foundations:validate", "semantics:validate", "test:theme-preference", "test:form-fields", "test:choice-controls", "test:layout-components", "test:overlays", "format:check", "reference:check"]
 
 [tasks.build]
 description = "Build token documents, the Svelte library and Vite specimen"
@@ -84,6 +84,10 @@ run = "node scripts/check-choice-controls.mjs"
 [tasks."test:layout-components"]
 description = "Verify card, separator and tab semantics"
 run = "node scripts/check-layout-components.mjs"
+
+[tasks."test:overlays"]
+description = "Verify dialog, alert and tooltip semantics"
+run = "node scripts/check-overlays.mjs"
 
 [tasks."fonts:build"]
 description = "Build self-hosted font files, CSS and the typography specimen"
