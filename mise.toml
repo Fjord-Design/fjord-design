@@ -1,0 +1,145 @@
+[tools]
+node = "24.22.1"
+bun = "1.4.4"
+python = "3.15.0"
+
+[env]
+PYTHONPATH = "{{config_root}}/src"
+
+[tasks.setup]
+description = "Install the exact JavaScript dependency set from bun.lock"
+run = "bun install --frozen-lockfile"
+
+[tasks.test]
+description = "Run DTCG, contrast and platform regression tests"
+run = "python3 -m unittest discover -s tests -v"
+
+[tasks.validate]
+description = "Validate DTCG sources, all modes, contrast and platform tables"
+run = "python3 -m fjord_tokens validate"
+
+[tasks.check]
+description = "Run all local checks"
+depends = ["test", "validate", "fonts:validate", "foundations:validate", "semantics:validate", "test:theme-preference", "test:form-fields", "format:check", "reference:check"]
+
+[tasks.build]
+description = "Build token documents, the Svelte library and Vite specimen"
+depends = ["tokens:build", "reference:build", "palette"]
+
+[tasks.palette]
+description = "Build colour scales and source/HEX contrast evidence"
+run = ["python3 -m fjord_tokens palette", "python3 -m fjord_tokens palette --format json"]
+
+[tasks."tokens:build"]
+description = "Build the three validated DTCG mode documents"
+run = [
+  "python3 -m fjord_tokens build --mode night",
+  "python3 -m fjord_tokens build --mode day",
+  "python3 -m fjord_tokens build --mode aurora",
+]
+
+[tasks.preview]
+description = "Build the interactive code and terminal specimen"
+depends = ["fonts:build"]
+run = "python3 -m fjord_tokens preview"
+
+[tasks."fonts:validate"]
+description = "Validate font files, licences, pinned inspection and type roles"
+run = "python3 -m fjord_tokens typography --check"
+
+[tasks."icons:sync"]
+description = "Regenerate typed icon data from the pinned SVG assets"
+run = "python3 scripts/sync_icons.py"
+
+[tasks."foundations:validate"]
+description = "Validate layout, interaction, motion and the licensed icon subset"
+run = "python3 -m fjord_tokens foundations --check"
+
+[tasks."foundations:build"]
+description = "Build foundation CSS, icon assets and the interactive specimen"
+depends = ["fonts:build"]
+run = "python3 -m fjord_tokens foundations"
+
+[tasks."semantics:validate"]
+description = "Validate semantic states, contrast and both identity variants"
+run = "python3 -m fjord_tokens semantics --check"
+
+[tasks."semantics:build"]
+description = "Build semantic CSS, state evidence and the mode/identity specimen"
+depends = ["foundations:build"]
+run = "python3 -m fjord_tokens semantics"
+
+[tasks."test:theme-preference"]
+description = "Verify dark defaults, explicit choices and system listener cleanup"
+run = "node scripts/check-theme-preference.mjs"
+
+[tasks."test:form-fields"]
+description = "Verify native form markup and accessible associations"
+run = "node scripts/check-form-fields.mjs"
+
+[tasks."fonts:build"]
+description = "Build self-hosted font files, CSS and the typography specimen"
+run = "python3 -m fjord_tokens typography"
+
+[tasks."format:check"]
+description = "Check reference, script and CI formatting"
+run = "bun run format:check"
+
+[tasks.format]
+description = "Format reference, scripts and CI configuration"
+run = "bun run format"
+
+[tasks."reference:check"]
+description = "Check Svelte and TypeScript with the TypeScript 7 compiler"
+depends = ["semantics:build"]
+run = "bun run check:reference"
+
+[tasks."reference:build"]
+description = "Build the typed Svelte library and Vite specimen"
+depends = ["semantics:build"]
+run = "bun run build:reference"
+
+[tasks."reference:dev"]
+description = "Open the local Vite development server"
+dir = "reference/svelte"
+depends = ["semantics:build"]
+run = "bun run dev"
+
+[tasks."storybook:dev"]
+description = "Open the local Storybook development server"
+dir = "reference/svelte"
+depends = ["semantics:build"]
+run = "bun run storybook"
+
+[tasks."storybook:build"]
+description = "Build the static Storybook catalogue"
+depends = ["semantics:build"]
+run = "bun run build:storybook"
+
+[tasks."test:types"]
+description = "Prove TypeScript 7 rejects source and distributed-consumer errors"
+run = "bun run test:types"
+
+[tasks."test:storybook-types"]
+description = "Check the Storybook declaration patch and reject invalid args"
+run = "bun run test:storybook-types"
+
+[tasks."artifacts:check"]
+description = "Check deterministic token output, build artifacts and document links"
+run = "python3 scripts/check_artifacts.py"
+
+[tasks.ci]
+description = "Run the complete CI verification locally"
+run = [
+  "mise run check",
+  "mise run build",
+  "mise run preview",
+  "mise run storybook:build",
+  "mise run test:types",
+  "mise run test:storybook-types",
+  "mise run artifacts:check",
+]
+
+[tasks."test:clean"]
+description = "Verify a clean source copy with a frozen dependency install"
+run = "node scripts/check-clean.mjs"

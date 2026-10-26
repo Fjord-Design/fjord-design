@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fjord colour scales</title>
+  <style>
+    {{CSS}}
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; background: var(--bg-base); color: var(--ink); font: 15px/1.6 system-ui, sans-serif; }
+    main { max-width: 1280px; padding: clamp(20px, 4vw, 56px); margin: auto; }
+    header { max-width: 820px; margin-bottom: 36px; }
+    .eyebrow { color: var(--accent); font-weight: 650; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.1; letter-spacing: -.04em; margin: 12px 0 20px; }
+    h2 { font-size: 22px; line-height: 1.3; margin: 0 0 20px; }
+    h3 { font-size: 14px; margin: 14px 0 4px; }
+    p { color: var(--ink-muted); }
+    .modes { display: flex; gap: 8px; margin: 26px 0 18px; flex-wrap: wrap; }
+    button { border: 1px solid var(--line-strong); border-radius: 999px; background: var(--bg-surface); color: var(--ink); padding: 9px 22px; font: inherit; cursor: pointer; }
+    button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+    :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+    .mode-summary { margin: 0 0 32px; }
+    .scale, .references { margin: 0 0 44px; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 20px; }
+    .color-card, .seed-card { min-width: 0; }
+    .swatch { min-height: 96px; padding: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-radius: 4px; }
+    .swatch > span:first-child { font-size: 28px; font-weight: 650; }
+    .sample-ratio { font-size: 12px; }
+    code { font: 12px/1.5 ui-monospace, monospace; overflow-wrap: anywhere; }
+    .hex { display: block; user-select: all; color: var(--ink); font-size: 14px; }
+    .coordinate, small { display: block; color: var(--ink-muted); margin-top: 4px; }
+    small { font-size: 12px; overflow-wrap: anywhere; }
+    .references { border-top: 1px solid var(--line); padding-top: 30px; margin-top: 46px; }
+    .seed-card > code { display: block; margin-top: 8px; }
+    details { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 28px; }
+    summary { cursor: pointer; font-weight: 600; }
+    .table-scroll { overflow-x: auto; max-width: 100%; margin-top: 20px; }
+    table { border-collapse: collapse; text-align: left; font-size: 13px; width: 100%; }
+    th, td { padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--ink-muted); font-weight: 500; }
+    td:nth-child(n+3), th:nth-child(n+3) { white-space: nowrap; }
+    footer { color: var(--ink-muted); font-size: 13px; margin-top: 40px; }
+    @media (max-width: 480px) { .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; } .swatch { display: block; } .sample-ratio { display: block; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="eyebrow">Fjord · Nordlys</span>
+    <h1>Colour scales</h1>
+    <p>Explore the approved surface, text, interaction and status scales. Every displayed swatch uses the final sRGB HEX value. The label inside a swatch uses whichever of black or white gives higher contrast.</p>
+    <div class="modes" role="group" aria-label="Colour mode">
+      <button type="button" data-mode="night" aria-pressed="true">Night</button>
+      <button type="button" data-mode="day" aria-pressed="false">Day</button>
+      <button type="button" data-mode="aurora" aria-pressed="false">Aurora</button>
+    </div>
+  </header>
+  {{PANELS}}
+  <section class="references" aria-labelledby="reference-heading">
+    <h2 id="reference-heading">Seven original references</h2>
+    <p>These OKLCH values are the design inspiration. Approved UI colours are the role-based values above. Reference swatches show the deterministic sRGB fallback, with chroma reduction where needed.</p>
+    <div class="swatches">{{SEEDS}}</div>
+  </section>
+  <footer>Disabled text and decorative dividers have no text-contrast claim. Status also needs a word or symbol. Café-toned latte fills the ANSI yellow role. Surfaces stay opaque; scrims retain their separate alpha contract.</footer>
+</main>
+<script>
+  const buttons = document.querySelectorAll('button[data-mode]');
+  const panels = document.querySelectorAll('.mode-panel');
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      document.documentElement.dataset.theme = button.dataset.mode;
+      for (const control of buttons) control.setAttribute('aria-pressed', String(control === button));
+      for (const panel of panels) panel.hidden = panel.dataset.mode !== button.dataset.mode;
+    });
+  }
+</script>
+</body>
+</html>

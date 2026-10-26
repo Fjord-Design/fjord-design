@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-10-26",
+  "fontDisplay": "swap",
+  "families": [
+    {
+      "id": "noto-sans",
+      "family": "Noto Sans",
+      "license": "OFL-1.1",
+      "licenseFile": "noto-sans/OFL.txt",
+      "licenseSha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+      "licenseSource": "https://github.com/google/fonts/blob/main/ofl/notosans/OFL.txt",
+      "faces": [
+        {
+          "file": "noto-sans/NotoSans-latin.woff2",
+          "style": "normal",
+          "weight": [
+            100,
+            900
+          ],
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "sourceUrl": "https://fonts.gstatic.com/s/notosans/v42/o-0bIpQlx3QUlC5A4PNB6Ryti20_6n1iPHjc5a7du3mhPy0.woff2",
+          "sha256": "afc7a910f4ff04ee2ff7b3a2ef8b24f8340b8ea8d8125f2779f1f0b69d1b56b9",
+          "bytes": 35856
+        },
+        {
+          "file": "noto-sans/NotoSansItalic-latin.woff2",
+          "style": "italic",
+          "weight": [
+            100,
+            900
+          ],
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "sourceUrl": "https://fonts.gstatic.com/s/notosans/v42/o-0ZIpQlx3QUlC5A4PNr4C5OaxRsfNNlKbCePevtuXOmHS91iw.woff2",
+          "sha256": "fc468dfc2ef6b34e9893188f0cd0999985c22b95d977ae84d60d39741de6e73f",
+          "bytes": 39604
+        }
+      ]
+    },
+    {
+      "id": "raleway",
+      "family": "Raleway",
+      "license": "OFL-1.1",
+      "licenseFile": "raleway/OFL.txt",
+      "licenseSha256": "7e946cf1171784d1015279e7dc35f827957a6b5d1f1f659ae0c98e5f5e37ed9b",
+      "licenseSource": "https://github.com/google/fonts/blob/main/ofl/raleway/OFL.txt",
+      "faces": [
+        {
+          "file": "raleway/Raleway-latin.woff2",
+          "style": "normal",
+          "weight": [
+            100,
+            900
+          ],
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "sourceUrl": "https://fonts.gstatic.com/s/raleway/v37/1Ptug8zYS_SKggPNyC0IT4ttDfA.woff2",
+          "sha256": "10f1a0ef3f3497901c1c3e9987d0cb97d092a6ce1ff45669a1aed503cf67e6ef",
+          "bytes": 43120
+        },
+        {
+          "file": "raleway/RalewayItalic-latin.woff2",
+          "style": "italic",
+          "weight": [
+            100,
+            900
+          ],
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "sourceUrl": "https://fonts.gstatic.com/s/raleway/v37/1Ptsg8zYS_SKggPNyCg4TYFqL_KWxQ.woff2",
+          "sha256": "aadf99b189915dd80cee82b206bfd492fd98371ba7cf11465e02031aedc8125c",
+          "bytes": 45260
+        }
+      ]
+    },
+    {
+      "id": "open-sans",
+      "family": "Open Sans",
+      "license": "OFL-1.1",
+      "licenseFile": "open-sans/OFL.txt",
+      "licenseSha256": "fbbbcfef55318de350562559b671360de6d597112ecc5c73881b05092db89602",
+      "licenseSource": "https://github.com/google/fonts/blob/main/ofl/opensans/OFL.txt",
+      "faces": [
+        {
+          "file": "open-sans/OpenSans-latin.woff2",
+          "style": "normal",
+          "weight": [
+            300,
+            800
+          ],
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "sourceUrl": "https://fonts.gstatic.com/s/opensans/v44/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-mu0SC55I.woff2",
+          "sha256": "441af0def989ebfdbd6ad85ffaed85e967ab21a05f1dd342f16259464a206dd0",
+          "bytes": 42964
+        },
+        {
+          "file": "open-sans/OpenSansItalic-latin.woff2",
+          "style": "italic",
+          "weight": [
+            300,
+            800
+          ],
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "sourceUrl": "https://fonts.gstatic.com/s/opensans/v44/memtYaGs126MiZpBA-UFUIcVXSCEkx2cmqvXlWqWuU6FxZCJgg.woff2",
+          "sha256": "8df90accd45bfd23e80b325300058648f6d4b293d1c8f399dfa4cda318d203e0",
+          "bytes": 45072
+        }
+      ]
+    },
+    {
+      "id": "cascadia-code",
+      "family": "Cascadia Code",
+      "release": "v2407.24",
+      "license": "OFL-1.1",
+      "licenseFile": "cascadia-code/OFL.txt",
+      "licenseSha256": "51882cd3cdba4e16f220f44ddb08a635c38c44ea6e0975db2574f4be6f958238",
+      "licenseSource": "https://github.com/microsoft/cascadia-code/blob/v2407.24/LICENSE",
+      "faces": [
+        {
+          "file": "cascadia-code/CascadiaCode.woff2",
+          "style": "normal",
+          "weight": [
+            200,
+            700
+          ],
+          "sourceUrl": "https://github.com/microsoft/cascadia-code/releases/download/v2407.24/CascadiaCode-2407.24.zip",
+          "archiveEntry": "woff2/CascadiaCode.woff2",
+          "sha256": "3ec1f7e7250c055d35504a1500e8a9ba12b26f25214a86da6537e28abc60dccc",
+          "bytes": 218824
+        },
+        {
+          "file": "cascadia-code/CascadiaCodeItalic.woff2",
+          "style": "italic",
+          "weight": [
+            200,
+            700
+          ],
+          "sourceUrl": "https://github.com/microsoft/cascadia-code/releases/download/v2407.24/CascadiaCode-2407.24.zip",
+          "archiveEntry": "woff2/CascadiaCodeItalic.woff2",
+          "sha256": "7b38c6e24c4f114ecdbc73c9114bf59cd7e998309a8a2ee54ef1e0289481405f",
+          "bytes": 159760
+        }
+      ]
+    },
+    {
+      "id": "fira-code",
+      "family": "Fira Code",
+      "release": "6.2",
+      "license": "OFL-1.1",
+      "licenseFile": "fira-code/OFL.txt",
+      "licenseSha256": "1d41e10031ab125302780a05ec4c91d218e47db0c7e37cf315cce5e608cdc25c",
+      "licenseSource": "https://github.com/tonsky/FiraCode/blob/6.2/LICENSE",
+      "faces": [
+        {
+          "file": "fira-code/FiraCode-VF.woff2",
+          "style": "normal",
+          "weight": [
+            300,
+            700
+          ],
+          "sourceUrl": "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip",
+          "archiveEntry": "woff2/FiraCode-VF.woff2",
+          "sha256": "408e876a202f15ea6ee307a70a65cf40ceb222c589a0b17e0a3a371db96dd49f",
+          "bytes": 113088
+        }
+      ]
+    }
+  ]
+}

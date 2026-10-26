@@ -1,0 +1,132 @@
+{
+  "tool": "fontconfig version 2.18.3",
+  "probe": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~æøåÆØÅéÉ",
+  "faces": [
+    {
+      "file": "noto-sans/NotoSans-latin.woff2",
+      "sha256": "afc7a910f4ff04ee2ff7b3a2ef8b24f8340b8ea8d8125f2779f1f0b69d1b56b9",
+      "family": "Noto Sans",
+      "reportedFamily": "Noto Sans",
+      "style": "normal",
+      "variable": true,
+      "weight": [
+        100,
+        900
+      ],
+      "fontVersionFixed": 132055,
+      "missingProbeCodepoints": []
+    },
+    {
+      "file": "noto-sans/NotoSansItalic-latin.woff2",
+      "sha256": "fc468dfc2ef6b34e9893188f0cd0999985c22b95d977ae84d60d39741de6e73f",
+      "family": "Noto Sans",
+      "reportedFamily": "Noto Sans",
+      "style": "italic",
+      "variable": true,
+      "weight": [
+        100,
+        900
+      ],
+      "fontVersionFixed": 132055,
+      "missingProbeCodepoints": []
+    },
+    {
+      "file": "raleway/Raleway-latin.woff2",
+      "sha256": "10f1a0ef3f3497901c1c3e9987d0cb97d092a6ce1ff45669a1aed503cf67e6ef",
+      "family": "Raleway",
+      "reportedFamily": "Raleway Thin",
+      "style": "normal",
+      "variable": true,
+      "weight": [
+        100,
+        900
+      ],
+      "fontVersionFixed": 263848,
+      "missingProbeCodepoints": []
+    },
+    {
+      "file": "raleway/RalewayItalic-latin.woff2",
+      "sha256": "aadf99b189915dd80cee82b206bfd492fd98371ba7cf11465e02031aedc8125c",
+      "family": "Raleway",
+      "reportedFamily": "Raleway Thin",
+      "style": "italic",
+      "variable": true,
+      "weight": [
+        100,
+        900
+      ],
+      "fontVersionFixed": 263848,
+      "missingProbeCodepoints": []
+    },
+    {
+      "file": "open-sans/OpenSans-latin.woff2",
+      "sha256": "441af0def989ebfdbd6ad85ffaed85e967ab21a05f1dd342f16259464a206dd0",
+      "family": "Open Sans",
+      "reportedFamily": "Open Sans",
+      "style": "normal",
+      "variable": true,
+      "weight": [
+        300,
+        800
+      ],
+      "fontVersionFixed": 196805,
+      "missingProbeCodepoints": []
+    },
+    {
+      "file": "open-sans/OpenSansItalic-latin.woff2",
+      "sha256": "8df90accd45bfd23e80b325300058648f6d4b293d1c8f399dfa4cda318d203e0",
+      "family": "Open Sans",
+      "reportedFamily": "Open Sans",
+      "style": "italic",
+      "variable": true,
+      "weight": [
+        300,
+        800
+      ],
+      "fontVersionFixed": 196805,
+      "missingProbeCodepoints": []
+    },
+    {
+      "file": "cascadia-code/CascadiaCode.woff2",
+      "sha256": "3ec1f7e7250c055d35504a1500e8a9ba12b26f25214a86da6537e28abc60dccc",
+      "family": "Cascadia Code",
+      "reportedFamily": "Cascadia Code",
+      "style": "normal",
+      "variable": true,
+      "weight": [
+        200,
+        700
+      ],
+      "fontVersionFixed": 157746725,
+      "missingProbeCodepoints": []
+    },
+    {
+      "file": "cascadia-code/CascadiaCodeItalic.woff2",
+      "sha256": "7b38c6e24c4f114ecdbc73c9114bf59cd7e998309a8a2ee54ef1e0289481405f",
+      "family": "Cascadia Code",
+      "reportedFamily": "Cascadia Code",
+      "style": "italic",
+      "variable": true,
+      "weight": [
+        200,
+        700
+      ],
+      "fontVersionFixed": 157746725,
+      "missingProbeCodepoints": []
+    },
+    {
+      "file": "fira-code/FiraCode-VF.woff2",
+      "sha256": "408e876a202f15ea6ee307a70a65cf40ceb222c589a0b17e0a3a371db96dd49f",
+      "family": "Fira Code",
+      "reportedFamily": "Fira Code,Fira Code Light",
+      "style": "normal",
+      "variable": true,
+      "weight": [
+        300,
+        700
+      ],
+      "fontVersionFixed": 393347,
+      "missingProbeCodepoints": []
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+dist/
+node_modules/
+.svelte-check/
+.svelte-kit/
+reference/svelte/.verification/
+reference/svelte/src/lib/type-verification-*/

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-fjord-mode="night" data-fjord-preference="night" data-fjord-identity="fjord">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Fjord semantic states</title>
+  <link rel="stylesheet" href="fonts/typography.css">
+  <link rel="stylesheet" href="foundations.css">
+  <link rel="stylesheet" href="semantics.css">
+  <style>
+    html {background:var(--fjord-bg-base);}
+    body {margin:0;}
+    h1,h2,h3,p {margin-block:0 1rem;}
+    section {margin-block:2.5rem;}
+    .eyebrow {color:var(--fjord-accent);text-transform:uppercase;letter-spacing:.1em;}
+    .toolbar,.actions {display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-block:1.5rem;}
+    .toolbar label {display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;min-inline-size:0;max-inline-size:100%;}
+    select {font:inherit;padding:.5rem;max-inline-size:100%;border:1px solid var(--fjord-line-strong);border-radius:var(--fjord-radius-panel);background:var(--fjord-bg-surface);color:var(--fjord-ink);}
+    .state-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:var(--fjord-space-4);}
+    .state-grid article {background:var(--fjord-bg-surface);padding:var(--fjord-space-5);border-radius:var(--fjord-radius-panel);min-inline-size:0;}
+    .state-grid h3 {font-size:.8125rem;color:var(--fjord-ink-muted);}
+    .status-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:var(--fjord-space-3);}
+    .table-region {max-inline-size:100%;overflow:auto;}
+    table {border-collapse:collapse;inline-size:100%;font-size:.75rem;}
+    td,th {padding:.75rem;border-block-end:1px solid var(--fjord-line);text-align:start;overflow-wrap:anywhere;}
+    tr[data-pair-identity] {display:none;}
+    html[data-fjord-identity="fjord"][data-fjord-mode="night"] tr[data-pair-identity="fjord"][data-pair-mode="night"],
+    html[data-fjord-identity="fjord"][data-fjord-mode="day"] tr[data-pair-identity="fjord"][data-pair-mode="day"],
+    html[data-fjord-identity="fjord"][data-fjord-mode="aurora"] tr[data-pair-identity="fjord"][data-pair-mode="aurora"],
+    html[data-fjord-identity="fern"][data-fjord-mode="night"] tr[data-pair-identity="fern"][data-pair-mode="night"],
+    html[data-fjord-identity="fern"][data-fjord-mode="day"] tr[data-pair-identity="fern"][data-pair-mode="day"],
+    html[data-fjord-identity="fern"][data-fjord-mode="aurora"] tr[data-pair-identity="fern"][data-pair-mode="aurora"] {display:table-row;}
+    footer {margin-block:3rem 1rem;}
+    @media (forced-colors:active) {.state-grid article {background:Canvas;border:1px solid CanvasText;} .eyebrow,.state-grid h3 {color:CanvasText;} }
+  </style>
+</head>
+<body class="fjord-foundation fjord-semantic fjord-type-body">
+<main class="fjord-page">
+  <header><p class="eyebrow fjord-type-label">Fjord · Nordlys</p><h1 class="fjord-type-display">Meaning stays the same</h1><p class="fjord-reading semantic-help">Change the mode or identity. Actions, selection and status keep their meaning and contrast. Night is the product default; System follows your display preference.</p></header>
+  <div class="toolbar" role="group" aria-label="Theme settings">
+    <label>Mode <select id="preference"><option value="night">Night</option><option value="day">Day</option><option value="aurora">Aurora</option><option value="system">System</option></select></label>
+    <label>Identity <select id="identity"><option value="fjord">Fjord</option><option value="fern">Fern</option></select></label>
+    <label>Text size <select id="size"><option value="100">100%</option><option value="200">200%</option></select></label>
+  </div>
+  <p id="mode-status" class="semantic-help" role="status">Night · Fjord</p>
+  <section aria-labelledby="state-heading"><h2 id="state-heading" class="fjord-type-title-2">Interaction states</h2>
+    <div class="state-grid">
+      <article><h3>Default</h3><button class="fjord-control semantic-primary" id="save-example" data-request-count="0">Save example</button></article>
+      <article><h3>Hover sample</h3><button class="fjord-control semantic-primary" data-sample-state="hover" type="button">Hovered action</button></article>
+      <article><h3>Pressed sample</h3><button class="fjord-control semantic-primary" data-sample-state="pressed" type="button">Pressed action</button></article>
+      <article><h3>Keyboard focus sample</h3><button class="fjord-control semantic-primary" data-sample-state="focus-visible" type="button">Focused action</button></article>
+      <article><h3>Selected</h3><button class="fjord-control semantic-choice" id="selected-example" aria-pressed="true">Selected workspace</button></article>
+      <article><h3>Disabled</h3><button class="fjord-control semantic-disabled" disabled>Unavailable action</button><p class="semantic-help">Help stays readable and uses the help role.</p></article>
+      <article><h3>Invalid</h3><label for="invalid-example">Theme name</label><input class="semantic-input" id="invalid-example" aria-invalid="true" aria-describedby="invalid-error" value="fjord/"><p class="semantic-error" id="invalid-error">Error: choose a name without a slash.</p></article>
+      <article><h3>Loading</h3><button class="fjord-control semantic-primary" aria-busy="true" aria-disabled="true" id="loading-sample">Loading example</button><p class="semantic-help">The action keeps its text contrast while work is pending.</p></article>
+    </div>
+    <div class="actions"><button class="fjord-control" id="complete-example" disabled>Complete example</button><button class="fjord-control" id="open-overlay">Inspect overlay</button><a href="#allowed-pairs">Inspect allowed colour pairs</a></div>
+    <p id="action-status" role="status">Try Save example, then complete it. These controls demonstrate states without saving data.</p>
+  </section>
+  <section aria-labelledby="status-heading"><h2 id="status-heading" class="fjord-type-title-2">Status with words</h2><div class="status-grid"><p class="semantic-status" data-status="info">Info: preview available</p><p class="semantic-status" data-status="success">Success: ready to use</p><p class="semantic-status" data-status="warning">Warning: review changes</p><p class="semantic-status" data-status="danger">Error: unable to save</p></div></section>
+  <section aria-labelledby="roles-heading"><h2 id="roles-heading" class="fjord-type-title-2">Role mapping</h2><p class="semantic-help">Default Fjord values. The palette source owns the values; component bindings retain their names across both identities.</p><div class="table-region" role="region" aria-label="Semantic role mapping" tabindex="0"><table><thead><tr><th>Meaning</th><th>Token</th><th>Night</th><th>Day</th><th>Aurora</th><th>Use</th></tr></thead><tbody>{{ROLES}}</tbody></table></div></section>
+  <section id="allowed-pairs" aria-labelledby="pairs-heading"><h2 id="pairs-heading" class="fjord-type-title-2">Allowed colour pairs</h2><p class="semantic-help">Every listed pair passes at source precision and after HEX rounding. The table follows the selected identity and resolved mode. Disabled labels and decorative dividers have explicit limited uses.</p><details><summary>Inspect contrast evidence</summary><div class="table-region" role="region" aria-label="Allowed contrast pairs" tabindex="0"><table><thead><tr><th>Foreground</th><th>Background</th><th>Minimum</th><th>Rendered HEX</th></tr></thead><tbody>{{PAIRS}}</tbody></table></div></details></section>
+  <footer class="semantic-help">The same component contracts apply to Fjord and Fern. Keyboard and native control semantics remain available during a mode change.</footer>
+  <dialog id="overlay" aria-labelledby="overlay-title"><h2 id="overlay-title" class="fjord-type-title-2">An opaque reading surface</h2><p>The scrim separates the page. Text stays on the raised surface.</p><button class="fjord-control" id="close-overlay">Close overlay</button></dialog>
+</main>
+<script type="module">
+  import { watchMode } from './theme-preference.js';
+  const root=document.documentElement, preference=document.getElementById('preference'), identity=document.getElementById('identity');
+  const status=()=>{document.getElementById('mode-status').textContent=root.dataset.fjordMode[0].toUpperCase()+root.dataset.fjordMode.slice(1)+' · '+identity.options[identity.selectedIndex].text;};
+  let stop=()=>{};
+  function applyPreference(){stop();root.dataset.fjordPreference=preference.value;stop=watchMode(preference.value,mode=>{root.dataset.fjordMode=mode;status();});}
+  preference.addEventListener('change',applyPreference);
+  identity.addEventListener('change',()=>{root.dataset.fjordIdentity=identity.value;status();});
+  document.getElementById('size').addEventListener('change',event=>{root.style.fontSize=event.target.value+'%';});
+  applyPreference();
+  const save=document.getElementById('save-example'), complete=document.getElementById('complete-example');
+  save.addEventListener('click',()=>{if(save.getAttribute('aria-busy')==='true')return;save.dataset.requestCount=String(Number(save.dataset.requestCount)+1);save.setAttribute('aria-busy','true');save.setAttribute('aria-disabled','true');save.textContent='Saving example';complete.disabled=false;document.getElementById('action-status').textContent='Example save started. Repeated activation is ignored.';});
+  complete.addEventListener('click',()=>{save.removeAttribute('aria-busy');save.removeAttribute('aria-disabled');save.textContent='Save example';complete.disabled=true;save.focus();document.getElementById('action-status').textContent='Example complete. No data was saved.';});
+  document.getElementById('loading-sample').addEventListener('click',event=>event.preventDefault());
+  const selected=document.getElementById('selected-example');selected.addEventListener('click',()=>{selected.setAttribute('aria-pressed',String(selected.getAttribute('aria-pressed')!=='true'));});
+  const dialog=document.getElementById('overlay'), open=document.getElementById('open-overlay');open.addEventListener('click',()=>dialog.showModal());document.getElementById('close-overlay').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>open.focus());
+  window.addEventListener('pagehide',()=>stop(),{once:true});
+</script>
+</body>
+</html>

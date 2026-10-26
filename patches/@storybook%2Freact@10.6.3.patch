@@ -1,0 +1,34 @@
+diff --git a/dist/chunk-ojHmM-yX.d.ts b/dist/chunk-ojHmM-yX.d.ts
+index 49560531974950c2bb1ee6cca2cbe3fa6d08ab1d..f07591113551d6c686e4ca2365a94a7cc44213c9 100644
+--- a/dist/chunk-ojHmM-yX.d.ts
++++ b/dist/chunk-ojHmM-yX.d.ts
+@@ -1023,7 +1023,8 @@ interface ReactPreview<T extends AddonTypes> extends Preview<ReactTypes & T> {
+  * provided in meta become optional in stories, while missing required args must be provided at the
+  * story level.
+  */
+-interface ReactMeta<T extends ReactTypes, MetaInput extends ComponentAnnotations<T>> /** @ts-expect-error ReactMeta requires two type parameters, but Meta's constraints differ */ extends Meta<T, MetaInput> {
++interface ReactMeta<T extends ReactTypes, MetaInput extends ComponentAnnotations<T>> extends Omit<Meta<T>, 'input' | 'story'> {
++  input: MetaInput;
+   /**
+    * Creates a story with a custom render function that takes no args.
+    *
+@@ -1069,7 +1070,7 @@ interface ReactMeta<T extends ReactTypes, MetaInput extends ComponentAnnotations
+    * });
+    * ```
+    */
+-  story<TInput extends Simplify<StoryAnnotations<T, AddMocks<T['args'], MetaInput['args']>, SetOptional<T['args'], keyof T['args'] & keyof MetaInput['args']>>>>(story: TInput /** @ts-expect-error hard */): ReactStory<T, TInput>;
++  story<TInput extends Simplify<StoryAnnotations<T, AddMocks<T['args'], MetaInput['args']>, SetOptional<T['args'], keyof T['args'] & keyof MetaInput['args']>>>>(story: TInput): ReactStory<T, TInput, AddMocks<T['args'], MetaInput['args']>>;
+   /**
+    * Creates a story with no additional configuration.
+    *
+@@ -1097,7 +1098,9 @@ interface ReactMeta<T extends ReactTypes, MetaInput extends ComponentAnnotations
+  *
+  * Also includes a `Component` property for portable story compatibility.
+  */
+-interface ReactStory<T extends ReactTypes, TInput extends StoryAnnotations<T, T['args']>> extends Story<T, TInput> {
++interface ReactStory<T extends ReactTypes, TInput extends StoryAnnotations<T, TArgs>, TArgs = T['args']> extends Omit<Story<T>, 'input' | 'play'> {
++  input: TInput;
++  play: TInput['play'];
+   Component: ComponentType<Partial<T['args']>>;
+ }
+ //#endregion

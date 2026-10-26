@@ -1,0 +1,9 @@
+{
+  "$extensions": {
+    "org.xerrion.fjord": {
+      "schemaVersion": 2,
+      "contractVersion": "0.3.0",
+      "dtcgVersion": "2025.10"
+    }
+  }
+}

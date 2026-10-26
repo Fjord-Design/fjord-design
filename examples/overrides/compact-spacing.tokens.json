@@ -1,0 +1,21 @@
+{
+  "$extensions": {
+    "org.xerrion.fjord": {
+      "schemaVersion": 2,
+      "contractVersion": "0.3.0",
+      "dtcgVersion": "2025.10"
+    }
+  },
+  "semantic": {
+    "spacing": {
+      "space-4": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "px"
+        },
+        "$description": "Example adjustment using a semantic role."
+      }
+    }
+  }
+}

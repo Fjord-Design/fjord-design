@@ -1,0 +1,21 @@
+{
+  "$extensions": {
+    "org.xerrion.fjord": {
+      "schemaVersion": 2,
+      "contractVersion": "0.3.0",
+      "dtcgVersion": "2025.10"
+    }
+  },
+  "semantic": {
+    "radius": {
+      "radius-window": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        },
+        "$description": "Example adjustment using a semantic role."
+      }
+    }
+  }
+}

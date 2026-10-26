@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "roles": {
+    "canvas": {
+      "token": "semantic.color.bg-base",
+      "kind": "fill",
+      "description": "Default page, window and editor ground.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "surface": {
+      "token": "semantic.color.bg-surface",
+      "kind": "fill",
+      "description": "Cards, sidebars, input surfaces and content panels.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "surface-floating": {
+      "token": "semantic.color.bg-raised",
+      "kind": "fill",
+      "description": "Opaque floating menus and dialogs.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "surface-sunken": {
+      "token": "semantic.color.bg-sunken",
+      "kind": "fill",
+      "description": "Code and terminal wells.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "surface-hover": {
+      "token": "semantic.color.bg-hover",
+      "kind": "fill",
+      "description": "Neutral row and ghost-control hover.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "surface-pressed": {
+      "token": "semantic.color.bg-active",
+      "kind": "fill",
+      "description": "Neutral pressed state.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "text": {
+      "token": "semantic.color.ink",
+      "kind": "text",
+      "description": "Primary content and solid icons.",
+      "backgrounds": [
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised",
+        "semantic.color.bg-hover",
+        "semantic.color.bg-active",
+        "semantic.color.bg-sunken"
+      ],
+      "minimumContrast": 4.5
+    },
+    "text-secondary": {
+      "token": "semantic.color.ink-muted",
+      "kind": "text",
+      "description": "Descriptions and secondary content.",
+      "backgrounds": [
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised",
+        "semantic.color.bg-hover",
+        "semantic.color.bg-active",
+        "semantic.color.bg-sunken"
+      ],
+      "minimumContrast": 4.5
+    },
+    "text-help": {
+      "token": "semantic.color.ink-muted",
+      "kind": "text",
+      "description": "Instructions and help; never the disabled role.",
+      "backgrounds": [
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "text-placeholder": {
+      "token": "semantic.color.ink-subtle",
+      "kind": "text",
+      "description": "Short placeholder or metadata; keep a persistent label.",
+      "backgrounds": [
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "text-disabled": {
+      "token": "semantic.color.ink-disabled",
+      "kind": "disabled",
+      "description": "Unavailable control labels only; not help or content.",
+      "backgrounds": [
+        "semantic.color.bg-surface"
+      ],
+      "minimumContrast": null
+    },
+    "border-divider": {
+      "token": "semantic.color.line",
+      "kind": "decorative",
+      "description": "Decorative separator; never the only control boundary.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "border-control": {
+      "token": "semantic.color.line-strong",
+      "kind": "border",
+      "description": "Visible input and outline-control boundary.",
+      "backgrounds": [
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface"
+      ],
+      "minimumContrast": 3
+    },
+    "focus": {
+      "token": "semantic.color.focus-ring",
+      "kind": "focus",
+      "description": "Keyboard outline offset from the control.",
+      "backgrounds": [
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised",
+        "semantic.color.bg-hover",
+        "semantic.color.bg-active",
+        "semantic.color.bg-sunken"
+      ],
+      "minimumContrast": 3
+    },
+    "link": {
+      "token": "semantic.color.accent",
+      "kind": "text",
+      "description": "Underlined interactive text.",
+      "backgrounds": [
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "link-hover": {
+      "token": "semantic.color.accent-hover",
+      "kind": "text",
+      "description": "Underlined interactive text.",
+      "backgrounds": [
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "accent-fill": {
+      "token": "semantic.color.accent",
+      "kind": "fill",
+      "description": "Primary action fill.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "accent-label": {
+      "token": "semantic.color.on-accent",
+      "kind": "text",
+      "description": "Label on a primary action fill.",
+      "backgrounds": [
+        "semantic.color.accent",
+        "semantic.color.accent-hover"
+      ],
+      "minimumContrast": 4.5
+    },
+    "selected-fill": {
+      "token": "semantic.color.accent-soft",
+      "kind": "fill",
+      "description": "Selected item fill; combine with a visible outline or marker.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "selected-label": {
+      "token": "semantic.color.accent-ink",
+      "kind": "text",
+      "description": "Text and icon on selected fill.",
+      "backgrounds": [
+        "semantic.color.accent-soft"
+      ],
+      "minimumContrast": 4.5
+    },
+    "text-selection-fill": {
+      "token": "semantic.color.selection",
+      "kind": "fill",
+      "description": "Text selection background.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "text-selection-label": {
+      "token": "semantic.color.ink",
+      "kind": "text",
+      "description": "Selected reading text.",
+      "backgrounds": [
+        "semantic.color.selection"
+      ],
+      "minimumContrast": 4.5
+    },
+    "overlay-scrim": {
+      "token": "semantic.color.scrim",
+      "kind": "overlay",
+      "description": "Translucent modal scrim; never a reading surface.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "overlay-surface": {
+      "token": "semantic.color.bg-raised",
+      "kind": "fill",
+      "description": "Opaque surface above a scrim.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "overlay-text": {
+      "token": "semantic.color.ink",
+      "kind": "text",
+      "description": "Text inside an overlay.",
+      "backgrounds": [
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "info": {
+      "token": "semantic.color.info",
+      "kind": "text",
+      "description": "Status text with an icon or visible status word.",
+      "backgrounds": [
+        "semantic.color.info-soft",
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "info-fill": {
+      "token": "semantic.color.info-soft",
+      "kind": "fill",
+      "description": "Soft status background; use its status text or ink.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "success": {
+      "token": "semantic.color.success",
+      "kind": "text",
+      "description": "Status text with an icon or visible status word.",
+      "backgrounds": [
+        "semantic.color.success-soft",
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "success-fill": {
+      "token": "semantic.color.success-soft",
+      "kind": "fill",
+      "description": "Soft status background; use its status text or ink.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "warning": {
+      "token": "semantic.color.warning",
+      "kind": "text",
+      "description": "Status text with an icon or visible status word.",
+      "backgrounds": [
+        "semantic.color.warning-soft",
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "warning-fill": {
+      "token": "semantic.color.warning-soft",
+      "kind": "fill",
+      "description": "Soft status background; use its status text or ink.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "danger": {
+      "token": "semantic.color.danger",
+      "kind": "text",
+      "description": "Status text with an icon or visible status word.",
+      "backgrounds": [
+        "semantic.color.danger-soft",
+        "semantic.color.bg-base",
+        "semantic.color.bg-surface",
+        "semantic.color.bg-raised"
+      ],
+      "minimumContrast": 4.5
+    },
+    "danger-fill": {
+      "token": "semantic.color.danger-soft",
+      "kind": "fill",
+      "description": "Soft status background; use its status text or ink.",
+      "backgrounds": [],
+      "minimumContrast": null
+    },
+    "destructive-label": {
+      "token": "semantic.color.on-danger",
+      "kind": "text",
+      "description": "Label on a destructive action fill.",
+      "backgrounds": [
+        "semantic.color.danger"
+      ],
+      "minimumContrast": 4.5
+    }
+  },
+  "states": {
+    "default": {
+      "foreground": "component.button.primary.foreground",
+      "background": "component.button.primary.background",
+      "minimumContrast": 4.5,
+      "appliesTo": "Available primary actions.",
+      "behaviour": "Native activation; keep a visible action name."
+    },
+    "hover": {
+      "foreground": "component.button.primary.foreground",
+      "background": "component.button.primary.hover-background",
+      "minimumContrast": 4.5,
+      "appliesTo": "Pointer hover over available primary actions.",
+      "behaviour": "Use hover fill; links also retain an underline."
+    },
+    "pressed": {
+      "foreground": "component.button.primary.foreground",
+      "background": "component.button.primary.pressed-background",
+      "minimumContrast": 4.5,
+      "appliesTo": "Primary action while held down.",
+      "behaviour": "Use pressed fill with inset shadow; no opacity dimming."
+    },
+    "focus-visible": {
+      "foreground": "component.button.primary.foreground",
+      "background": "component.button.primary.background",
+      "minimumContrast": 4.5,
+      "appliesTo": "Keyboard-focused controls and links.",
+      "behaviour": "Keep the offset 2px focus outline on the containing surface."
+    },
+    "selected": {
+      "foreground": "semantic.color.accent-ink",
+      "background": "semantic.color.accent-soft",
+      "minimumContrast": 4.5,
+      "appliesTo": "Persistent choices, selected rows and tabs.",
+      "behaviour": "Use selected fill plus outline or marker and native selected/pressed semantics."
+    },
+    "disabled": {
+      "foreground": "semantic.color.ink-disabled",
+      "background": "semantic.color.bg-surface",
+      "minimumContrast": null,
+      "appliesTo": "Unavailable controls only.",
+      "behaviour": "Suppress activation; never use the disabled foreground for help text."
+    },
+    "invalid": {
+      "foreground": "semantic.color.danger",
+      "background": "semantic.color.bg-surface",
+      "minimumContrast": 4.5,
+      "appliesTo": "Fields or data that failed validation.",
+      "behaviour": "Expose invalid state and an associated text error; retain the focus ring."
+    },
+    "loading": {
+      "foreground": "component.button.primary.foreground",
+      "background": "component.button.primary.background",
+      "minimumContrast": 4.5,
+      "appliesTo": "An action with pending work.",
+      "behaviour": "Keep focus and label contrast; expose busy state and suppress repeated activation."
+    }
+  }
+}

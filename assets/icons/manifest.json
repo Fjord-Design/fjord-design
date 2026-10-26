@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "family": "Phosphor",
+  "weight": "fill",
+  "package": "@phosphor-icons/core",
+  "version": "2.1.1",
+  "source": "https://registry.npmjs.org/@phosphor-icons/core/-/core-2.1.1.tgz",
+  "integrity": "sha512-v4ARvrip4qBCImOE5rmPUylOEK4iiED9ZyKjcvzuezqMaiRASCHKcRIuvvxL/twvLpkfnEODCOJp5dM4eZilxQ==",
+  "retrievedAt": "2026-10-26",
+  "license": "MIT",
+  "licenseFile": "LICENSE",
+  "licenseSha256": "ddbe6082ec3cf979db47e5af549d2849c5d6182b3e005ef91ce1dbb9eb122f11",
+  "icons": [
+    {
+      "name": "check",
+      "file": "check.svg",
+      "upstream": "check-fill.svg",
+      "sha256": "d114007dc371976dc3e8f4ebc59c5aef429fae59ae58d56acdf231a52b4700be"
+    },
+    {
+      "name": "close",
+      "file": "close.svg",
+      "upstream": "x-fill.svg",
+      "sha256": "6ec0689770c1fb1dc7018039bef101079d2d20931c4661c3981cbe956f20c872"
+    },
+    {
+      "name": "info",
+      "file": "info.svg",
+      "upstream": "info-fill.svg",
+      "sha256": "8240b810f7a3b076271a829dff61c7dd64257a781c30f29c938f88835f11136a"
+    },
+    {
+      "name": "success",
+      "file": "success.svg",
+      "upstream": "check-circle-fill.svg",
+      "sha256": "6ba676543869fddabb7a4ba7026fc51e14351455f4c095ea389b89d0e1d79708"
+    },
+    {
+      "name": "warning",
+      "file": "warning.svg",
+      "upstream": "warning-fill.svg",
+      "sha256": "90595f8a478ac1f156871ac8d8a35c7c4e372b8d101dad9aeb1bceadf9a2c7f0"
+    },
+    {
+      "name": "danger",
+      "file": "danger.svg",
+      "upstream": "warning-circle-fill.svg",
+      "sha256": "29199dd3ff20a7fc36380dc366c9004fafa98d979649dc2311c5b1f8fd968dac"
+    },
+    {
+      "name": "add",
+      "file": "add.svg",
+      "upstream": "plus-fill.svg",
+      "sha256": "64ef1a2c9f693a531ddb970a6c6e7c9dcd9bf36a58afec66ecb57355449ce3d2"
+    },
+    {
+      "name": "remove",
+      "file": "remove.svg",
+      "upstream": "minus-fill.svg",
+      "sha256": "fc5b1fa0d71db88886b70da6a675f7de3e7d4007444e87ba68f174a9ecef037e"
+    },
+    {
+      "name": "search",
+      "file": "search.svg",
+      "upstream": "magnifying-glass-fill.svg",
+      "sha256": "e7cf953bb787af2a4b11f8a248f35b56aab2f2b44f535d03593f490a4a633244"
+    },
+    {
+      "name": "expand",
+      "file": "expand.svg",
+      "upstream": "caret-down-fill.svg",
+      "sha256": "33550432966b277d6cf891f4db186357f4a83b1f8a5c7770c6ad6f5dee9b0b34"
+    },
+    {
+      "name": "next",
+      "file": "next.svg",
+      "upstream": "caret-right-fill.svg",
+      "sha256": "c62278a701f1e4c08f424ce4b5cac69c8adb23b496dae489d5545ea7e6c019ef"
+    },
+    {
+      "name": "arrow-right",
+      "file": "arrow-right.svg",
+      "upstream": "arrow-right-fill.svg",
+      "sha256": "b2b6dd337492218b781ec35371c648d9cbca5f81e169249bfe75f37466cb5119"
+    },
+    {
+      "name": "settings",
+      "file": "settings.svg",
+      "upstream": "gear-fill.svg",
+      "sha256": "564f53f72b0bd4371dc14a3d39a3fcf4c5a1a74d285eb56fff465a954f993ec8"
+    },
+    {
+      "name": "file",
+      "file": "file.svg",
+      "upstream": "file-fill.svg",
+      "sha256": "d6fe00691e45b5e9b87ccc5a8fc9022485935408167ab1234817915df4fd1ca4"
+    },
+    {
+      "name": "copy",
+      "file": "copy.svg",
+      "upstream": "copy-fill.svg",
+      "sha256": "eac5e853ad04f714e8d7f74932b62a6227d0853c9f31550e006c9b20f469172f"
+    },
+    {
+      "name": "loading",
+      "file": "loading.svg",
+      "upstream": "circle-notch-fill.svg",
+      "sha256": "2fcac4862730f5f6f0b0ff4126831bfcc738ca6010dcc558396a4e8f5c7e7580"
+    }
+  ]
+}

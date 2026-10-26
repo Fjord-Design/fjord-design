@@ -1,0 +1,440 @@
+{
+  "$extensions": {
+    "org.xerrion.fjord": {
+      "schemaVersion": 2,
+      "contractVersion": "0.3.0",
+      "dtcgVersion": "2025.10"
+    }
+  },
+  "semantic": {
+    "color": {
+      "accent": {
+        "$type": "color",
+        "$value": "{primitive.color.day.accent}",
+        "$description": "Primary interaction colour: frost blue in Night, deep blue in Day and teal in Aurora. Used for primary actions, links and focus."
+      },
+      "accent-hover": {
+        "$type": "color",
+        "$value": "{primitive.color.day.accent-hover}",
+        "$description": "Hover state of an `accent` fill or link."
+      },
+      "accent-ink": {
+        "$type": "color",
+        "$value": "{primitive.color.day.accent-ink}",
+        "$description": "Text and icons on `accent-soft`."
+      },
+      "accent-soft": {
+        "$type": "color",
+        "$value": "{primitive.color.day.accent-soft}",
+        "$description": "Tinted fill behind a selected item, a soft badge or the current day in a calendar. Text on it is `accent-ink`."
+      },
+      "ansi-black": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-black}",
+        "$description": "ANSI 0. Matches `bg-raised` in dark themes so 'black' backgrounds stay visible on `bg-base`."
+      },
+      "ansi-blue": {
+        "$type": "color",
+        "$value": "{semantic.color.frost}",
+        "$description": "ANSI 4."
+      },
+      "ansi-bright-black": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-bright-black}",
+        "$description": "ANSI 8. Dim or hint text and autosuggestions: at least 4.5:1 on bg-base in every theme at full opacity. Do not apply extra dimming."
+      },
+      "ansi-bright-blue": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-bright-blue}",
+        "$description": "ANSI 12."
+      },
+      "ansi-bright-cyan": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-bright-cyan}",
+        "$description": "ANSI 14."
+      },
+      "ansi-bright-green": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-bright-green}",
+        "$description": "ANSI 10."
+      },
+      "ansi-bright-magenta": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-bright-magenta}",
+        "$description": "ANSI 13."
+      },
+      "ansi-bright-red": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-bright-red}",
+        "$description": "ANSI 9."
+      },
+      "ansi-bright-white": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-bright-white}",
+        "$description": "ANSI 15."
+      },
+      "ansi-bright-yellow": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-bright-yellow}",
+        "$description": "ANSI 11."
+      },
+      "ansi-cyan": {
+        "$type": "color",
+        "$value": "{semantic.color.aurora}",
+        "$description": "ANSI 6."
+      },
+      "ansi-green": {
+        "$type": "color",
+        "$value": "{semantic.color.fern}",
+        "$description": "ANSI 2."
+      },
+      "ansi-magenta": {
+        "$type": "color",
+        "$value": "{semantic.color.lilac}",
+        "$description": "ANSI 5."
+      },
+      "ansi-red": {
+        "$type": "color",
+        "$value": "{semantic.color.rose}",
+        "$description": "ANSI 1."
+      },
+      "ansi-white": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ansi-white}",
+        "$description": "ANSI 7."
+      },
+      "ansi-yellow": {
+        "$type": "color",
+        "$value": "{semantic.color.latte}",
+        "$description": "ANSI 3 - mapped to latte; there is no true yellow in Fjord."
+      },
+      "aurora": {
+        "$type": "color",
+        "$value": "{primitive.color.day.aurora}",
+        "$description": "Aurora teal. Functions/methods in code, the Aurora theme's accent, chart series 2."
+      },
+      "bg-active": {
+        "$type": "color",
+        "$value": "{primitive.color.day.bg-active}",
+        "$description": "Pressed fill and the neutral selected row. Seed: oklch(35.00% 0.034 250) in Night."
+      },
+      "bg-base": {
+        "$type": "color",
+        "$value": "{primitive.color.day.bg-base}",
+        "$description": "Default page, window and editor background. Seed: oklch(20.88% 0.018 245) in Night. Body text `ink` sits here."
+      },
+      "bg-hover": {
+        "$type": "color",
+        "$value": "{primitive.color.day.bg-hover}",
+        "$description": "Hover fill for rows, menu items, ghost buttons. Seed: oklch(32.95% 0.034 247) in Night."
+      },
+      "bg-inverse": {
+        "$type": "color",
+        "$value": "{primitive.color.day.bg-inverse}",
+        "$description": "Inverted chips such as tooltips and the Kbd key cap shadow side. Text on it is `ink-inverse`."
+      },
+      "bg-raised": {
+        "$type": "color",
+        "$value": "{primitive.color.day.bg-raised}",
+        "$description": "Floating layers: menus, popovers, dialogs, toasts, hover cards. Always paired with `shadow-overlay`."
+      },
+      "bg-sunken": {
+        "$type": "color",
+        "$value": "{primitive.color.day.bg-sunken}",
+        "$description": "Deepest ground: terminal and editor gutter wells, inset code blocks, the track behind sliders and progress bars, the page behind a desktop of windows."
+      },
+      "bg-surface": {
+        "$type": "color",
+        "$value": "{primitive.color.day.bg-surface}",
+        "$description": "Panels, cards, sidebars, table bodies and inputs: one step up from `bg-base`."
+      },
+      "chart-1": {
+        "$type": "color",
+        "$value": "{semantic.color.frost}",
+        "$description": "Chart series 1 (primary series)."
+      },
+      "chart-2": {
+        "$type": "color",
+        "$value": "{semantic.color.aurora}",
+        "$description": "Chart series 2."
+      },
+      "chart-3": {
+        "$type": "color",
+        "$value": "{semantic.color.latte}",
+        "$description": "Chart series 3."
+      },
+      "chart-4": {
+        "$type": "color",
+        "$value": "{semantic.color.lilac}",
+        "$description": "Chart series 4."
+      },
+      "chart-5": {
+        "$type": "color",
+        "$value": "{semantic.color.rose}",
+        "$description": "Chart series 5."
+      },
+      "chart-6": {
+        "$type": "color",
+        "$value": "{semantic.color.fern}",
+        "$description": "Chart series 6. More than six series: group the rest as 'Other' in `ink-subtle`."
+      },
+      "chart-grid": {
+        "$type": "color",
+        "$value": "{semantic.color.line}",
+        "$description": "Gridlines and axis ticks."
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{primitive.color.day.danger}",
+        "$description": "Errors and destructive actions: a stronger, redder sibling of `rose` so it stays apart from `warning`. Always with the octagon icon or a word."
+      },
+      "danger-soft": {
+        "$type": "color",
+        "$value": "{primitive.color.day.danger-soft}",
+        "$description": "Background of a danger alert/badge; text `danger` or `ink`."
+      },
+      "diff-add-bg": {
+        "$type": "color",
+        "$value": "{primitive.color.day.diff-add-bg}",
+        "$description": "Background of an added line in a diff; `ink` on it."
+      },
+      "diff-del-bg": {
+        "$type": "color",
+        "$value": "{primitive.color.day.diff-del-bg}",
+        "$description": "Background of a removed line in a diff; `ink` on it."
+      },
+      "fern": {
+        "$type": "color",
+        "$value": "{primitive.color.day.fern}",
+        "$description": "Fern green, a stronger sibling of sage. Success, git additions, the ANSI green slot, regex in code. Text-safe on every surface."
+      },
+      "foam": {
+        "$type": "color",
+        "$value": "{primitive.color.day.foam}",
+        "$description": "Cappuccino foam. Seed: oklch(86.99% 0.028 46). Strings in code, warm highlights, avatar fallbacks."
+      },
+      "focus-ring": {
+        "$type": "color",
+        "$value": "{semantic.color.accent}",
+        "$description": "Keyboard focus: a 2px solid ring offset 2px from the control. 3:1+ against every surface in every theme."
+      },
+      "frost": {
+        "$type": "color",
+        "$value": "{primitive.color.day.frost}",
+        "$description": "Cool frost blue. Types/classes in code, info, links when `accent` is aurora. Text-safe on every surface."
+      },
+      "git-added": {
+        "$type": "color",
+        "$value": "{semantic.color.fern}",
+        "$description": "Added lines/files in gutters, file trees, prompts."
+      },
+      "git-ignored": {
+        "$type": "color",
+        "$value": "{semantic.color.ink-subtle}",
+        "$description": "Ignored/untracked files in trees."
+      },
+      "git-modified": {
+        "$type": "color",
+        "$value": "{semantic.color.frost}",
+        "$description": "Modified lines/files."
+      },
+      "git-removed": {
+        "$type": "color",
+        "$value": "{semantic.color.rose}",
+        "$description": "Deleted lines/files."
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{semantic.color.frost}",
+        "$description": "Informational alerts, badges, toasts. Always with the info icon or a word."
+      },
+      "info-soft": {
+        "$type": "color",
+        "$value": "{primitive.color.day.info-soft}",
+        "$description": "Background of an info alert/badge; its text is `info` or `ink`."
+      },
+      "ink": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ink}",
+        "$description": "Primary text and solid icons on `bg-base`, `bg-surface`, `bg-raised`, `bg-hover`, `bg-active`."
+      },
+      "ink-disabled": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ink-disabled}",
+        "$description": "Disabled labels and icons only (WCAG-exempt). Never for content."
+      },
+      "ink-inverse": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ink-inverse}",
+        "$description": "Text on `bg-inverse` (tooltips)."
+      },
+      "ink-muted": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ink-muted}",
+        "$description": "Secondary text: descriptions, metadata, placeholder-free helper text. 4.5:1+ on every surface including `bg-active`."
+      },
+      "ink-subtle": {
+        "$type": "color",
+        "$value": "{primitive.color.day.ink-subtle}",
+        "$description": "Tertiary text: timestamps, line numbers, input placeholders. 4.5:1+ on `bg-base`, `bg-surface` and `bg-raised`; not for long copy."
+      },
+      "latte": {
+        "$type": "color",
+        "$value": "{primitive.color.day.latte}",
+        "$description": "Café latte. Seed: oklch(76.09% 0.065 71). Warnings, numbers/constants in code, the ANSI yellow slot - the only place a yellow-ish hue appears."
+      },
+      "lilac": {
+        "$type": "color",
+        "$value": "{primitive.color.day.lilac}",
+        "$description": "Muted lilac. Keywords and storage in code, chart series 4. Cool counterweight to the café tones."
+      },
+      "line": {
+        "$type": "color",
+        "$value": "{primitive.color.day.line}",
+        "$description": "Hairline dividers between regions (1px). Separates panels without adding a frame; never on control outlines."
+      },
+      "line-strong": {
+        "$type": "color",
+        "$value": "{primitive.color.day.line-strong}",
+        "$description": "Control borders (inputs, checkboxes, outline buttons) and the scroll thumb. Holds 3:1 on `bg-base` and `bg-surface` in every theme."
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "{primitive.color.day.on-accent}",
+        "$description": "Text and icons on an `accent` fill (primary button label, checked checkbox tick). Dark in Night/Aurora, white in Day."
+      },
+      "on-danger": {
+        "$type": "color",
+        "$value": "{primitive.color.day.on-danger}",
+        "$description": "Label on a solid `danger` fill (destructive button)."
+      },
+      "rose": {
+        "$type": "color",
+        "$value": "{primitive.color.day.rose}",
+        "$description": "Dusty rose. Seed: oklch(75.93% 0.066 10). Danger/errors, variables and tags in code, git deletions."
+      },
+      "sage": {
+        "$type": "color",
+        "$value": "{primitive.color.day.sage}",
+        "$description": "Pale sage. Seed: oklch(86.93% 0.028 130). Quiet decorative accent: avatar fallbacks, tags, the bright end of green ramps. For success use `fern`."
+      },
+      "scrim": {
+        "$type": "color",
+        "$value": "{primitive.color.day.scrim}",
+        "$description": "Overlay behind dialogs, sheets and drawers. No blur - Fjord never uses backdrop blur."
+      },
+      "search-match": {
+        "$type": "color",
+        "$value": "{primitive.color.day.search-match}",
+        "$description": "Search/find match background and the Marker highlight; `ink` on it. Latte-tinted so it is findable without breaking the palette."
+      },
+      "search-match-current": {
+        "$type": "color",
+        "$value": "{primitive.color.day.search-match-current}",
+        "$description": "The current match; `ink` on it."
+      },
+      "selection": {
+        "$type": "color",
+        "$value": "{primitive.color.day.selection}",
+        "$description": "Text selection and editor selection background. `ink` stays readable on it."
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{semantic.color.fern}",
+        "$description": "Success state. Always with the check icon or a word; never rely on hue alone."
+      },
+      "success-soft": {
+        "$type": "color",
+        "$value": "{primitive.color.day.success-soft}",
+        "$description": "Background of a success alert/badge; text `success` or `ink`."
+      },
+      "syn-comment": {
+        "$type": "color",
+        "$value": "{primitive.color.day.syn-comment}",
+        "$description": "Comments, set in italic. Deliberately readable: 5:1+ on `bg-base` - comments are content, not noise."
+      },
+      "syn-function": {
+        "$type": "color",
+        "$value": "{semantic.color.aurora}",
+        "$description": "Function and method names, calls and declarations."
+      },
+      "syn-keyword": {
+        "$type": "color",
+        "$value": "{semantic.color.lilac}",
+        "$description": "Keywords, storage, control flow (`const`, `if`, `return`)."
+      },
+      "syn-number": {
+        "$type": "color",
+        "$value": "{semantic.color.latte}",
+        "$description": "Numbers, booleans, constants, enum members."
+      },
+      "syn-operator": {
+        "$type": "color",
+        "$value": "{primitive.color.day.syn-operator}",
+        "$description": "Operators and ligatures (`=>`, `!==`, `|>`). A touch brighter than punctuation so ligatures read as glyphs."
+      },
+      "syn-property": {
+        "$type": "color",
+        "$value": "{semantic.color.rose}",
+        "$description": "Object properties, attributes, HTML/JSX tags and CSS selectors (Horizon-style rose)."
+      },
+      "syn-punctuation": {
+        "$type": "color",
+        "$value": "{semantic.color.ink-muted}",
+        "$description": "Brackets, commas, semicolons."
+      },
+      "syn-regex": {
+        "$type": "color",
+        "$value": "{semantic.color.fern}",
+        "$description": "Regular expressions and escape sequences."
+      },
+      "syn-string": {
+        "$type": "color",
+        "$value": "{semantic.color.foam}",
+        "$description": "Strings, template literals, markdown code spans."
+      },
+      "syn-type": {
+        "$type": "color",
+        "$value": "{semantic.color.frost}",
+        "$description": "Types, classes, interfaces, JSX components."
+      },
+      "syn-variable": {
+        "$type": "color",
+        "$value": "{semantic.color.ink}",
+        "$description": "Plain identifiers and parameters."
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{semantic.color.latte}",
+        "$description": "Warnings. Always with the triangle icon or a word."
+      },
+      "warning-soft": {
+        "$type": "color",
+        "$value": "{primitive.color.day.warning-soft}",
+        "$description": "Background of a warning alert/badge; text `warning` or `ink`."
+      }
+    },
+    "shadow": {
+      "shadow-overlay": {
+        "$type": "shadow",
+        "$value": "{primitive.shadow.day.shadow-overlay}",
+        "$description": "Menus, popovers, dialogs, toasts, sheets - anything floating."
+      },
+      "shadow-pressed": {
+        "$type": "shadow",
+        "$value": "{primitive.shadow.day.shadow-pressed}",
+        "$description": "Pressed toggles and wells."
+      },
+      "shadow-raised": {
+        "$type": "shadow",
+        "$value": "{primitive.shadow.day.shadow-raised}",
+        "$description": "Cards and panels that sit on `bg-base`."
+      },
+      "shadow-sm": {
+        "$type": "shadow",
+        "$value": "{primitive.shadow.day.shadow-sm}",
+        "$description": "Buttons, the selected segment of a toggle group, switch thumbs."
+      }
+    }
+  }
+}

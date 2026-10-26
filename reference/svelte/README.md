@@ -1,0 +1,25 @@
+# Fjord Svelte reference
+
+This workspace contains the typed Svelte reference and Storybook setup. `ThemeScope` defaults to Night and accepts Night, Day, Aurora or the explicit System preference. It scopes `data-fjord-mode`, `data-fjord-preference` and an `identity` string without changing document globals or storing a choice. Import `@fjord/svelte/semantics.css` after the typography/foundation styles for semantic colours and states, including the Fern example identity. System CSS also applies before hydration; the client observes changes and cleans up its listener. Nested scopes remain independent. General token export belongs to XER-116; product components and the complete catalogue retain their delivery tasks.
+
+`Button` and `Badge` provide the first MVP component references. Both require a non-empty localized `label`. `Button` supports primary, secondary, ghost and destructive variants, native button types, disabled and controlled loading. `iconOnly` requires an icon and uses the label as the accessible name. `Badge` is a static status label with an optional decorative icon. See the Components/Button and Badge stories for examples and limitations; component specifications are in the source repository's `docs/components` directory.
+
+`Field`, `Label`, `Input`, `Textarea` and `NativeSelect` compose native, labelled form controls. Spread the control object from Field's child snippet onto its control to connect the ID, help, error, required and disabled states. Use unique IDs and localized text. Input and Textarea support read-only values; NativeSelect provides a single native selection. The Components/Form fields story demonstrates the API and its limits. Import `@fjord/svelte/form-controls.css` after the foundation and semantic styles.
+
+Run commands from the repository root:
+
+```sh
+mise run reference:check
+mise run reference:build
+mise run storybook:build
+mise run reference:dev
+mise run storybook:dev
+```
+
+The library builds to `dist/svelte/`, the Vite specimen to `dist/reference/`, and the static catalogue to `dist/storybook/`. Generated files do not belong in version control.
+
+The supporting `Icon` primitive uses the 16 pinned Phosphor Fill SVGs and retains their original MIT notice under `icons/`. Import `@fjord/svelte/foundations.css` for shared layout, density, focus, motion and system-colour rules. Wrap its controls in `.fjord-foundation.fjord-type-body` and select a mode with `data-fjord-mode`. Decorative icons are the default. A meaningful icon requires `decorative={false}` and a non-empty localized `label`; an icon-only button receives its accessible name on the button.
+
+Consumers install the versioned local archive produced by `mise run test:types`. Import `ThemeScope` and the `Mode` type from `@fjord/svelte`. The package requires Svelte 5.57.2 or a compatible later 5.x version. Its own sources use the repository's MIT licence. Dependencies retain their licences.
+
+Import `@fjord/svelte/typography.css` once in the application entry. It includes nine self-hosted WOFF2 faces and the 15 `.fjord-type-*` classes. Keep its relative font directories and original OFL licences when redistributing. Sizes use `rem`. Contextual ligatures default to on; comments and keywords use standard slanted italic with handwritten forms off. Set `data-fjord-ligatures="off"` to disable ligatures, or explicitly opt into handwritten forms with `data-fjord-cursive="on"` on the document root. The archive includes the font manifest, inspection evidence and original notices under `fonts/`.

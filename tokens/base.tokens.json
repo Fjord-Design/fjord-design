@@ -1,0 +1,4072 @@
+{
+  "$extensions": {
+    "org.xerrion.fjord": {
+      "schemaVersion": 2,
+      "contractVersion": "0.3.0",
+      "dtcgVersion": "2025.10",
+      "name": "Fjord",
+      "designSeeds": {
+        "primary": [
+          "oklch(32.9478% 0.034021 247.264)",
+          "oklch(20.8843% 0.018341 245.245)",
+          "oklch(34.9975% 0.034292 250.45)"
+        ],
+        "accents": [
+          "oklch(76.0906% 0.065221 71.267)",
+          "oklch(86.9933% 0.028271 46.055)",
+          "oklch(75.9325% 0.065969 10.27)",
+          "oklch(86.9339% 0.02788 129.841)"
+        ]
+      },
+      "fontAssets": "assets/fonts/manifest.json",
+      "iconAssets": "assets/icons/manifest.json"
+    }
+  },
+  "component": {
+    "button": {
+      "primary": {
+        "background": {
+          "$type": "color",
+          "$value": "{semantic.color.accent}",
+          "$description": "Primary button background."
+        },
+        "disabled-foreground": {
+          "$type": "color",
+          "$value": "{semantic.color.ink-disabled}",
+          "$description": "Primary button disabled foreground."
+        },
+        "focus-color": {
+          "$type": "color",
+          "$value": "{semantic.color.focus-ring}",
+          "$description": "Primary button focus color."
+        },
+        "focus-width": {
+          "$type": "dimension",
+          "$value": "{semantic.border-width.border-focus}",
+          "$description": "Primary button focus width."
+        },
+        "font-family": {
+          "$type": "fontFamily",
+          "$value": "{semantic.font.sans}",
+          "$description": "Primary button font family."
+        },
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{semantic.font-size.text-md}",
+          "$description": "Primary button font size."
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "{semantic.color.on-accent}",
+          "$description": "Primary button foreground."
+        },
+        "hover-background": {
+          "$type": "color",
+          "$value": "{semantic.color.accent-hover}",
+          "$description": "Primary button hover background."
+        },
+        "padding-block": {
+          "$type": "dimension",
+          "$value": "{semantic.spacing.space-2}",
+          "$description": "Primary button padding block."
+        },
+        "padding-inline": {
+          "$type": "dimension",
+          "$value": "{semantic.spacing.space-4}",
+          "$description": "Primary button padding inline."
+        },
+        "pressed-background": {
+          "$type": "color",
+          "$value": "{semantic.color.accent-hover}",
+          "$description": "Primary button pressed background."
+        },
+        "radius": {
+          "$type": "dimension",
+          "$value": "{semantic.radius.radius-full}",
+          "$description": "Primary button radius."
+        }
+      }
+    }
+  },
+  "primitive": {
+    "border-width": {
+      "border-active": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2.0,
+          "unit": "px"
+        },
+        "$description": "Selected indicators: active tab underline, selected card outline, sidebar marker."
+      },
+      "border-focus": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2.0,
+          "unit": "px"
+        },
+        "$description": "Focus ring width (solid `focus-ring`, offset 2px)."
+      },
+      "border-hairline": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.0,
+          "unit": "px"
+        },
+        "$description": "Every divider and control border. Fjord separates with hairlines and fills, never heavy frames."
+      }
+    },
+    "color": {
+      "aurora": {
+        "accent": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.47843137254901963,
+              0.8431372549019608,
+              0.8196078431372549
+            ],
+            "alpha": 1
+          },
+          "$description": "THE interactive colour: primary buttons, links, focus ring, active tab/selection markers, checked controls. Frost blue in Night/Day, aurora teal in Aurora. Readable as text on every surface."
+        },
+        "accent-hover": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5803921568627451,
+              0.9019607843137255,
+              0.8784313725490196
+            ],
+            "alpha": 1
+          },
+          "$description": "Hover state of an `accent` fill or link."
+        },
+        "accent-ink": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.596078431372549,
+              0.9137254901960784,
+              0.8901960784313725
+            ],
+            "alpha": 1
+          },
+          "$description": "Text and icons on `accent-soft`."
+        },
+        "accent-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.18823529411764706,
+              0.18823529411764706
+            ],
+            "alpha": 1
+          },
+          "$description": "Tinted fill behind a selected item, a soft badge or the current day in a calendar. Text on it is `accent-ink`."
+        },
+        "ansi-black": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.07450980392156863,
+              0.12156862745098039,
+              0.17254901960784313
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 0. Matches `bg-raised` in dark themes so 'black' backgrounds stay visible on `bg-base`."
+        },
+        "ansi-bright-black": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.43137254901960786,
+              0.48627450980392156,
+              0.5450980392156862
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 8. Dim or hint text and autosuggestions: at least 4.5:1 on bg-base in every theme at full opacity. Do not apply extra dimming."
+        },
+        "ansi-bright-blue": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6588235294117647,
+              0.8666666666666667,
+              0.9647058823529412
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 12."
+        },
+        "ansi-bright-cyan": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.611764705882353,
+              0.9294117647058824,
+              0.8901960784313725
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 14."
+        },
+        "ansi-bright-green": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8235294117647058,
+              0.9137254901960784,
+              0.803921568627451
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 10."
+        },
+        "ansi-bright-magenta": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8313725490196079,
+              0.7725490196078432,
+              0.9529411764705882
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 13."
+        },
+        "ansi-bright-red": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9411764705882353,
+              0.6901960784313725,
+              0.7254901960784313
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 9."
+        },
+        "ansi-bright-white": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9490196078431372,
+              0.9647058823529412,
+              0.9764705882352941
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 15."
+        },
+        "ansi-bright-yellow": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8980392156862745,
+              0.7686274509803922,
+              0.611764705882353
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 11."
+        },
+        "ansi-white": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7137254901960784,
+              0.7647058823529411,
+              0.803921568627451
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 7."
+        },
+        "aurora": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5058823529411764,
+              0.8745098039215686,
+              0.792156862745098
+            ],
+            "alpha": 1
+          },
+          "$description": "Aurora teal. Functions/methods in code, the Aurora theme's accent, chart series 2."
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.13725490196078433,
+              0.19607843137254902,
+              0.26666666666666666
+            ],
+            "alpha": 1
+          },
+          "$description": "Pressed fill and the neutral selected row. Seed: oklch(35.00% 0.034 250) in Night."
+        },
+        "bg-base": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.03137254901960784,
+              0.054901960784313725,
+              0.08627450980392157
+            ],
+            "alpha": 1
+          },
+          "$description": "Default page, window and editor background. Seed: oklch(20.88% 0.018 245) in Night. Body text `ink` sits here."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.11764705882352941,
+              0.17254901960784313,
+              0.23137254901960785
+            ],
+            "alpha": 1
+          },
+          "$description": "Hover fill for rows, menu items, ghost buttons. Seed: oklch(32.95% 0.034 247) in Night."
+        },
+        "bg-inverse": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8823529411764706,
+              0.9137254901960784,
+              0.9372549019607843
+            ],
+            "alpha": 1
+          },
+          "$description": "Inverted chips such as tooltips and the Kbd key cap shadow side. Text on it is `ink-inverse`."
+        },
+        "bg-raised": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.07450980392156863,
+              0.12156862745098039,
+              0.17254901960784313
+            ],
+            "alpha": 1
+          },
+          "$description": "Floating layers: menus, popovers, dialogs, toasts, hover cards. Always paired with `shadow-overlay`."
+        },
+        "bg-sunken": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.01568627450980392,
+              0.03137254901960784,
+              0.054901960784313725
+            ],
+            "alpha": 1
+          },
+          "$description": "Deepest ground: terminal and editor gutter wells, inset code blocks, the track behind sliders and progress bars, the page behind a desktop of windows."
+        },
+        "bg-surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.058823529411764705,
+              0.09803921568627451,
+              0.13725490196078433
+            ],
+            "alpha": 1
+          },
+          "$description": "Panels, cards, sidebars, table bodies and inputs: one step up from `bg-base`."
+        },
+        "danger": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9137254901960784,
+              0.5294117647058824,
+              0.5490196078431373
+            ],
+            "alpha": 1
+          },
+          "$description": "Errors and destructive actions: a stronger, redder sibling of `rose` so it stays apart from `warning`. Always with the octagon icon or a word."
+        },
+        "danger-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.19607843137254902,
+              0.09803921568627451,
+              0.11372549019607843
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a danger alert/badge; text `danger` or `ink`."
+        },
+        "diff-add-bg": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.07058823529411765,
+              0.12156862745098039,
+              0.08235294117647059
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of an added line in a diff; `ink` on it."
+        },
+        "diff-del-bg": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.16470588235294117,
+              0.08235294117647059,
+              0.09411764705882353
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a removed line in a diff; `ink` on it."
+        },
+        "fern": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6235294117647059,
+              0.8313725490196079,
+              0.6470588235294118
+            ],
+            "alpha": 1
+          },
+          "$description": "Fern green, a stronger sibling of sage. Success, git additions, the ANSI green slot, regex in code. Text-safe on every surface."
+        },
+        "foam": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9137254901960784,
+              0.807843137254902,
+              0.7568627450980392
+            ],
+            "alpha": 1
+          },
+          "$description": "Cappuccino foam. Seed: oklch(86.99% 0.028 46). Strings in code, warm highlights, avatar fallbacks."
+        },
+        "frost": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5764705882352941,
+              0.788235294117647,
+              0.9254901960784314
+            ],
+            "alpha": 1
+          },
+          "$description": "Cool frost blue. Types/classes in code, info, links when `accent` is aurora. Text-safe on every surface."
+        },
+        "info-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.050980392156862744,
+              0.14901960784313725,
+              0.2
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of an info alert/badge; its text is `info` or `ink`."
+        },
+        "ink": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8980392156862745,
+              0.9254901960784314,
+              0.9450980392156862
+            ],
+            "alpha": 1
+          },
+          "$description": "Primary text and solid icons on `bg-base`, `bg-surface`, `bg-raised`, `bg-hover`, `bg-active`."
+        },
+        "ink-disabled": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3333333333333333,
+              0.37254901960784315,
+              0.4117647058823529
+            ],
+            "alpha": 1
+          },
+          "$description": "Disabled labels and icons only (WCAG-exempt). Never for content."
+        },
+        "ink-inverse": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.03137254901960784,
+              0.054901960784313725,
+              0.08627450980392157
+            ],
+            "alpha": 1
+          },
+          "$description": "Text on `bg-inverse` (tooltips)."
+        },
+        "ink-muted": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6588235294117647,
+              0.7137254901960784,
+              0.7568627450980392
+            ],
+            "alpha": 1
+          },
+          "$description": "Secondary text: descriptions, metadata, placeholder-free helper text. 4.5:1+ on every surface including `bg-active`."
+        },
+        "ink-subtle": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5725490196078431,
+              0.6313725490196078,
+              0.6823529411764706
+            ],
+            "alpha": 1
+          },
+          "$description": "Tertiary text: timestamps, line numbers, input placeholders. 4.5:1+ on `bg-base`, `bg-surface` and `bg-raised`; not for long copy."
+        },
+        "latte": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8431372549019608,
+              0.6862745098039216,
+              0.5137254901960784
+            ],
+            "alpha": 1
+          },
+          "$description": "Café latte. Seed: oklch(76.09% 0.065 71). Warnings, numbers/constants in code, the ANSI yellow slot - the only place a yellow-ish hue appears."
+        },
+        "lilac": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7764705882352941,
+              0.6823529411764706,
+              0.8941176470588236
+            ],
+            "alpha": 1
+          },
+          "$description": "Muted lilac. Keywords and storage in code, chart series 4. Cool counterweight to the café tones."
+        },
+        "line": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.15294117647058825,
+              0.20392156862745098
+            ],
+            "alpha": 1
+          },
+          "$description": "Hairline dividers between regions (1px). Separates panels without adding a frame; never on control outlines."
+        },
+        "line-strong": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.35294117647058826,
+              0.4196078431372549,
+              0.48627450980392156
+            ],
+            "alpha": 1
+          },
+          "$description": "Control borders (inputs, checkboxes, outline buttons) and the scroll thumb. Holds 3:1 on `bg-base` and `bg-surface` in every theme."
+        },
+        "on-accent": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.03137254901960784,
+              0.054901960784313725,
+              0.08627450980392157
+            ],
+            "alpha": 1
+          },
+          "$description": "Text and icons on an `accent` fill (primary button label, checked checkbox tick). Dark in Night/Aurora, white in Day."
+        },
+        "on-danger": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.03137254901960784,
+              0.054901960784313725,
+              0.08627450980392157
+            ],
+            "alpha": 1
+          },
+          "$description": "Label on a solid `danger` fill (destructive button)."
+        },
+        "rose": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8823529411764706,
+              0.6078431372549019,
+              0.6470588235294118
+            ],
+            "alpha": 1
+          },
+          "$description": "Dusty rose. Seed: oklch(75.93% 0.066 10). Danger/errors, variables and tags in code, git deletions."
+        },
+        "sage": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7686274509803922,
+              0.8470588235294118,
+              0.7490196078431373
+            ],
+            "alpha": 1
+          },
+          "$description": "Pale sage. Seed: oklch(86.93% 0.028 130). Quiet decorative accent: avatar fallbacks, tags, the bright end of green ramps. For success use `fern`."
+        },
+        "scrim": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0196078431372549,
+              0.03137254901960784,
+              0.050980392156862744
+            ],
+            "alpha": 0.7215686274509804
+          },
+          "$description": "Overlay behind dialogs, sheets and drawers. No blur - Fjord never uses backdrop blur."
+        },
+        "search-match": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3137254901960784,
+              0.2196078431372549,
+              0.10588235294117647
+            ],
+            "alpha": 1
+          },
+          "$description": "Search/find match background and the Marker highlight; `ink` on it. Latte-tinted so it is findable without breaking the palette."
+        },
+        "search-match-current": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.44313725490196076,
+              0.3176470588235294,
+              0.1607843137254902
+            ],
+            "alpha": 1
+          },
+          "$description": "The current match; `ink` on it."
+        },
+        "selection": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.03529411764705882,
+              0.23137254901960785,
+              0.23137254901960785
+            ],
+            "alpha": 1
+          },
+          "$description": "Text selection and editor selection background. `ink` stays readable on it."
+        },
+        "success-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.09803921568627451,
+              0.1450980392156863,
+              0.09803921568627451
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a success alert/badge; text `success` or `ink`."
+        },
+        "syn-comment": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5647058823529412,
+              0.6862745098039216,
+              0.6666666666666666
+            ],
+            "alpha": 1
+          },
+          "$description": "Comments, set in italic. Deliberately readable: 5:1+ on `bg-base` - comments are content, not noise."
+        },
+        "syn-operator": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7294117647058823,
+              0.8745098039215686,
+              0.9019607843137255
+            ],
+            "alpha": 1
+          },
+          "$description": "Operators and ligatures (`=>`, `!==`, `|>`). A touch brighter than punctuation so ligatures read as glyphs."
+        },
+        "syn-regex": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9803921568627451,
+              0.7058823529411765,
+              0.6
+            ],
+            "alpha": 1
+          },
+          "$description": "Regular expressions and escape sequences."
+        },
+        "warning-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.17647058823529413,
+              0.12549019607843137,
+              0.06666666666666667
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a warning alert/badge; text `warning` or `ink`."
+        }
+      },
+      "day": {
+        "accent": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10980392156862745,
+              0.38823529411764707,
+              0.5686274509803921
+            ],
+            "alpha": 1
+          },
+          "$description": "THE interactive colour: primary buttons, links, focus ring, active tab/selection markers, checked controls. Frost blue in Night/Day, aurora teal in Aurora. Readable as text on every surface."
+        },
+        "accent-hover": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.3215686274509804,
+              0.49411764705882355
+            ],
+            "alpha": 1
+          },
+          "$description": "Hover state of an `accent` fill or link."
+        },
+        "accent-ink": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.03529411764705882,
+              0.2980392156862745,
+              0.4549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "Text and icons on `accent-soft`."
+        },
+        "accent-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.807843137254902,
+              0.9058823529411765,
+              0.9725490196078431
+            ],
+            "alpha": 1
+          },
+          "$description": "Tinted fill behind a selected item, a soft badge or the current day in a calendar. Text on it is `accent-ink`."
+        },
+        "ansi-black": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.08627450980392157,
+              0.13725490196078433,
+              0.1843137254901961
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 0. Matches `bg-raised` in dark themes so 'black' backgrounds stay visible on `bg-base`."
+        },
+        "ansi-bright-black": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.37254901960784315,
+              0.42745098039215684,
+              0.47843137254901963
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 8. Dim or hint text and autosuggestions: at least 4.5:1 on bg-base in every theme at full opacity. Do not apply extra dimming."
+        },
+        "ansi-bright-blue": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.3215686274509804,
+              0.49411764705882355
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 12."
+        },
+        "ansi-bright-cyan": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.3607843137254902,
+              0.35294117647058826
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 14."
+        },
+        "ansi-bright-green": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2196078431372549,
+              0.3411764705882353,
+              0.17647058823529413
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 10."
+        },
+        "ansi-bright-magenta": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.34901960784313724,
+              0.24313725490196078,
+              0.5333333333333333
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 13."
+        },
+        "ansi-bright-red": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5294117647058824,
+              0.18823529411764706,
+              0.2549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 9."
+        },
+        "ansi-bright-white": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06666666666666667,
+              0.09803921568627451,
+              0.12549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 15."
+        },
+        "ansi-bright-yellow": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.4588235294117647,
+              0.2901960784313726,
+              0.13333333333333333
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 11."
+        },
+        "ansi-white": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3764705882352941,
+              0.41568627450980394,
+              0.4549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 7."
+        },
+        "aurora": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.07058823529411765,
+              0.4117647058823529,
+              0.3607843137254902
+            ],
+            "alpha": 1
+          },
+          "$description": "Aurora teal. Functions/methods in code, the Aurora theme's accent, chart series 2."
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8196078431372549,
+              0.8745098039215686,
+              0.9137254901960784
+            ],
+            "alpha": 1
+          },
+          "$description": "Pressed fill and the neutral selected row. Seed: oklch(35.00% 0.034 250) in Night."
+        },
+        "bg-base": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9254901960784314,
+              0.9450980392156862,
+              0.9607843137254902
+            ],
+            "alpha": 1
+          },
+          "$description": "Default page, window and editor background. Seed: oklch(20.88% 0.018 245) in Night. Body text `ink` sits here."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8705882352941177,
+              0.9058823529411765,
+              0.9333333333333333
+            ],
+            "alpha": 1
+          },
+          "$description": "Hover fill for rows, menu items, ghost buttons. Seed: oklch(32.95% 0.034 247) in Night."
+        },
+        "bg-inverse": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.1450980392156863,
+              0.18823529411764706
+            ],
+            "alpha": 1
+          },
+          "$description": "Inverted chips such as tooltips and the Kbd key cap shadow side. Text on it is `ink-inverse`."
+        },
+        "bg-raised": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "alpha": 1
+          },
+          "$description": "Floating layers: menus, popovers, dialogs, toasts, hover cards. Always paired with `shadow-overlay`."
+        },
+        "bg-sunken": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8784313725490196,
+              0.9098039215686274,
+              0.9294117647058824
+            ],
+            "alpha": 1
+          },
+          "$description": "Deepest ground: terminal and editor gutter wells, inset code blocks, the track behind sliders and progress bars, the page behind a desktop of windows."
+        },
+        "bg-surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9921568627450981,
+              0.996078431372549,
+              1.0
+            ],
+            "alpha": 1
+          },
+          "$description": "Panels, cards, sidebars, table bodies and inputs: one step up from `bg-base`."
+        },
+        "danger": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6196078431372549,
+              0.16862745098039217,
+              0.21176470588235294
+            ],
+            "alpha": 1
+          },
+          "$description": "Errors and destructive actions: a stronger, redder sibling of `rose` so it stays apart from `warning`. Always with the octagon icon or a word."
+        },
+        "danger-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9921568627450981,
+              0.9019607843137255,
+              0.9098039215686274
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a danger alert/badge; text `danger` or `ink`."
+        },
+        "diff-add-bg": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8784313725490196,
+              0.9450980392156862,
+              0.8588235294117647
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of an added line in a diff; `ink` on it."
+        },
+        "diff-del-bg": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9921568627450981,
+              0.9019607843137255,
+              0.9098039215686274
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a removed line in a diff; `ink` on it."
+        },
+        "fern": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.19607843137254902,
+              0.4,
+              0.20784313725490197
+            ],
+            "alpha": 1
+          },
+          "$description": "Fern green, a stronger sibling of sage. Success, git additions, the ANSI green slot, regex in code. Text-safe on every surface."
+        },
+        "foam": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5333333333333333,
+              0.20392156862745098,
+              0.12156862745098039
+            ],
+            "alpha": 1
+          },
+          "$description": "Cappuccino foam. Seed: oklch(86.99% 0.028 46). Strings in code, warm highlights, avatar fallbacks."
+        },
+        "frost": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.12941176470588237,
+              0.3686274509803922,
+              0.5725490196078431
+            ],
+            "alpha": 1
+          },
+          "$description": "Cool frost blue. Types/classes in code, info, links when `accent` is aurora. Text-safe on every surface."
+        },
+        "info-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8431372549019608,
+              0.9215686274509803,
+              0.9764705882352941
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of an info alert/badge; its text is `info` or `ink`."
+        },
+        "ink": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.08627450980392157,
+              0.13725490196078433,
+              0.1843137254901961
+            ],
+            "alpha": 1
+          },
+          "$description": "Primary text and solid icons on `bg-base`, `bg-surface`, `bg-raised`, `bg-hover`, `bg-active`."
+        },
+        "ink-disabled": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5686274509803921,
+              0.6,
+              0.6313725490196078
+            ],
+            "alpha": 1
+          },
+          "$description": "Disabled labels and icons only (WCAG-exempt). Never for content."
+        },
+        "ink-inverse": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9490196078431372,
+              0.9647058823529412,
+              0.9764705882352941
+            ],
+            "alpha": 1
+          },
+          "$description": "Text on `bg-inverse` (tooltips)."
+        },
+        "ink-muted": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2627450980392157,
+              0.3215686274509804,
+              0.3764705882352941
+            ],
+            "alpha": 1
+          },
+          "$description": "Secondary text: descriptions, metadata, placeholder-free helper text. 4.5:1+ on every surface including `bg-active`."
+        },
+        "ink-subtle": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3215686274509804,
+              0.3803921568627451,
+              0.43529411764705883
+            ],
+            "alpha": 1
+          },
+          "$description": "Tertiary text: timestamps, line numbers, input placeholders. 4.5:1+ on `bg-base`, `bg-surface` and `bg-raised`; not for long copy."
+        },
+        "latte": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.47843137254901963,
+              0.3176470588235294,
+              0.12156862745098039
+            ],
+            "alpha": 1
+          },
+          "$description": "Café latte. Seed: oklch(76.09% 0.065 71). Warnings, numbers/constants in code, the ANSI yellow slot - the only place a yellow-ish hue appears."
+        },
+        "lilac": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.4117647058823529,
+              0.29411764705882354,
+              0.5882352941176471
+            ],
+            "alpha": 1
+          },
+          "$description": "Muted lilac. Keywords and storage in code, chart series 4. Cool counterweight to the café tones."
+        },
+        "line": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8274509803921568,
+              0.8588235294117647,
+              0.8823529411764706
+            ],
+            "alpha": 1
+          },
+          "$description": "Hairline dividers between regions (1px). Separates panels without adding a frame; never on control outlines."
+        },
+        "line-strong": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.47843137254901963,
+              0.5333333333333333,
+              0.5843137254901961
+            ],
+            "alpha": 1
+          },
+          "$description": "Control borders (inputs, checkboxes, outline buttons) and the scroll thumb. Holds 3:1 on `bg-base` and `bg-surface` in every theme."
+        },
+        "on-accent": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9764705882352941,
+              0.9882352941176471,
+              0.996078431372549
+            ],
+            "alpha": 1
+          },
+          "$description": "Text and icons on an `accent` fill (primary button label, checked checkbox tick). Dark in Night/Aurora, white in Day."
+        },
+        "on-danger": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9764705882352941,
+              0.9882352941176471,
+              0.996078431372549
+            ],
+            "alpha": 1
+          },
+          "$description": "Label on a solid `danger` fill (destructive button)."
+        },
+        "rose": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6078431372549019,
+              0.25882352941176473,
+              0.3176470588235294
+            ],
+            "alpha": 1
+          },
+          "$description": "Dusty rose. Seed: oklch(75.93% 0.066 10). Danger/errors, variables and tags in code, git deletions."
+        },
+        "sage": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.27058823529411763,
+              0.396078431372549,
+              0.23137254901960785
+            ],
+            "alpha": 1
+          },
+          "$description": "Pale sage. Seed: oklch(86.93% 0.028 130). Quiet decorative accent: avatar fallbacks, tags, the bright end of green ramps. For success use `fern`."
+        },
+        "scrim": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.1411764705882353,
+              0.19607843137254902
+            ],
+            "alpha": 0.34901960784313724
+          },
+          "$description": "Overlay behind dialogs, sheets and drawers. No blur - Fjord never uses backdrop blur."
+        },
+        "search-match": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9607843137254902,
+              0.8196078431372549,
+              0.6470588235294118
+            ],
+            "alpha": 1
+          },
+          "$description": "Search/find match background and the Marker highlight; `ink` on it. Latte-tinted so it is findable without breaking the palette."
+        },
+        "search-match-current": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8980392156862745,
+              0.7019607843137254,
+              0.4745098039215686
+            ],
+            "alpha": 1
+          },
+          "$description": "The current match; `ink` on it."
+        },
+        "selection": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7019607843137254,
+              0.8392156862745098,
+              0.9333333333333333
+            ],
+            "alpha": 1
+          },
+          "$description": "Text selection and editor selection background. `ink` stays readable on it."
+        },
+        "success-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8862745098039215,
+              0.9411764705882353,
+              0.8666666666666667
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a success alert/badge; text `success` or `ink`."
+        },
+        "syn-comment": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.38823529411764707,
+              0.396078431372549,
+              0.4470588235294118
+            ],
+            "alpha": 1
+          },
+          "$description": "Comments, set in italic. Deliberately readable: 5:1+ on `bg-base` - comments are content, not noise."
+        },
+        "syn-operator": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.16862745098039217,
+              0.20392156862745098,
+              0.23921568627450981
+            ],
+            "alpha": 1
+          },
+          "$description": "Operators and ligatures (`=>`, `!==`, `|>`). A touch brighter than punctuation so ligatures read as glyphs."
+        },
+        "warning-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9803921568627451,
+              0.9176470588235294,
+              0.8470588235294118
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a warning alert/badge; text `warning` or `ink`."
+        }
+      },
+      "night": {
+        "accent": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5647058823529412,
+              0.7764705882352941,
+              0.8901960784313725
+            ],
+            "alpha": 1
+          },
+          "$description": "THE interactive colour: primary buttons, links, focus ring, active tab/selection markers, checked controls. Frost blue in Night/Day, aurora teal in Aurora. Readable as text on every surface."
+        },
+        "accent-hover": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6549019607843137,
+              0.8352941176470589,
+              0.9372549019607843
+            ],
+            "alpha": 1
+          },
+          "$description": "Hover state of an `accent` fill or link."
+        },
+        "accent-ink": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6666666666666666,
+              0.8509803921568627,
+              0.9490196078431372
+            ],
+            "alpha": 1
+          },
+          "$description": "Text and icons on `accent-soft`."
+        },
+        "accent-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.08627450980392157,
+              0.21568627450980393,
+              0.28627450980392155
+            ],
+            "alpha": 1
+          },
+          "$description": "Tinted fill behind a selected item, a soft badge or the current day in a calendar. Text on it is `accent-ink`."
+        },
+        "ansi-black": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.11764705882352941,
+              0.16862745098039217,
+              0.2196078431372549
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 0. Matches `bg-raised` in dark themes so 'black' backgrounds stay visible on `bg-base`."
+        },
+        "ansi-bright-black": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.47058823529411764,
+              0.5294117647058824,
+              0.5843137254901961
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 8. Dim or hint text and autosuggestions: at least 4.5:1 on bg-base in every theme at full opacity. Do not apply extra dimming."
+        },
+        "ansi-bright-blue": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6666666666666666,
+              0.8509803921568627,
+              0.9490196078431372
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 12."
+        },
+        "ansi-bright-cyan": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6196078431372549,
+              0.8941176470588236,
+              0.8666666666666667
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 14."
+        },
+        "ansi-bright-green": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8509803921568627,
+              0.9058823529411765,
+              0.8117647058823529
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 10."
+        },
+        "ansi-bright-magenta": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8235294117647058,
+              0.7803921568627451,
+              0.9333333333333333
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 13."
+        },
+        "ansi-bright-red": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9098039215686274,
+              0.7098039215686275,
+              0.7294117647058823
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 9."
+        },
+        "ansi-bright-white": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9294117647058824,
+              0.9529411764705882,
+              0.9686274509803922
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 15."
+        },
+        "ansi-bright-yellow": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8784313725490196,
+              0.7607843137254902,
+              0.615686274509804
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 11."
+        },
+        "ansi-white": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7019607843137254,
+              0.7529411764705882,
+              0.792156862745098
+            ],
+            "alpha": 1
+          },
+          "$description": "ANSI 7."
+        },
+        "aurora": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5137254901960784,
+              0.8274509803921568,
+              0.7450980392156863
+            ],
+            "alpha": 1
+          },
+          "$description": "Aurora teal. Functions/methods in code, the Aurora theme's accent, chart series 2."
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.17647058823529413,
+              0.23529411764705882,
+              0.2980392156862745
+            ],
+            "alpha": 1
+          },
+          "$description": "Pressed fill and the neutral selected row. Seed: oklch(35.00% 0.034 250) in Night."
+        },
+        "bg-base": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06666666666666667,
+              0.09803921568627451,
+              0.12549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "Default page, window and editor background. Seed: oklch(20.88% 0.018 245) in Night. Body text `ink` sits here."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.15294117647058825,
+              0.21568627450980393,
+              0.27450980392156865
+            ],
+            "alpha": 1
+          },
+          "$description": "Hover fill for rows, menu items, ghost buttons. Seed: oklch(32.95% 0.034 247) in Night."
+        },
+        "bg-inverse": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8823529411764706,
+              0.9137254901960784,
+              0.9372549019607843
+            ],
+            "alpha": 1
+          },
+          "$description": "Inverted chips such as tooltips and the Kbd key cap shadow side. Text on it is `ink-inverse`."
+        },
+        "bg-raised": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.11764705882352941,
+              0.16862745098039217,
+              0.2196078431372549
+            ],
+            "alpha": 1
+          },
+          "$description": "Floating layers: menus, popovers, dialogs, toasts, hover cards. Always paired with `shadow-overlay`."
+        },
+        "bg-sunken": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.043137254901960784,
+              0.07058823529411765,
+              0.09019607843137255
+            ],
+            "alpha": 1
+          },
+          "$description": "Deepest ground: terminal and editor gutter wells, inset code blocks, the track behind sliders and progress bars, the page behind a desktop of windows."
+        },
+        "bg-surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.09803921568627451,
+              0.1450980392156863,
+              0.18823529411764706
+            ],
+            "alpha": 1
+          },
+          "$description": "Panels, cards, sidebars, table bodies and inputs: one step up from `bg-base`."
+        },
+        "danger": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8784313725490196,
+              0.5137254901960784,
+              0.5333333333333333
+            ],
+            "alpha": 1
+          },
+          "$description": "Errors and destructive actions: a stronger, redder sibling of `rose` so it stays apart from `warning`. Always with the octagon icon or a word."
+        },
+        "danger-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2549019607843137,
+              0.14901960784313725,
+              0.16470588235294117
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a danger alert/badge; text `danger` or `ink`."
+        },
+        "diff-add-bg": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.11372549019607843,
+              0.16470588235294117,
+              0.11372549019607843
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of an added line in a diff; `ink` on it."
+        },
+        "diff-del-bg": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.21568627450980393,
+              0.12549019607843137,
+              0.13725490196078433
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a removed line in a diff; `ink` on it."
+        },
+        "fern": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6274509803921569,
+              0.796078431372549,
+              0.6274509803921569
+            ],
+            "alpha": 1
+          },
+          "$description": "Fern green, a stronger sibling of sage. Success, git additions, the ANSI green slot, regex in code. Text-safe on every surface."
+        },
+        "foam": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8980392156862745,
+              0.8117647058823529,
+              0.7725490196078432
+            ],
+            "alpha": 1
+          },
+          "$description": "Cappuccino foam. Seed: oklch(86.99% 0.028 46). Strings in code, warm highlights, avatar fallbacks."
+        },
+        "frost": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5725490196078431,
+              0.7568627450980392,
+              0.8901960784313725
+            ],
+            "alpha": 1
+          },
+          "$description": "Cool frost blue. Types/classes in code, info, links when `accent` is aurora. Text-safe on every surface."
+        },
+        "info-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.19607843137254902,
+              0.2549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of an info alert/badge; its text is `info` or `ink`."
+        },
+        "ink": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8823529411764706,
+              0.9137254901960784,
+              0.9372549019607843
+            ],
+            "alpha": 1
+          },
+          "$description": "Primary text and solid icons on `bg-base`, `bg-surface`, `bg-raised`, `bg-hover`, `bg-active`."
+        },
+        "ink-disabled": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3764705882352941,
+              0.41568627450980394,
+              0.4549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "Disabled labels and icons only (WCAG-exempt). Never for content."
+        },
+        "ink-inverse": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06666666666666667,
+              0.09803921568627451,
+              0.12549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "Text on `bg-inverse` (tooltips)."
+        },
+        "ink-muted": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6549019607843137,
+              0.7098039215686275,
+              0.7529411764705882
+            ],
+            "alpha": 1
+          },
+          "$description": "Secondary text: descriptions, metadata, placeholder-free helper text. 4.5:1+ on every surface including `bg-active`."
+        },
+        "ink-subtle": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5843137254901961,
+              0.6431372549019608,
+              0.6941176470588235
+            ],
+            "alpha": 1
+          },
+          "$description": "Tertiary text: timestamps, line numbers, input placeholders. 4.5:1+ on `bg-base`, `bg-surface` and `bg-raised`; not for long copy."
+        },
+        "latte": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8,
+              0.6705882352941176,
+              0.5176470588235295
+            ],
+            "alpha": 1
+          },
+          "$description": "Café latte. Seed: oklch(76.09% 0.065 71). Warnings, numbers/constants in code, the ANSI yellow slot - the only place a yellow-ish hue appears."
+        },
+        "lilac": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7607843137254902,
+              0.6745098039215687,
+              0.8705882352941177
+            ],
+            "alpha": 1
+          },
+          "$description": "Muted lilac. Keywords and storage in code, chart series 4. Cool counterweight to the café tones."
+        },
+        "line": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1411764705882353,
+              0.19607843137254902,
+              0.24705882352941178
+            ],
+            "alpha": 1
+          },
+          "$description": "Hairline dividers between regions (1px). Separates panels without adding a frame; never on control outlines."
+        },
+        "line-strong": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.396078431372549,
+              0.4666666666666667,
+              0.5254901960784314
+            ],
+            "alpha": 1
+          },
+          "$description": "Control borders (inputs, checkboxes, outline buttons) and the scroll thumb. Holds 3:1 on `bg-base` and `bg-surface` in every theme."
+        },
+        "on-accent": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06666666666666667,
+              0.09803921568627451,
+              0.12549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "Text and icons on an `accent` fill (primary button label, checked checkbox tick). Dark in Night/Aurora, white in Day."
+        },
+        "on-danger": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.06666666666666667,
+              0.09803921568627451,
+              0.12549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "Label on a solid `danger` fill (destructive button)."
+        },
+        "rose": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8431372549019608,
+              0.6274509803921569,
+              0.6549019607843137
+            ],
+            "alpha": 1
+          },
+          "$description": "Dusty rose. Seed: oklch(75.93% 0.066 10). Danger/errors, variables and tags in code, git deletions."
+        },
+        "sage": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.807843137254902,
+              0.8470588235294118,
+              0.7725490196078432
+            ],
+            "alpha": 1
+          },
+          "$description": "Pale sage. Seed: oklch(86.93% 0.028 130). Quiet decorative accent: avatar fallbacks, tags, the bright end of green ramps. For success use `fern`."
+        },
+        "scrim": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0392156862745098,
+              0.058823529411764705,
+              0.08627450980392157
+            ],
+            "alpha": 0.7019607843137254
+          },
+          "$description": "Overlay behind dialogs, sheets and drawers. No blur - Fjord never uses backdrop blur."
+        },
+        "search-match": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3568627450980392,
+              0.25882352941176473,
+              0.1450980392156863
+            ],
+            "alpha": 1
+          },
+          "$description": "Search/find match background and the Marker highlight; `ink` on it. Latte-tinted so it is findable without breaking the palette."
+        },
+        "search-match-current": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.49019607843137253,
+              0.3607843137254902,
+              0.20784313725490197
+            ],
+            "alpha": 1
+          },
+          "$description": "The current match; `ink` on it."
+        },
+        "selection": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.10196078431372549,
+              0.2549019607843137,
+              0.34901960784313724
+            ],
+            "alpha": 1
+          },
+          "$description": "Text selection and editor selection background. `ink` stays readable on it."
+        },
+        "success-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.15294117647058825,
+              0.2,
+              0.1411764705882353
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a success alert/badge; text `success` or `ink`."
+        },
+        "syn-comment": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5647058823529412,
+              0.6862745098039216,
+              0.6666666666666666
+            ],
+            "alpha": 1
+          },
+          "$description": "Comments, set in italic. Deliberately readable: 5:1+ on `bg-base` - comments are content, not noise."
+        },
+        "syn-operator": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.7294117647058823,
+              0.8745098039215686,
+              0.9019607843137255
+            ],
+            "alpha": 1
+          },
+          "$description": "Operators and ligatures (`=>`, `!==`, `|>`). A touch brighter than punctuation so ligatures read as glyphs."
+        },
+        "syn-property": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8705882352941177,
+              0.6,
+              0.6627450980392157
+            ],
+            "alpha": 1
+          },
+          "$description": "Object properties, attributes, HTML/JSX tags and CSS selectors (Horizon-style rose)."
+        },
+        "syn-regex": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9490196078431372,
+              0.7098039215686275,
+              0.5490196078431373
+            ],
+            "alpha": 1
+          },
+          "$description": "Regular expressions and escape sequences."
+        },
+        "warning-soft": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.23529411764705882,
+              0.17647058823529413,
+              0.11372549019607843
+            ],
+            "alpha": 1
+          },
+          "$description": "Background of a warning alert/badge; text `warning` or `ink`."
+        }
+      }
+    },
+    "duration": {
+      "duration-base": {
+        "$type": "duration",
+        "$value": {
+          "value": 180.0,
+          "unit": "ms"
+        },
+        "$description": "Expanding accordions, switches, dialogs."
+      },
+      "duration-fast": {
+        "$type": "duration",
+        "$value": {
+          "value": 120.0,
+          "unit": "ms"
+        },
+        "$description": "Hover, press, colour changes, menus appearing."
+      },
+      "duration-slow": {
+        "$type": "duration",
+        "$value": {
+          "value": 260.0,
+          "unit": "ms"
+        },
+        "$description": "Sheets, drawers, carousel slides. Nothing in Fjord moves for longer."
+      },
+      "duration-none": {
+        "$type": "duration",
+        "$value": {
+          "value": 0,
+          "unit": "ms"
+        },
+        "$description": "No movement under reduced motion."
+      }
+    },
+    "easing": {
+      "easing-exit": {
+        "$type": "cubicBezier",
+        "$value": [
+          0.4,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "$description": "Elements leaving the screen."
+      },
+      "easing-standard": {
+        "$type": "cubicBezier",
+        "$value": [
+          0.2,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "$description": "Default for every functional animation: quick start, soft landing."
+      }
+    },
+    "font-size": {
+      "text-2xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20.0,
+          "unit": "px"
+        },
+        "$description": "Questionnaire questions, OTP digits."
+      },
+      "text-2xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 11.0,
+          "unit": "px"
+        },
+        "$description": "Overline labels and chart ticks only. Never body text."
+      },
+      "text-3xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24.0,
+          "unit": "px"
+        },
+        "$description": "Section titles (title-2)."
+      },
+      "text-base": {
+        "$type": "dimension",
+        "$value": {
+          "value": 15.0,
+          "unit": "px"
+        },
+        "$description": "Body copy and accordion titles."
+      },
+      "text-lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 17.0,
+          "unit": "px"
+        },
+        "$description": "Lead paragraphs."
+      },
+      "text-md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14.0,
+          "unit": "px"
+        },
+        "$description": "Default UI text: buttons, inputs, menus, table cells, code."
+      },
+      "text-sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 13.0,
+          "unit": "px"
+        },
+        "$description": "Descriptions, helper text, small controls, labels."
+      },
+      "text-xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 18.0,
+          "unit": "px"
+        },
+        "$description": "Dialog and card titles (title-3)."
+      },
+      "text-xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12.0,
+          "unit": "px"
+        },
+        "$description": "Captions, badges, timestamps, kbd caps."
+      }
+    },
+    "font": {
+      "display": {
+        "$type": "fontFamily",
+        "$value": [
+          "Raleway",
+          "Noto Sans",
+          "system-ui",
+          "sans-serif"
+        ],
+        "$description": "Display font stack."
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "Cascadia Code",
+          "Fira Code",
+          "JetBrains Mono",
+          "ui-monospace",
+          "Menlo",
+          "Consolas",
+          "monospace"
+        ],
+        "$description": "Mono font stack."
+      },
+      "sans": {
+        "$type": "fontFamily",
+        "$value": [
+          "Noto Sans",
+          "Open Sans",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif"
+        ],
+        "$description": "Sans font stack."
+      }
+    },
+    "radius": {
+      "radius-control": {
+        "$type": "dimension",
+        "$value": {
+          "value": 6.0,
+          "unit": "px"
+        },
+        "$description": "Inputs, selects, list items, icon tiles."
+      },
+      "radius-full": {
+        "$type": "dimension",
+        "$value": {
+          "value": 9999.0,
+          "unit": "px"
+        },
+        "$description": "Buttons, toggles, badges, tabs (pill), switches, avatars: every control you press is round."
+      },
+      "radius-none": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.0,
+          "unit": "px"
+        },
+        "$description": "Window chrome, terminal and editor panes, title bars: windows are square."
+      },
+      "radius-panel": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4.0,
+          "unit": "px"
+        },
+        "$description": "Cards, alerts, code blocks, tables, the drawer top."
+      },
+      "radius-window": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2.0,
+          "unit": "px"
+        },
+        "$description": "Floating windows, dialogs, menus, popovers, toasts - square with the corner just softened."
+      },
+      "radius-xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 3.0,
+          "unit": "px"
+        },
+        "$description": "Checkboxes, kbd caps, menu items, tooltips, code spans."
+      }
+    },
+    "shadow": {
+      "aurora": {
+        "shadow-overlay": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.058823529411764705
+              },
+              "inset": true
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 6.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "alpha": 0.6509803921568628
+              },
+              "inset": false
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 16.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 40.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "alpha": 0.7019607843137254
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Menus, popovers, dialogs, toasts, sheets - anything floating."
+        },
+        "shadow-pressed": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 3.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "alpha": 0.6509803921568628
+              },
+              "inset": true
+            }
+          ],
+          "$description": "Pressed toggles and wells."
+        },
+        "shadow-raised": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.0392156862745098
+              },
+              "inset": true
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "alpha": 0.6
+              },
+              "inset": false
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 4.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 12.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "alpha": 0.4
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Cards and panels that sit on `bg-base`."
+        },
+        "shadow-sm": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.050980392156862744
+              },
+              "inset": true
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "alpha": 0.5019607843137255
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Buttons, the selected segment of a toggle group, switch thumbs."
+        }
+      },
+      "day": {
+        "shadow-overlay": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 6.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.10196078431372549,
+                  0.1411764705882353,
+                  0.19607843137254902
+                ],
+                "alpha": 0.12156862745098039
+              },
+              "inset": false
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 16.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 40.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.10196078431372549,
+                  0.1411764705882353,
+                  0.19607843137254902
+                ],
+                "alpha": 0.1607843137254902
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Menus, popovers, dialogs, toasts, sheets - anything floating."
+        },
+        "shadow-pressed": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 3.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.10196078431372549,
+                  0.1411764705882353,
+                  0.19607843137254902
+                ],
+                "alpha": 0.2
+              },
+              "inset": true
+            }
+          ],
+          "$description": "Pressed toggles and wells."
+        },
+        "shadow-raised": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.10196078431372549,
+                  0.1411764705882353,
+                  0.19607843137254902
+                ],
+                "alpha": 0.12156862745098039
+              },
+              "inset": false
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 4.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 12.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.10196078431372549,
+                  0.1411764705882353,
+                  0.19607843137254902
+                ],
+                "alpha": 0.0784313725490196
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Cards and panels that sit on `bg-base`."
+        },
+        "shadow-sm": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.6
+              },
+              "inset": true
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.10196078431372549,
+                  0.1411764705882353,
+                  0.19607843137254902
+                ],
+                "alpha": 0.14901960784313725
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Buttons, the selected segment of a toggle group, switch thumbs."
+        }
+      },
+      "night": {
+        "shadow-overlay": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.07058823529411765
+              },
+              "inset": true
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 6.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.011764705882352941,
+                  0.023529411764705882,
+                  0.0392156862745098
+                ],
+                "alpha": 0.45098039215686275
+              },
+              "inset": false
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 16.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 40.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.011764705882352941,
+                  0.023529411764705882,
+                  0.0392156862745098
+                ],
+                "alpha": 0.6
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Menus, popovers, dialogs, toasts, sheets - anything floating."
+        },
+        "shadow-pressed": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 3.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.011764705882352941,
+                  0.023529411764705882,
+                  0.0392156862745098
+                ],
+                "alpha": 0.5019607843137255
+              },
+              "inset": true
+            }
+          ],
+          "$description": "Pressed toggles and wells."
+        },
+        "shadow-raised": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.050980392156862744
+              },
+              "inset": true
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.011764705882352941,
+                  0.023529411764705882,
+                  0.0392156862745098
+                ],
+                "alpha": 0.4
+              },
+              "inset": false
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 4.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 12.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.011764705882352941,
+                  0.023529411764705882,
+                  0.0392156862745098
+                ],
+                "alpha": 0.25098039215686274
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Cards and panels that sit on `bg-base`."
+        },
+        "shadow-sm": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "alpha": 0.058823529411764705
+              },
+              "inset": true
+            },
+            {
+              "offsetX": {
+                "value": 0.0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1.0,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 2.0,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              },
+              "color": {
+                "colorSpace": "srgb",
+                "components": [
+                  0.011764705882352941,
+                  0.023529411764705882,
+                  0.0392156862745098
+                ],
+                "alpha": 0.34901960784313724
+              },
+              "inset": false
+            }
+          ],
+          "$description": "Buttons, the selected segment of a toggle group, switch thumbs."
+        }
+      }
+    },
+    "spacing": {
+      "space-1": {
+        "$type": "dimension",
+        "$value": {
+          "value": 4.0,
+          "unit": "px"
+        },
+        "$description": "Icon-to-text in tight places, menu padding."
+      },
+      "space-10": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40.0,
+          "unit": "px"
+        },
+        "$description": "Empty-state padding, page gutters on wide screens."
+      },
+      "space-12": {
+        "$type": "dimension",
+        "$value": {
+          "value": 48.0,
+          "unit": "px"
+        },
+        "$description": "Between page regions."
+      },
+      "space-16": {
+        "$type": "dimension",
+        "$value": {
+          "value": 64.0,
+          "unit": "px"
+        },
+        "$description": "Hero spacing."
+      },
+      "space-2": {
+        "$type": "dimension",
+        "$value": {
+          "value": 8.0,
+          "unit": "px"
+        },
+        "$description": "Gap between related controls; button icon gap."
+      },
+      "space-3": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12.0,
+          "unit": "px"
+        },
+        "$description": "Control inner padding, list row padding."
+      },
+      "space-4": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16.0,
+          "unit": "px"
+        },
+        "$description": "Default gap and card/body padding."
+      },
+      "space-5": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20.0,
+          "unit": "px"
+        },
+        "$description": "Dialog and card horizontal padding."
+      },
+      "space-6": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24.0,
+          "unit": "px"
+        },
+        "$description": "Between groups inside a panel."
+      },
+      "space-8": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32.0,
+          "unit": "px"
+        },
+        "$description": "Between sections."
+      }
+    },
+    "z-index": {
+      "z-modal": {
+        "$type": "number",
+        "$value": 60,
+        "$description": "Dialogs, sheets, drawers and their scrim."
+      },
+      "z-popover": {
+        "$type": "number",
+        "$value": 50,
+        "$description": "Menus, popovers, hover cards, select lists."
+      },
+      "z-toast": {
+        "$type": "number",
+        "$value": 70,
+        "$description": "Toasts sit above modals."
+      },
+      "z-tooltip": {
+        "$type": "number",
+        "$value": 80,
+        "$description": "Tooltips are always on top."
+      },
+      "z-base": {
+        "$type": "number",
+        "$value": 0,
+        "$description": "Base or sticky document layer."
+      },
+      "z-sticky": {
+        "$type": "number",
+        "$value": 10,
+        "$description": "Base or sticky document layer."
+      }
+    },
+    "size": {
+      "control-compact": {
+        "$type": "dimension",
+        "$value": {
+          "value": 34,
+          "unit": "px"
+        },
+        "$description": "control-compact in CSS pixels."
+      },
+      "control-comfortable": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "$description": "control-comfortable in CSS pixels."
+      },
+      "target-minimum": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "target-minimum in CSS pixels."
+      },
+      "target-touch": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        },
+        "$description": "target-touch in CSS pixels."
+      },
+      "icon-control": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        },
+        "$description": "icon-control in CSS pixels."
+      },
+      "icon-status": {
+        "$type": "dimension",
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        },
+        "$description": "icon-status in CSS pixels."
+      },
+      "icon-medium": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "icon-medium in CSS pixels."
+      },
+      "icon-default": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "icon-default in CSS pixels."
+      },
+      "icon-empty": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "$description": "icon-empty in CSS pixels."
+      }
+    },
+    "breakpoint": {
+      "breakpoint-sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 640,
+          "unit": "px"
+        },
+        "$description": "breakpoint-sm in CSS pixels."
+      },
+      "breakpoint-md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 960,
+          "unit": "px"
+        },
+        "$description": "breakpoint-md in CSS pixels."
+      },
+      "breakpoint-lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1280,
+          "unit": "px"
+        },
+        "$description": "breakpoint-lg in CSS pixels."
+      }
+    },
+    "layout": {
+      "content-max": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1200,
+          "unit": "px"
+        },
+        "$description": "content-max in CSS pixels."
+      },
+      "focus-offset": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        },
+        "$description": "focus-offset in CSS pixels."
+      }
+    }
+  },
+  "semantic": {
+    "border-width": {
+      "border-active": {
+        "$type": "dimension",
+        "$value": "{primitive.border-width.border-active}",
+        "$description": "Selected indicators: active tab underline, selected card outline, sidebar marker."
+      },
+      "border-focus": {
+        "$type": "dimension",
+        "$value": "{primitive.border-width.border-focus}",
+        "$description": "Focus ring width (solid `focus-ring`, offset 2px)."
+      },
+      "border-hairline": {
+        "$type": "dimension",
+        "$value": "{primitive.border-width.border-hairline}",
+        "$description": "Every divider and control border. Fjord separates with hairlines and fills, never heavy frames."
+      }
+    },
+    "duration": {
+      "duration-base": {
+        "$type": "duration",
+        "$value": "{primitive.duration.duration-base}",
+        "$description": "Expanding accordions, switches, dialogs."
+      },
+      "duration-fast": {
+        "$type": "duration",
+        "$value": "{primitive.duration.duration-fast}",
+        "$description": "Hover, press, colour changes, menus appearing."
+      },
+      "duration-slow": {
+        "$type": "duration",
+        "$value": "{primitive.duration.duration-slow}",
+        "$description": "Sheets, drawers, carousel slides. Nothing in Fjord moves for longer."
+      },
+      "duration-none": {
+        "$type": "duration",
+        "$value": "{primitive.duration.duration-none}",
+        "$description": "Immediate updates without motion."
+      }
+    },
+    "easing": {
+      "easing-exit": {
+        "$type": "cubicBezier",
+        "$value": "{primitive.easing.easing-exit}",
+        "$description": "Elements leaving the screen."
+      },
+      "easing-standard": {
+        "$type": "cubicBezier",
+        "$value": "{primitive.easing.easing-standard}",
+        "$description": "Default for every functional animation: quick start, soft landing."
+      }
+    },
+    "font-size": {
+      "text-2xl": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-2xl}",
+        "$description": "Questionnaire questions, OTP digits."
+      },
+      "text-2xs": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-2xs}",
+        "$description": "Overline labels and chart ticks only. Never body text."
+      },
+      "text-3xl": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-3xl}",
+        "$description": "Section titles (title-2)."
+      },
+      "text-base": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-base}",
+        "$description": "Body copy and accordion titles."
+      },
+      "text-lg": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-lg}",
+        "$description": "Lead paragraphs."
+      },
+      "text-md": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-md}",
+        "$description": "Default UI text: buttons, inputs, menus, table cells, code."
+      },
+      "text-sm": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-sm}",
+        "$description": "Descriptions, helper text, small controls, labels."
+      },
+      "text-xl": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-xl}",
+        "$description": "Dialog and card titles (title-3)."
+      },
+      "text-xs": {
+        "$type": "dimension",
+        "$value": "{primitive.font-size.text-xs}",
+        "$description": "Captions, badges, timestamps, kbd caps."
+      }
+    },
+    "font": {
+      "display": {
+        "$type": "fontFamily",
+        "$value": "{primitive.font.display}",
+        "$description": "Display text font role."
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": "{primitive.font.mono}",
+        "$description": "Mono text font role."
+      },
+      "sans": {
+        "$type": "fontFamily",
+        "$value": "{primitive.font.sans}",
+        "$description": "Sans text font role."
+      }
+    },
+    "radius": {
+      "radius-control": {
+        "$type": "dimension",
+        "$value": "{primitive.radius.radius-control}",
+        "$description": "Inputs, selects, list items, icon tiles."
+      },
+      "radius-full": {
+        "$type": "dimension",
+        "$value": "{primitive.radius.radius-full}",
+        "$description": "Buttons, toggles, badges, tabs (pill), switches, avatars: every control you press is round."
+      },
+      "radius-none": {
+        "$type": "dimension",
+        "$value": "{primitive.radius.radius-none}",
+        "$description": "Window chrome, terminal and editor panes, title bars: windows are square."
+      },
+      "radius-panel": {
+        "$type": "dimension",
+        "$value": "{primitive.radius.radius-panel}",
+        "$description": "Cards, alerts, code blocks, tables, the drawer top."
+      },
+      "radius-window": {
+        "$type": "dimension",
+        "$value": "{primitive.radius.radius-window}",
+        "$description": "Floating windows, dialogs, menus, popovers, toasts - square with the corner just softened."
+      },
+      "radius-xs": {
+        "$type": "dimension",
+        "$value": "{primitive.radius.radius-xs}",
+        "$description": "Checkboxes, kbd caps, menu items, tooltips, code spans."
+      }
+    },
+    "spacing": {
+      "space-1": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-1}",
+        "$description": "Icon-to-text in tight places, menu padding."
+      },
+      "space-10": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-10}",
+        "$description": "Empty-state padding, page gutters on wide screens."
+      },
+      "space-12": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-12}",
+        "$description": "Between page regions."
+      },
+      "space-16": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-16}",
+        "$description": "Hero spacing."
+      },
+      "space-2": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-2}",
+        "$description": "Gap between related controls; button icon gap."
+      },
+      "space-3": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-3}",
+        "$description": "Control inner padding, list row padding."
+      },
+      "space-4": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-4}",
+        "$description": "Default gap and card/body padding."
+      },
+      "space-5": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-5}",
+        "$description": "Dialog and card horizontal padding."
+      },
+      "space-6": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-6}",
+        "$description": "Between groups inside a panel."
+      },
+      "space-8": {
+        "$type": "dimension",
+        "$value": "{primitive.spacing.space-8}",
+        "$description": "Between sections."
+      }
+    },
+    "typography": {
+      "type-body": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.sans}",
+          "fontSize": {
+            "value": 15.0,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.6
+        },
+        "$description": "Default reading text.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Fjord keeps the screen quiet so the work can be loud."
+          }
+        }
+      },
+      "type-body-strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.sans}",
+          "fontSize": {
+            "value": 15.0,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.6
+        },
+        "$description": "Emphasis inside body text.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Unsaved changes"
+          }
+        }
+      },
+      "type-caption": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.sans}",
+          "fontSize": {
+            "value": 12.0,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        },
+        "$description": "Timestamps and captions, in `ink-subtle`. Never smaller.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "12 Oct · 14:32"
+          }
+        }
+      },
+      "type-code": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.mono}",
+          "fontSize": {
+            "value": 14.0,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5714285714285714
+        },
+        "$description": "Editors, terminals and code blocks. Ligatures on (`calt`).",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "const fjord = (x) => x !== null;"
+          }
+        }
+      },
+      "type-code-italic": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.mono}",
+          "fontSize": {
+            "value": 14.0,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5714285714285714
+        },
+        "$description": "Comments and keywords in code (Cascadia Code has a cursive italic).",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "italic",
+            "sample": "// comments read like prose"
+          }
+        }
+      },
+      "type-code-small": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.mono}",
+          "fontSize": {
+            "value": 12.0,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.5
+        },
+        "$description": "Inline metadata: shortcuts, file sizes, durations, git refs.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "git switch -c theme/aurora"
+          }
+        }
+      },
+      "type-display": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.display}",
+          "fontSize": {
+            "value": 40.0,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": -0.4,
+            "unit": "px"
+          },
+          "lineHeight": 1.2
+        },
+        "$description": "One per screen at most: hero titles, empty dashboards, splash.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Rolig, kølig, nordisk"
+          }
+        }
+      },
+      "type-label": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.sans}",
+          "fontSize": {
+            "value": 13.0,
+            "unit": "px"
+          },
+          "fontWeight": 500,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2307692307692308
+        },
+        "$description": "Form labels, button text at sm size.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Display name"
+          }
+        }
+      },
+      "type-lead": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.sans}",
+          "fontSize": {
+            "value": 17.0,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.6470588235294117
+        },
+        "$description": "Intro paragraph under a page title, in `ink-muted`.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "A calm, cool theme for work and play."
+          }
+        }
+      },
+      "type-overline": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.sans}",
+          "fontSize": {
+            "value": 11.0,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0.88,
+            "unit": "px"
+          },
+          "lineHeight": 1.4545454545454546
+        },
+        "$description": "Uppercase group labels in menus, sidebars and table headers.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "SECTION"
+          }
+        }
+      },
+      "type-small": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.sans}",
+          "fontSize": {
+            "value": 13.0,
+            "unit": "px"
+          },
+          "fontWeight": 400,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3846153846153846
+        },
+        "$description": "Descriptions, helper text, table metadata.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Last synced 4 minutes ago"
+          }
+        }
+      },
+      "type-title-1": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.display}",
+          "fontSize": {
+            "value": 30.0,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.2666666666666666
+        },
+        "$description": "Page titles.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Workspace settings"
+          }
+        }
+      },
+      "type-title-2": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.display}",
+          "fontSize": {
+            "value": 24.0,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.3333333333333333
+        },
+        "$description": "Section titles.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Appearance"
+          }
+        }
+      },
+      "type-title-3": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.display}",
+          "fontSize": {
+            "value": 18.0,
+            "unit": "px"
+          },
+          "fontWeight": 600,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4444444444444444
+        },
+        "$description": "Dialog, card and panel titles.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Terminal profile"
+          }
+        }
+      },
+      "type-title-4": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{semantic.font.display}",
+          "fontSize": {
+            "value": 15.0,
+            "unit": "px"
+          },
+          "fontWeight": 700,
+          "letterSpacing": {
+            "value": 0.0,
+            "unit": "px"
+          },
+          "lineHeight": 1.4666666666666666
+        },
+        "$description": "Small group headings inside panels.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Recent projects"
+          }
+        }
+      }
+    },
+    "z-index": {
+      "z-modal": {
+        "$type": "number",
+        "$value": "{primitive.z-index.z-modal}",
+        "$description": "Dialogs, sheets, drawers and their scrim."
+      },
+      "z-popover": {
+        "$type": "number",
+        "$value": "{primitive.z-index.z-popover}",
+        "$description": "Menus, popovers, hover cards, select lists."
+      },
+      "z-toast": {
+        "$type": "number",
+        "$value": "{primitive.z-index.z-toast}",
+        "$description": "Toasts sit above modals."
+      },
+      "z-tooltip": {
+        "$type": "number",
+        "$value": "{primitive.z-index.z-tooltip}",
+        "$description": "Tooltips are always on top."
+      },
+      "z-base": {
+        "$type": "number",
+        "$value": "{primitive.z-index.z-base}",
+        "$description": "Base document content within a stacking context."
+      },
+      "z-sticky": {
+        "$type": "number",
+        "$value": "{primitive.z-index.z-sticky}",
+        "$description": "Sticky navigation within its document stacking context."
+      }
+    },
+    "size": {
+      "control-compact": {
+        "$type": "dimension",
+        "$value": "{primitive.size.control-compact}",
+        "$description": "Minimum compact control height; allow text to increase the height."
+      },
+      "control-comfortable": {
+        "$type": "dimension",
+        "$value": "{primitive.size.control-comfortable}",
+        "$description": "Minimum comfortable control height; typography remains unchanged."
+      },
+      "target-minimum": {
+        "$type": "dimension",
+        "$value": "{primitive.size.target-minimum}",
+        "$description": "Minimum interactive target extent; visible icon size is independent."
+      },
+      "target-touch": {
+        "$type": "dimension",
+        "$value": "{primitive.size.target-touch}",
+        "$description": "Minimum coarse-pointer hit area in both dimensions."
+      },
+      "icon-control": {
+        "$type": "dimension",
+        "$value": "{primitive.size.icon-control}",
+        "$description": "Filled icon beside a control label."
+      },
+      "icon-status": {
+        "$type": "dimension",
+        "$value": "{primitive.size.icon-status}",
+        "$description": "Filled icon beside status text or navigation."
+      },
+      "icon-medium": {
+        "$type": "dimension",
+        "$value": "{primitive.size.icon-medium}",
+        "$description": "Larger inline content icon."
+      },
+      "icon-default": {
+        "$type": "dimension",
+        "$value": "{primitive.size.icon-default}",
+        "$description": "Reference standalone icon box."
+      },
+      "icon-empty": {
+        "$type": "dimension",
+        "$value": "{primitive.size.icon-empty}",
+        "$description": "Icon in an empty state."
+      }
+    },
+    "breakpoint": {
+      "breakpoint-sm": {
+        "$type": "dimension",
+        "$value": "{primitive.breakpoint.breakpoint-sm}",
+        "$description": "Small content threshold for responsive composition."
+      },
+      "breakpoint-md": {
+        "$type": "dimension",
+        "$value": "{primitive.breakpoint.breakpoint-md}",
+        "$description": "Medium content threshold for responsive composition."
+      },
+      "breakpoint-lg": {
+        "$type": "dimension",
+        "$value": "{primitive.breakpoint.breakpoint-lg}",
+        "$description": "Wide application threshold; retain the content width limit."
+      }
+    },
+    "layout": {
+      "content-max": {
+        "$type": "dimension",
+        "$value": "{primitive.layout.content-max}",
+        "$description": "Maximum outer page width including gutters."
+      },
+      "focus-offset": {
+        "$type": "dimension",
+        "$value": "{primitive.layout.focus-offset}",
+        "$description": "Gap between a control edge and its keyboard focus outline."
+      },
+      "page-gutter": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.space-4}",
+        "$description": "Page padding below the small breakpoint."
+      },
+      "page-gutter-wide": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.space-8}",
+        "$description": "Page padding from the small breakpoint."
+      }
+    },
+    "density": {
+      "gap-comfortable": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.space-4}",
+        "$description": "Density changes spacing while retaining text size and line height."
+      },
+      "padding-comfortable": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.space-5}",
+        "$description": "Density changes spacing while retaining text size and line height."
+      },
+      "gap-compact": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.space-3}",
+        "$description": "Density changes spacing while retaining text size and line height."
+      },
+      "padding-compact": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.space-3}",
+        "$description": "Density changes spacing while retaining text size and line height."
+      }
+    }
+  }
+}
