@@ -24,7 +24,7 @@ depends = ["test", "validate", "fonts:validate", "foundations:validate", "semant
 
 [tasks.build]
 description = "Build token documents, the Svelte library and Vite specimen"
-depends = ["tokens:build", "reference:build", "palette"]
+depends = ["tokens:build", "tokens:export", "reference:build", "palette"]
 
 [tasks.palette]
 description = "Build colour scales and source/HEX contrast evidence"
@@ -37,6 +37,10 @@ run = [
   "python3 -m fjord_tokens build --mode day",
   "python3 -m fjord_tokens build --mode aurora",
 ]
+
+[tasks."tokens:export"]
+description = "Export DTCG, resolved JSON, CSS and WezTerm schemes for all modes"
+run = "set -e; for mode in night day aurora; do for format in dtcg resolved css wezterm; do python3 -m fjord_tokens export --mode \"$mode\" --format \"$format\"; done; done"
 
 [tasks.preview]
 description = "Build the interactive code and terminal specimen"

@@ -60,17 +60,17 @@ Edit `tokens/` sources. `dist/` files are disposable build results.
 
 ## Commands
 
-| Command | Result |
-| --- | --- |
-| `mise run check` | Token regression tests, mode/platform validation, reference types and formatting |
-| `mise run validate` | Validate sources without writing output |
-| `mise run build` | Write DTCG documents, the typed Svelte library and Vite specimen to `dist/` |
-| `mise run test` | Run regression tests using temporary fixtures |
-| `mise run preview` | Write the interactive specimen to `dist/code-and-terminal.html` |
-| `mise run palette` | Write colour scales and source/HEX contrast evidence to `dist/palette.html` and `.json` |
-| `mise run fonts:build` | Write self-hosted font assets, typography CSS and `dist/typography.html` |
-| `mise run foundations:build` | Write layout CSS, icon assets and `dist/foundations.html` |
-| `mise run semantics:build` | Write semantic CSS, role/state evidence and `dist/semantics.html` |
+| Command                      | Result                                                                                  |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| `mise run check`             | Token regression tests, mode/platform validation, reference types and formatting        |
+| `mise run validate`          | Validate sources without writing output                                                 |
+| `mise run build`             | Write DTCG documents, the typed Svelte library and Vite specimen to `dist/`             |
+| `mise run test`              | Run regression tests using temporary fixtures                                           |
+| `mise run preview`           | Write the interactive specimen to `dist/code-and-terminal.html`                         |
+| `mise run palette`           | Write colour scales and source/HEX contrast evidence to `dist/palette.html` and `.json` |
+| `mise run fonts:build`       | Write self-hosted font assets, typography CSS and `dist/typography.html`                |
+| `mise run foundations:build` | Write layout CSS, icon assets and `dist/foundations.html`                               |
+| `mise run semantics:build`   | Write semantic CSS, role/state evidence and `dist/semantics.html`                       |
 
 `mise run ci` runs the complete verification sequence. `mise run test:clean` installs and builds in a temporary source copy. [The reference workspace](reference/svelte/README.md) lists development-server commands.
 
@@ -99,7 +99,7 @@ Validation errors go to stderr and return exit code 1. Invalid CLI arguments ret
 
 The [code and terminal specification](docs/code-and-terminal.md) defines portable role bindings, ANSI behaviour and non-colour markers. [Verification results](docs/verification/xer-108.md) record the checked examples and browser behaviour.
 
-The web reference is Svelte + TypeScript with Vite and Storybook. XER-102 provides the workspace, packaging and diagnostic checks under the latest-stable policy. The TypeScript 7 compiler uses the approved Svelte support arrangement. The library includes nine self-hosted font faces, original licences and typography CSS. General CSS and resolved-JSON token exporters, along with the remaining MVP components, are planned for their respective tasks.
+The web reference is Svelte + TypeScript with Vite and Storybook. XER-102 provides the workspace, packaging and diagnostic checks under the latest-stable policy. The TypeScript 7 compiler uses the approved Svelte support arrangement. The library includes nine self-hosted font faces, original licences and typography CSS. Validated DTCG, resolved JSON, CSS and WezTerm exports are described in the [token export guide](docs/token-export.md).
 
 WezTerm 20240203-110809-5046fc22 on macOS is the MVP terminal target. Zed 1.25.3 is the first editor target after MVP, followed by VS Code and Neovim. Application support is recorded after target-specific tests.
 

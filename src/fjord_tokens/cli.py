@@ -49,6 +49,13 @@ def parser():
     build.add_argument("--theme", type=Path, help="replace the default theme layer")
     build.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
     build.add_argument("--output", type=Path, help="output path; default: dist/<mode>.tokens.json")
+    export = commands.add_parser("export", help="export validated tokens or a WezTerm colour scheme", allow_abbrev=False)
+    export.add_argument("--root", type=Path, default=ROOT, help="project directory")
+    export.add_argument("--mode", choices=THEMES, default="night")
+    export.add_argument("--format", choices=("dtcg", "resolved", "css", "wezterm"), required=True)
+    export.add_argument("--theme", type=Path, help="replace the default theme layer")
+    export.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
+    export.add_argument("--output", type=Path, help="output path; default: dist/<mode>.<format>")
     preview = commands.add_parser("preview", help="build the interactive code and terminal specimen", allow_abbrev=False)
     preview.add_argument("--root", type=Path, default=ROOT, help="project directory")
     preview.add_argument("--theme", type=Path, help="replace the default theme layer in every mode")
@@ -91,6 +98,23 @@ def main(argv=None):
             forbidden = [args.root / "tokens", *args.override] + ([args.theme] if args.theme else [])
             write_output(destination, nest(composition.tokens, info), forbidden)
             print(f"Built {args.mode}: {destination}")
+        elif args.command == "export":
+            from .export import export
+
+            validate_project(args.root)
+            composition = Project(args.root).compose(args.mode, args.theme, args.override)
+            result = export(composition, args.format)
+            suffix = {"dtcg": "dtcg.json", "resolved": "resolved.json", "css": "tokens.css", "wezterm": "wezterm.toml"}[args.format]
+            destination = args.output or args.root / "dist" / f"{args.mode}.{suffix}"
+            forbidden = [args.root / name for name in ("tokens", "src", "docs", "assets", "examples", "tests", "reference",
+                                                      "scripts", "patches", ".github", ".git", "README.md", "LICENSE",
+                                                      "mise.toml", "package.json", "bun.lock")]
+            forbidden += [*args.override] + ([args.theme] if args.theme else [])
+            if isinstance(result, dict):
+                write_output(destination, result, forbidden)
+            else:
+                write_text_output(destination, result, forbidden)
+            print(f"Exported {args.mode} {args.format}: {destination}")
         elif args.command == "preview":
             from .preview import render_preview
             from .fonts import font_bundle, load_fonts
