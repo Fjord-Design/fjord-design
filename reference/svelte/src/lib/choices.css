@@ -1,0 +1,199 @@
+.fjord-choice {
+  display: flex;
+  align-items: center;
+  gap: var(--fjord-space-2);
+  min-block-size: var(--fjord-control-comfortable);
+  max-inline-size: 100%;
+  color: var(--fjord-ink);
+  font-family: var(--fjord-button-primary-font-family);
+  font-size: var(--fjord-button-primary-font-size);
+  line-height: 1.5;
+  cursor: pointer;
+}
+.fjord-choice-label {
+  overflow-wrap: anywhere;
+}
+.fjord-choice-input,
+.fjord-switch-input {
+  appearance: none;
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  flex: none;
+  margin: 0;
+  border: var(--fjord-border-active) solid var(--fjord-line-strong);
+  background: var(--fjord-bg-surface);
+  color: var(--fjord-on-accent);
+  cursor: inherit;
+}
+.fjord-choice-input {
+  inline-size: var(--fjord-icon-default);
+  block-size: var(--fjord-icon-default);
+  border-radius: var(--fjord-radius-control);
+}
+.fjord-choice-input[type="radio"] {
+  border-radius: var(--fjord-radius-full);
+}
+.fjord-choice-input:checked,
+.fjord-choice-input[type="checkbox"]:indeterminate,
+.fjord-switch-input:checked {
+  border-color: var(--fjord-accent);
+  background: var(--fjord-accent);
+}
+.fjord-choice-input:checked:not(:indeterminate)::after {
+  content: "";
+  display: block;
+  inline-size: 0.5rem;
+  block-size: 0.75rem;
+  border: solid currentColor;
+  border-width: 0 var(--fjord-border-active) var(--fjord-border-active) 0;
+  transform: rotate(45deg) translate(-0.08rem, -0.08rem);
+}
+.fjord-choice-input[type="checkbox"]:indeterminate::after {
+  content: "";
+  display: block;
+  inline-size: 0.75rem;
+  block-size: var(--fjord-border-active);
+  background: currentColor;
+}
+.fjord-choice-input[type="radio"]:checked::after {
+  inline-size: 0.625rem;
+  block-size: 0.625rem;
+  border: 0;
+  border-radius: var(--fjord-radius-full);
+  background: currentColor;
+  transform: none;
+}
+.fjord-switch-input {
+  inline-size: var(--fjord-target-touch);
+  block-size: var(--fjord-icon-default);
+  border-radius: var(--fjord-radius-full);
+  place-content: initial;
+  align-items: center;
+  justify-items: start;
+  padding: var(--fjord-space-1);
+  color: var(--fjord-ink);
+}
+.fjord-switch-input::after {
+  content: "";
+  display: block;
+  inline-size: 0.75rem;
+  block-size: 0.75rem;
+  background: currentColor;
+  border-radius: var(--fjord-radius-full);
+}
+.fjord-switch-input:checked {
+  color: var(--fjord-on-accent);
+  justify-items: end;
+}
+.fjord-choice-input[aria-invalid="true"],
+.fjord-switch-input[aria-invalid="true"] {
+  border-color: var(--fjord-danger);
+}
+.fjord-radio-group[aria-invalid="true"] .fjord-choice-input {
+  border-color: var(--fjord-danger);
+}
+.fjord-choice-input:focus-visible,
+.fjord-switch-input:focus-visible {
+  outline: var(--fjord-border-focus) solid var(--fjord-focus-ring);
+  outline-offset: var(--fjord-focus-offset);
+}
+.fjord-choice-input:disabled,
+.fjord-switch-input:disabled {
+  border-color: var(--fjord-line-strong);
+  background: var(--fjord-bg-surface);
+  color: var(--fjord-ink-disabled);
+  cursor: not-allowed;
+}
+.fjord-choice:has(input:disabled) {
+  cursor: not-allowed;
+}
+@media (forced-colors: none) {
+  .fjord-choice-input[type="checkbox"]:not(:checked):not(:indeterminate):not(
+      :disabled
+    ):hover,
+  .fjord-choice-input[type="radio"]:not(:checked):not(:disabled):hover,
+  .fjord-switch-input:not(:checked):not(:disabled):hover {
+    background: var(--fjord-bg-hover);
+  }
+  .fjord-choice-input:checked:not(:disabled):hover,
+  .fjord-choice-input[type="checkbox"]:indeterminate:not(:disabled):hover,
+  .fjord-switch-input:checked:not(:disabled):hover {
+    background: var(--fjord-accent-hover);
+    border-color: var(--fjord-accent-hover);
+  }
+  .fjord-choice-input:not(:disabled):active,
+  .fjord-switch-input:not(:disabled):active {
+    box-shadow: var(--fjord-shadow-pressed);
+  }
+}
+.fjord-radio-group {
+  display: grid;
+  gap: var(--fjord-space-1);
+  min-inline-size: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.fjord-radio-group legend {
+  padding: 0;
+  color: var(--fjord-ink);
+  font: 600 var(--fjord-button-primary-font-size)/1.5
+    var(--fjord-button-primary-font-family);
+  overflow-wrap: anywhere;
+}
+.fjord-radio-group p {
+  margin: 0;
+  font: var(--fjord-button-primary-font-size)/1.5
+    var(--fjord-button-primary-font-family);
+  overflow-wrap: anywhere;
+}
+.fjord-radio-group .help {
+  color: var(--fjord-ink-muted);
+}
+.fjord-radio-group .error {
+  color: var(--fjord-danger);
+}
+@media (any-pointer: coarse) {
+  .fjord-choice {
+    min-block-size: var(--fjord-target-touch);
+  }
+}
+@media (forced-colors: active) {
+  .fjord-choice-input,
+  .fjord-switch-input {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+  }
+  .fjord-choice-input:checked,
+  .fjord-choice-input[type="checkbox"]:indeterminate,
+  .fjord-switch-input:checked {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
+  .fjord-choice-input:disabled,
+  .fjord-switch-input:disabled {
+    border-color: GrayText;
+    color: GrayText;
+    background: ButtonFace;
+  }
+  .fjord-switch-input::after,
+  .fjord-choice-input[type="radio"]:checked::after {
+    box-sizing: border-box;
+    border: var(--fjord-border-active) solid currentColor;
+  }
+  .fjord-choice-input[type="checkbox"]:indeterminate::after {
+    block-size: 0;
+    border-block-start: var(--fjord-border-active) solid currentColor;
+  }
+  .fjord-choice-input:focus-visible,
+  .fjord-switch-input:focus-visible {
+    outline-color: Highlight;
+  }
+  .fjord-radio-group .help,
+  .fjord-radio-group .error {
+    color: CanvasText;
+  }
+}

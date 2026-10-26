@@ -208,6 +208,12 @@ try {
   assert.equal(installed.exports["./foundations.css"], "./foundations.css");
   assert.equal(installed.exports["./semantics.css"], "./semantics.css");
   assert.equal(installed.exports["./form-controls.css"], "./form-controls.css");
+  assert.equal(installed.exports["./choices.css"], "./choices.css");
+  const choiceCss = await readFile(
+    join(consumer, "node_modules/@fjord/svelte/choices.css"),
+    "utf8",
+  );
+  assert.match(choiceCss, /forced-colors/);
   const semanticCss = await readFile(
     join(consumer, "node_modules/@fjord/svelte/semantics.css"),
     "utf8",
@@ -278,7 +284,7 @@ try {
   assert.match(declaration, /Mode/);
 
   const component = (mode) =>
-    `<script lang="ts">import { ThemeScope, Icon, Button, Badge, Field, Input, Textarea, NativeSelect } from "@fjord/svelte";</script>\n<ThemeScope mode="${mode}"><p>Consumer content</p><Icon name="info" decorative={false} label="Information" /><Button label="Search" iconOnly icon="search" /><Badge label="Ready" variant="success" /><Field id="address" label="Address">{#snippet children(control)}<Input {...control} name="address" autocomplete="street-address" />{/snippet}</Field><Textarea aria-label="Note" /><NativeSelect aria-label="Mode"><option value="night">Night</option></NativeSelect></ThemeScope>\n`;
+    `<script lang="ts">import { ThemeScope, Icon, Button, Badge, Field, Input, Textarea, NativeSelect, Checkbox, RadioGroup, Switch } from "@fjord/svelte";</script>\n<ThemeScope mode="${mode}"><p>Consumer content</p><Icon name="info" decorative={false} label="Information" /><Button label="Search" iconOnly icon="search" /><Badge label="Ready" variant="success" /><Field id="address" label="Address">{#snippet children(control)}<Input {...control} name="address" autocomplete="street-address" />{/snippet}</Field><Textarea aria-label="Note" /><NativeSelect aria-label="Mode"><option value="night">Night</option></NativeSelect><Checkbox label="Accept" /><Switch label="Updates" /><RadioGroup id="freq" name="freq" label="Frequency" options={[{value:"day",label:"Daily"}]} /></ThemeScope>\n`;
   await writeFile(join(consumer, "Consumer.svelte"), component("day"));
   await writeFile(
     join(consumer, "consumer.ts"),

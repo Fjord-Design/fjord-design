@@ -6,6 +6,8 @@ This workspace contains the typed Svelte reference and Storybook setup. `ThemeSc
 
 `Field`, `Label`, `Input`, `Textarea` and `NativeSelect` compose native, labelled form controls. Spread the control object from Field's child snippet onto its control to connect the ID, help, error, required and disabled states. Use unique IDs and localized text. Input and Textarea support read-only values; NativeSelect provides a single native selection. The Components/Form fields story demonstrates the API and its limits. Import `@fjord/svelte/form-controls.css` after the foundation and semantic styles.
 
+`Checkbox`, `RadioGroup` and `Switch` provide native choice controls. Supply visible localized labels and import `@fjord/svelte/choices.css` after the shared styles. RadioGroup uses a fieldset and one shared form name. The application owns the mixed checkbox state. See Components/Choice controls in Storybook for usage and native validation.
+
 Run commands from the repository root:
 
 ```sh
