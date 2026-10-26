@@ -113,31 +113,36 @@ run = "bun run format:check"
 description = "Format reference, scripts and CI configuration"
 run = "bun run format"
 
+[tasks."catalogue:build"]
+description = "Build validated token inspection data for Storybook"
+depends = ["semantics:build"]
+run = "python3 scripts/build_catalogue.py"
+
 [tasks."reference:check"]
 description = "Check Svelte and TypeScript with the TypeScript 7 compiler"
-depends = ["semantics:build"]
+depends = ["catalogue:build"]
 run = "bun run check:reference"
 
 [tasks."reference:build"]
 description = "Build the typed Svelte library and Vite specimen"
-depends = ["semantics:build"]
+depends = ["catalogue:build"]
 run = "bun run build:reference"
 
 [tasks."reference:dev"]
 description = "Open the local Vite development server"
 dir = "reference/svelte"
-depends = ["semantics:build"]
+depends = ["catalogue:build"]
 run = "bun run dev"
 
 [tasks."storybook:dev"]
 description = "Open the local Storybook development server"
 dir = "reference/svelte"
-depends = ["semantics:build"]
+depends = ["catalogue:build"]
 run = "bun run storybook"
 
 [tasks."storybook:build"]
 description = "Build the static Storybook catalogue"
-depends = ["semantics:build"]
+depends = ["catalogue:build"]
 run = "bun run build:storybook"
 
 [tasks."test:types"]

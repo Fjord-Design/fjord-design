@@ -16,6 +16,8 @@ This workspace contains the typed Svelte reference and Storybook setup. `ThemeSc
 
 `Typography`, `CodeBlock` and `Kbd` provide semantic text, source code and shortcut labels. Import `@fjord/svelte/type-components.css` after the shared styles. CodeBlock validates that highlighted segments reproduce the source, copies the source exactly and accepts localized copy messages. See Components/Typography Code Block Kbd.
 
+The Fjord/Explore story brings mode, identity and density controls together with token inspection, semantic colours, typography and a terminal example. The other stories demonstrate component variants and states. Token inspection data is generated from the validated sources before Storybook starts or builds.
+
 Run commands from the repository root:
 
 ```sh

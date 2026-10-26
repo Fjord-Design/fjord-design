@@ -11,8 +11,7 @@
       Svelte and TypeScript are ready. Selected mode: {mode}.
     </p>
     <p class="fjord-type-body">
-      Component styling and theme controls are delivered with the component
-      catalogue.
+      Explore Fjord in the catalogue to inspect tokens and component examples.
     </p>
   </main>
 </ThemeScope>
