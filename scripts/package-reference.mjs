@@ -27,6 +27,7 @@ await writeFile(
         "./choices.css": "./choices.css",
         "./layout-components.css": "./layout-components.css",
         "./overlay-components.css": "./overlay-components.css",
+        "./data-feedback.css": "./data-feedback.css",
       },
       files: [
         "*.js",

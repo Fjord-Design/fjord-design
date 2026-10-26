@@ -1,6 +1,6 @@
 {
   "name": "@fjord/svelte",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -12,7 +12,8 @@
     "./form-controls.css": "./src/lib/form-controls.css",
     "./choices.css": "./src/lib/choices.css",
     "./layout-components.css": "./src/lib/layout-components.css",
-    "./overlay-components.css": "./src/lib/overlay-components.css"
+    "./overlay-components.css": "./src/lib/overlay-components.css",
+    "./data-feedback.css": "./src/lib/data-feedback.css"
   },
   "scripts": {
     "check": "node ../../scripts/check-reference.mjs",

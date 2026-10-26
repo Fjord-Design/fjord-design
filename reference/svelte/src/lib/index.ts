@@ -16,6 +16,10 @@ export { default as Tabs } from "./Tabs.svelte";
 export { default as Dialog } from "./Dialog.svelte";
 export { default as Alert } from "./Alert.svelte";
 export { default as Tooltip } from "./Tooltip.svelte";
+export { default as Table } from "./Table.svelte";
+export { default as Empty } from "./Empty.svelte";
+export { default as Skeleton } from "./Skeleton.svelte";
+export { default as Spinner } from "./Spinner.svelte";
 export type { IconName, IconSize } from "./icons.generated.js";
 export type {
   Mode,

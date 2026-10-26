@@ -12,6 +12,8 @@ This workspace contains the typed Svelte reference and Storybook setup. `ThemeSc
 
 `Dialog`, `Alert` and `Tooltip` use native modal, live-region and description semantics. Import `@fjord/svelte/overlay-components.css` after the shared styles. Dialog requires a localized title and close label; Tooltip needs one named trigger and supplementary text. The Components/Dialog Alert Tooltip story demonstrates the API and its limits.
 
+`Table`, `Empty`, `Skeleton` and `Spinner` provide data and loading states. Import `@fjord/svelte/data-feedback.css` after the shared styles. Table needs a caption and semantic headers; Skeleton is decorative, and Spinner carries a visible loading label. The Components/Table Empty Skeleton Spinner story shows usage.
+
 Run commands from the repository root:
 
 ```sh
