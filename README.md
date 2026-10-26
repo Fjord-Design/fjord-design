@@ -30,7 +30,7 @@ mise run preview
 mise run storybook:build
 ```
 
-Mise selects Node 24.22.1, Bun 1.4.4 and Python 3.15.0. The token core uses only the Python standard library; its minimum Python version remains 3.10. The Svelte reference has a separate JavaScript dependency set. Inspect `mise.toml`, then run `mise trust` once if mise requests it. Follow [the setup and contribution rules](CONTRIBUTING.md) before installing a missing runtime or library.
+Mise selects Node 26.12.1, Bun 1.4.4 and Python 3.15.0. The token core uses only the Python standard library; its minimum Python version remains 3.10. The Svelte reference has a separate JavaScript dependency set. Inspect `mise.toml`, then run `mise trust` once if mise requests it. Follow [the setup and contribution rules](CONTRIBUTING.md) before installing a missing runtime or library.
 
 Dependencies are locked in `bun.lock`. [XER-102 verification](docs/verification/xer-102.md) records the checks, builds and TypeScript 7 source and consumer probes run for that delivery. Storybook 10.6.3 uses a [declaration-only Bun patch](patches/README.md), with regression checks for valid and invalid story args. Token-only checks remain available through `mise run test`, `mise run validate` and `mise run tokens:build`.
 

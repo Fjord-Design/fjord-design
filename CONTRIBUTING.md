@@ -4,7 +4,7 @@ Use a feature branch and keep each conventional commit focused on one change. Ru
 
 ## Setup
 
-Read `mise.toml` before trusting it. Mise selects Node 24.22.1, Bun 1.4.4 and Python 3.15.0. Obtain permission before installing a missing runtime or library. After approval, install missing runtimes with `mise install`, then run `mise run setup` to install the exact dependency set from `bun.lock`. Normal builds reuse that set.
+Read `mise.toml` before trusting it. Mise selects Node 26.12.1, Bun 1.4.4 and Python 3.15.0. Obtain permission before installing a missing runtime or library. After approval, install missing runtimes with `mise install`, then run `mise run setup` to install the exact dependency set from `bun.lock`. Normal builds reuse that set.
 
 Work from the repository root:
 
