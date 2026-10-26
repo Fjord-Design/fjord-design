@@ -2,17 +2,17 @@
 
 Use `mise run check` and `mise run build` before accepting a contract change.
 
-| Version | Current value | Purpose |
-| --- | --- | --- |
-| DTCG | `2025.10` | Portable token serialization |
-| Fjord schema | `2` | Directory manifest and layer metadata |
-| Fjord contract | `0.3.0` | Public names, types, roles and CLI behaviour |
+| Version        | Current value | Purpose                                      |
+| -------------- | ------------- | -------------------------------------------- |
+| DTCG           | `2025.10`     | Portable token serialization                 |
+| Fjord schema   | `2`           | Directory manifest and layer metadata        |
+| Fjord contract | `0.3.0`       | Public names, types, roles and CLI behaviour |
 
 The resolver accepts `0.3.x` contracts. Every source and override must declare schema version `2` and DTCG version `2025.10`. Unsupported versions fail before composition or output.
 
 The [dependency policy](dependency-policy.md) governs library and development-tool releases, including the selected Svelte reference and its TypeScript 7 support arrangement. Dependency versions are independent of token-contract versions.
 
-Contract 0.3.0 includes the layout roles, semantic usage/state source, semantic CLI, System preference and scoped identity contract. All source/override metadata must declare a supported 0.3.x contract. `tokens/contract.json` identifies `usage.json`; consumers import the scoped semantic stylesheet and may choose `mode="system"`. Existing token names and merge order remain unchanged. The Svelte package is versioned independently; 0.7.0 adds Table, Empty, Skeleton and Spinner.
+Contract 0.3.0 includes the layout roles, semantic usage/state source, semantic CLI, System preference and scoped identity contract. All source/override metadata must declare a supported 0.3.x contract. `tokens/contract.json` identifies `usage.json`; consumers import the scoped semantic stylesheet and may choose `mode="system"`. Existing token names and merge order remain unchanged. The Svelte package is versioned independently; 0.8.0 adds Typography, Code Block and Kbd.
 
 ## Release rules
 

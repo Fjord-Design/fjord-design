@@ -9,3 +9,17 @@ export type FieldControl = {
   "aria-invalid": "true" | undefined;
   "aria-describedby": string | undefined;
 };
+export type SyntaxRole =
+  | "text"
+  | "comment"
+  | "keyword"
+  | "string"
+  | "number"
+  | "type"
+  | "function"
+  | "property"
+  | "variable"
+  | "operator"
+  | "punctuation"
+  | "regex";
+export type CodeSegment = { text: string; role: SyntaxRole };

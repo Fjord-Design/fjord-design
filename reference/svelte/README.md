@@ -14,6 +14,8 @@ This workspace contains the typed Svelte reference and Storybook setup. `ThemeSc
 
 `Table`, `Empty`, `Skeleton` and `Spinner` provide data and loading states. Import `@fjord/svelte/data-feedback.css` after the shared styles. Table needs a caption and semantic headers; Skeleton is decorative, and Spinner carries a visible loading label. The Components/Table Empty Skeleton Spinner story shows usage.
 
+`Typography`, `CodeBlock` and `Kbd` provide semantic text, source code and shortcut labels. Import `@fjord/svelte/type-components.css` after the shared styles. CodeBlock validates that highlighted segments reproduce the source, copies the source exactly and accepts localized copy messages. See Components/Typography Code Block Kbd.
+
 Run commands from the repository root:
 
 ```sh

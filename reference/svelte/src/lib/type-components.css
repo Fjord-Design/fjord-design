@@ -1,0 +1,99 @@
+.fjord-kbd {
+  display: inline-block;
+  padding: var(--fjord-space-1) var(--fjord-space-2);
+  border: var(--fjord-border-hairline) solid var(--fjord-line-strong);
+  border-radius: var(--fjord-radius-control);
+  background: var(--fjord-bg-surface);
+  color: var(--fjord-ink);
+}
+.fjord-code-block {
+  min-inline-size: 0;
+  border: var(--fjord-border-hairline) solid var(--fjord-line-strong);
+  border-radius: var(--fjord-radius-panel);
+  color: var(--fjord-ink);
+  background: var(--fjord-bg-base);
+}
+.fjord-code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fjord-space-3);
+  padding: var(--fjord-space-2) var(--fjord-space-3);
+  font: var(--fjord-button-primary-font-size)/1.5
+    var(--fjord-button-primary-font-family);
+}
+.fjord-code-block button {
+  font: inherit;
+  color: var(--fjord-ink);
+  background: var(--fjord-bg-surface);
+  border: 1px solid var(--fjord-line-strong);
+  border-radius: var(--fjord-radius-control);
+  padding: var(--fjord-space-2) var(--fjord-space-3);
+  cursor: pointer;
+}
+.fjord-code-block button:focus-visible,
+.fjord-code-scroll:focus-visible {
+  outline: var(--fjord-border-focus) solid var(--fjord-focus-ring);
+  outline-offset: var(--fjord-focus-offset);
+}
+.fjord-code-feedback {
+  display: block;
+  padding-inline: var(--fjord-space-3);
+  font: var(--fjord-button-primary-font-size)/1.5
+    var(--fjord-button-primary-font-family);
+}
+.fjord-code-scroll {
+  overflow: auto;
+  max-inline-size: 100%;
+}
+.fjord-code-scroll pre {
+  margin: 0;
+  padding: var(--fjord-space-3);
+  white-space: pre;
+}
+.fjord-code-scroll [data-syntax="comment"] {
+  color: var(--fjord-syn-comment);
+  font-style: italic;
+  font-variant-alternates: var(--fjord-code-alternates, normal);
+}
+.fjord-code-scroll [data-syntax="keyword"] {
+  color: var(--fjord-syn-keyword);
+  font-style: italic;
+  font-variant-alternates: var(--fjord-code-alternates, normal);
+}
+.fjord-code-scroll [data-syntax="string"] {
+  color: var(--fjord-syn-string);
+}
+.fjord-code-scroll [data-syntax="number"] {
+  color: var(--fjord-syn-number);
+}
+.fjord-code-scroll [data-syntax="type"] {
+  color: var(--fjord-syn-type);
+}
+.fjord-code-scroll [data-syntax="function"] {
+  color: var(--fjord-syn-function);
+}
+.fjord-code-scroll [data-syntax="property"] {
+  color: var(--fjord-syn-property);
+}
+.fjord-code-scroll [data-syntax="variable"] {
+  color: var(--fjord-syn-variable);
+}
+.fjord-code-scroll [data-syntax="operator"] {
+  color: var(--fjord-syn-operator);
+}
+.fjord-code-scroll [data-syntax="punctuation"] {
+  color: var(--fjord-syn-punctuation);
+}
+.fjord-code-scroll [data-syntax="regex"] {
+  color: var(--fjord-syn-regex);
+}
+@media (forced-colors: active) {
+  .fjord-code-block,
+  .fjord-kbd {
+    border-color: CanvasText;
+  }
+  .fjord-code-scroll [data-syntax] {
+    color: CanvasText;
+  }
+}

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { access, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
@@ -217,6 +217,13 @@ try {
     installed.exports["./overlay-components.css"],
     "./overlay-components.css",
   );
+  assert.equal(
+    installed.exports["./type-components.css"],
+    "./type-components.css",
+  );
+  await access(
+    join(consumer, "node_modules/@fjord/svelte/type-components.css"),
+  );
   assert.equal(installed.exports["./data-feedback.css"], "./data-feedback.css");
   const dataCss = await readFile(
     join(consumer, "node_modules/@fjord/svelte/data-feedback.css"),
@@ -308,7 +315,7 @@ try {
   assert.match(declaration, /Mode/);
 
   const component = (mode) =>
-    `<script lang="ts">import { ThemeScope, Icon, Button, Badge, Field, Input, Textarea, NativeSelect, Checkbox, RadioGroup, Switch, Card, Separator, Tabs, Dialog, Alert, Tooltip, Table, Empty, Skeleton, Spinner } from "@fjord/svelte";</script>\n<ThemeScope mode="${mode}"><p>Consumer content</p><Icon name="info" decorative={false} label="Information" /><Button label="Search" iconOnly icon="search" /><Badge label="Ready" variant="success" /><Field id="address" label="Address">{#snippet children(control)}<Input {...control} name="address" autocomplete="street-address" />{/snippet}</Field><Textarea aria-label="Note" /><NativeSelect aria-label="Mode"><option value="night">Night</option></NativeSelect><Checkbox label="Accept" /><Switch label="Updates" /><RadioGroup id="freq" name="freq" label="Frequency" options={[{value:"day",label:"Daily"}]} /><Card><Separator /><Tabs id="tabs" label="Sections" items={[{value:"a",label:"First"}]}>{#snippet children(panel)}<p>{panel}</p>{/snippet}</Tabs></Card><Dialog id="review" title="Review" closeLabel="Close"><p>Body</p></Dialog><Alert title="Info" message="Ready" /><Tooltip id="hint" text="More">{#snippet children(attrs)}<Button {...attrs} label="Help" />{/snippet}</Tooltip><Table id="results" caption="Results"><thead><tr><th scope="col">Name</th></tr></thead><tbody><tr><td>Fjord</td></tr></tbody></Table><Empty title="No results" description="Try again" /><Skeleton /><Spinner label="Loading" /></ThemeScope>\n`;
+    `<script lang="ts">import { ThemeScope, Icon, Button, Badge, Field, Input, Textarea, NativeSelect, Checkbox, RadioGroup, Switch, Card, Separator, Tabs, Dialog, Alert, Tooltip, Table, Empty, Skeleton, Spinner, Typography, CodeBlock, Kbd } from "@fjord/svelte";</script>\n<ThemeScope mode="${mode}"><p>Consumer content</p><Icon name="info" decorative={false} label="Information" /><Button label="Search" iconOnly icon="search" /><Badge label="Ready" variant="success" /><Field id="address" label="Address">{#snippet children(control)}<Input {...control} name="address" autocomplete="street-address" />{/snippet}</Field><Textarea aria-label="Note" /><NativeSelect aria-label="Mode"><option value="night">Night</option></NativeSelect><Checkbox label="Accept" /><Switch label="Updates" /><RadioGroup id="freq" name="freq" label="Frequency" options={[{value:"day",label:"Daily"}]} /><Card><Separator /><Tabs id="tabs" label="Sections" items={[{value:"a",label:"First"}]}>{#snippet children(panel)}<p>{panel}</p>{/snippet}</Tabs></Card><Dialog id="review" title="Review" closeLabel="Close"><p>Body</p></Dialog><Alert title="Info" message="Ready" /><Tooltip id="hint" text="More">{#snippet children(attrs)}<Button {...attrs} label="Help" />{/snippet}</Tooltip><Table id="results" caption="Results"><thead><tr><th scope="col">Name</th></tr></thead><tbody><tr><td>Fjord</td></tr></tbody></Table><Empty title="No results" description="Try again" /><Skeleton /><Spinner label="Loading" /><Typography as="h2" role="title-2">Title</Typography><CodeBlock label="Example" code="const x = 1;" /><Kbd>Ctrl</Kbd></ThemeScope>\n`;
   await writeFile(join(consumer, "Consumer.svelte"), component("day"));
   await writeFile(
     join(consumer, "consumer.ts"),

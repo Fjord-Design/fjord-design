@@ -28,3 +28,7 @@ export type {
   RadioOption,
   TabItem,
 } from "./types.js";
+export { default as Typography } from "./Typography.svelte";
+export { default as CodeBlock } from "./CodeBlock.svelte";
+export { default as Kbd } from "./Kbd.svelte";
+export type { CodeSegment, SyntaxRole } from "./types.js";

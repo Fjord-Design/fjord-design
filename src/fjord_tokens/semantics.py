@@ -33,7 +33,7 @@ def semantic_report(root):
                 raise TokenError("Identity changes must preserve the component token contract")
             paths = {role["token"] for role in project.usage["roles"].values()}
             paths.update(path for role in project.usage["roles"].values() for path in role["backgrounds"])
-            paths.update(path for path in composition.values if path.startswith(("component.", "semantic.shadow.")))
+            paths.update(path for path in composition.values if path.startswith(("component.", "semantic.shadow.", "semantic.color.syn-")))
             modes[mode] = {"colors": palette["modes"][mode]["colors"], "pairs": palette["modes"][mode]["contrastPairs"],
                            "values": {path: {"type": composition.tokens[path]["$type"], "value": composition.values[path]}
                                       for path in sorted(paths)}}
