@@ -209,6 +209,15 @@ try {
   assert.equal(installed.exports["./semantics.css"], "./semantics.css");
   assert.equal(installed.exports["./form-controls.css"], "./form-controls.css");
   assert.equal(installed.exports["./choices.css"], "./choices.css");
+  assert.equal(
+    installed.exports["./layout-components.css"],
+    "./layout-components.css",
+  );
+  const layoutCss = await readFile(
+    join(consumer, "node_modules/@fjord/svelte/layout-components.css"),
+    "utf8",
+  );
+  assert.match(layoutCss, /forced-colors/);
   const choiceCss = await readFile(
     join(consumer, "node_modules/@fjord/svelte/choices.css"),
     "utf8",
@@ -284,7 +293,7 @@ try {
   assert.match(declaration, /Mode/);
 
   const component = (mode) =>
-    `<script lang="ts">import { ThemeScope, Icon, Button, Badge, Field, Input, Textarea, NativeSelect, Checkbox, RadioGroup, Switch } from "@fjord/svelte";</script>\n<ThemeScope mode="${mode}"><p>Consumer content</p><Icon name="info" decorative={false} label="Information" /><Button label="Search" iconOnly icon="search" /><Badge label="Ready" variant="success" /><Field id="address" label="Address">{#snippet children(control)}<Input {...control} name="address" autocomplete="street-address" />{/snippet}</Field><Textarea aria-label="Note" /><NativeSelect aria-label="Mode"><option value="night">Night</option></NativeSelect><Checkbox label="Accept" /><Switch label="Updates" /><RadioGroup id="freq" name="freq" label="Frequency" options={[{value:"day",label:"Daily"}]} /></ThemeScope>\n`;
+    `<script lang="ts">import { ThemeScope, Icon, Button, Badge, Field, Input, Textarea, NativeSelect, Checkbox, RadioGroup, Switch, Card, Separator, Tabs } from "@fjord/svelte";</script>\n<ThemeScope mode="${mode}"><p>Consumer content</p><Icon name="info" decorative={false} label="Information" /><Button label="Search" iconOnly icon="search" /><Badge label="Ready" variant="success" /><Field id="address" label="Address">{#snippet children(control)}<Input {...control} name="address" autocomplete="street-address" />{/snippet}</Field><Textarea aria-label="Note" /><NativeSelect aria-label="Mode"><option value="night">Night</option></NativeSelect><Checkbox label="Accept" /><Switch label="Updates" /><RadioGroup id="freq" name="freq" label="Frequency" options={[{value:"day",label:"Daily"}]} /><Card><Separator /><Tabs id="tabs" label="Sections" items={[{value:"a",label:"First"}]}>{#snippet children(panel)}<p>{panel}</p>{/snippet}</Tabs></Card></ThemeScope>\n`;
   await writeFile(join(consumer, "Consumer.svelte"), component("day"));
   await writeFile(
     join(consumer, "consumer.ts"),

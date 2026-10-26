@@ -8,6 +8,8 @@ This workspace contains the typed Svelte reference and Storybook setup. `ThemeSc
 
 `Checkbox`, `RadioGroup` and `Switch` provide native choice controls. Supply visible localized labels and import `@fjord/svelte/choices.css` after the shared styles. RadioGroup uses a fieldset and one shared form name. The application owns the mixed checkbox state. See Components/Choice controls in Storybook for usage and native validation.
 
+`Card`, `Separator` and `Tabs` provide layout and content navigation. Import `@fjord/svelte/layout-components.css` after the shared styles. Tabs support automatic or manual activation and horizontal or vertical keyboard navigation; inactive panels stay mounted. The Components/Card Separator Tabs story shows the API and its limits.
+
 Run commands from the repository root:
 
 ```sh

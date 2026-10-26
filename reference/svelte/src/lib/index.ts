@@ -10,10 +10,14 @@ export { default as NativeSelect } from "./NativeSelect.svelte";
 export { default as Checkbox } from "./Checkbox.svelte";
 export { default as RadioGroup } from "./RadioGroup.svelte";
 export { default as Switch } from "./Switch.svelte";
+export { default as Card } from "./Card.svelte";
+export { default as Separator } from "./Separator.svelte";
+export { default as Tabs } from "./Tabs.svelte";
 export type { IconName, IconSize } from "./icons.generated.js";
 export type {
   Mode,
   ModePreference,
   FieldControl,
   RadioOption,
+  TabItem,
 } from "./types.js";

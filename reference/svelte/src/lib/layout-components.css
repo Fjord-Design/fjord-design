@@ -1,0 +1,126 @@
+.fjord-card {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  padding: var(--fjord-space-5);
+  color: var(--fjord-ink);
+  background: var(--fjord-bg-surface);
+  border-radius: var(--fjord-radius-panel);
+  box-shadow: var(--fjord-shadow-raised);
+  overflow-wrap: anywhere;
+}
+.fjord-separator-component {
+  box-sizing: border-box;
+  border: 0;
+  margin: 0;
+  inline-size: 100%;
+  block-size: var(--fjord-border-hairline);
+  background: var(--fjord-line);
+}
+.fjord-separator-component[data-orientation="vertical"] {
+  inline-size: var(--fjord-border-hairline);
+  block-size: auto;
+  min-block-size: var(--fjord-icon-default);
+  align-self: stretch;
+  flex: none;
+}
+.fjord-tabs {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+.fjord-tabs[data-orientation="vertical"] {
+  display: flex;
+  gap: var(--fjord-space-4);
+  align-items: flex-start;
+}
+.fjord-tablist {
+  display: flex;
+  gap: var(--fjord-space-1);
+  overflow-x: auto;
+  max-inline-size: 100%;
+  padding: var(--fjord-space-1);
+}
+.fjord-tabs[data-orientation="vertical"] .fjord-tablist {
+  flex-direction: column;
+  flex: none;
+  max-inline-size: 45%;
+}
+.fjord-tablist [role="tab"] {
+  box-sizing: border-box;
+  flex: none;
+  min-block-size: var(--fjord-control-comfortable);
+  padding: var(--fjord-space-2) var(--fjord-space-4);
+  border: var(--fjord-border-hairline) solid transparent;
+  border-radius: var(--fjord-radius-full);
+  background: var(--fjord-bg-surface);
+  color: var(--fjord-ink);
+  font: var(--fjord-button-primary-font-size)/1.5
+    var(--fjord-button-primary-font-family);
+  cursor: pointer;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  max-inline-size: 18rem;
+}
+.fjord-tabs[data-orientation="vertical"] .fjord-tablist [role="tab"] {
+  inline-size: 100%;
+  text-align: start;
+}
+.fjord-tablist [role="tab"]:hover:not(:disabled) {
+  background: var(--fjord-bg-hover);
+}
+.fjord-tablist [role="tab"][aria-selected="true"] {
+  background: var(--fjord-accent-soft);
+  color: var(--fjord-accent-ink);
+  font-weight: 700;
+  border-color: var(--fjord-accent);
+}
+.fjord-tablist [role="tab"]:focus-visible,
+.fjord-tabpanels [role="tabpanel"]:focus-visible {
+  outline: var(--fjord-border-focus) solid var(--fjord-focus-ring);
+  outline-offset: var(--fjord-focus-offset);
+}
+.fjord-tablist [role="tab"]:disabled {
+  background: var(--fjord-bg-surface);
+  color: var(--fjord-ink-disabled);
+  cursor: not-allowed;
+}
+.fjord-tabpanels {
+  min-inline-size: 0;
+  flex: 1;
+  padding: var(--fjord-space-4);
+  overflow-wrap: anywhere;
+}
+@media (any-pointer: coarse) {
+  .fjord-tablist [role="tab"] {
+    min-block-size: var(--fjord-target-touch);
+  }
+}
+@media (forced-colors: active) {
+  .fjord-card {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+  .fjord-separator-component {
+    background: CanvasText;
+  }
+  .fjord-tablist [role="tab"] {
+    background: ButtonFace;
+    color: ButtonText;
+    border-color: ButtonText;
+  }
+  .fjord-tablist [role="tab"][aria-selected="true"] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+  .fjord-tablist [role="tab"]:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+  .fjord-tablist [role="tab"]:focus-visible,
+  .fjord-tabpanels [role="tabpanel"]:focus-visible {
+    outline-color: Highlight;
+  }
+}
