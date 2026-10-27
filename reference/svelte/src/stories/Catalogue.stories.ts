@@ -3,6 +3,7 @@ import Catalogue from "./Catalogue.svelte";
 const meta = {
   title: "Fjord/Explore",
   component: Catalogue,
+  parameters: { layout: "fullscreen" },
   args: { mode: "night", identity: "fjord" },
 } satisfies Meta<typeof Catalogue>;
 export default meta;

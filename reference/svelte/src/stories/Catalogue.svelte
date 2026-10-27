@@ -253,6 +253,7 @@
   }
   .controls {
     display: flex;
+    min-width: 0;
     gap: var(--fjord-space-3);
     flex-wrap: wrap;
     align-items: center;
@@ -264,6 +265,7 @@
   }
   select,
   input {
+    min-width: 0;
     font: inherit;
     color: var(--fjord-ink);
     background: var(--fjord-bg-surface);
@@ -299,6 +301,11 @@
   }
   dd {
     margin-inline: 0;
+    overflow-wrap: anywhere;
+  }
+  dl,
+  code {
+    min-width: 0;
     overflow-wrap: anywhere;
   }
   dt {
