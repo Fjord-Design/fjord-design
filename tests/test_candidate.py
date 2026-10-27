@@ -28,6 +28,9 @@ class CandidateTests(unittest.TestCase):
             dependency.mkdir(parents=True)
             (dependency / "package.json").write_text('{"name":"example","version":"1.0.0","license":"MIT"}')
             (dependency / "LICENSE").write_text("Example licence")
+            (dependency / "ThirdPartyNoticeText.txt").write_text("Third-party notice")
+            (dependency / "vendor").mkdir()
+            (dependency / "vendor/LICENSE.txt").write_text("Nested licence")
             for mode in module.MODES:
                 for suffix in module.SUFFIXES:
                     (root / "dist" / f"{mode}.{suffix}").write_text(f"{mode}.{suffix}")
@@ -47,6 +50,9 @@ class CandidateTests(unittest.TestCase):
                 record = next(iter(notices.values()))
                 self.assertEqual(record["name"], "example")
                 self.assertEqual(archive.read(record["notices"][0]), b"Example licence")
+                self.assertEqual(len(record["notices"]), 3)
+                self.assertEqual({archive.read(name) for name in record["notices"]},
+                                 {b"Example licence", b"Third-party notice", b"Nested licence"})
                 for name, digest in manifest["sha256"].items():
                     self.assertEqual(sha256(archive.read(name)).hexdigest(), digest)
             (root / "dist/night.wezterm.toml").unlink()

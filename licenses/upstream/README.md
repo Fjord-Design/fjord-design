@@ -17,4 +17,4 @@ The Storybook notice is retained for the Storybook packages at 10.6.3. The esbui
 
 The npm publication commits for is-reference and locate-character contain an MIT declaration in README and package metadata, but no separate licence file or copyright notice. Those declarations are preserved as supplied. No copyright attribution or licence text has been invented to fill that upstream gap.
 
-The inventory includes build tools as well as code in the catalogue. Complete the review of the code actually distributed in Storybook before accepting the release.
+The inventory retains supplied notices for build tools as well as catalogue dependencies. It includes nested licence files and third-party notice files, preserving their package-relative paths.

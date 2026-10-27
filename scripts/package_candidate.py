@@ -16,7 +16,7 @@ SUFFIXES = ("dtcg.json", "resolved.json", "tokens.css", "wezterm.toml")
 
 
 def dependency_notices(root):
-    """Collect installed package metadata and root notices for later review."""
+    """Collect installed package metadata and supplied notices recursively."""
     cache = Path(root) / "node_modules/.bun"
     if not cache.is_dir():
         raise ValueError("missing Bun dependency store; run mise run setup")
@@ -38,10 +38,18 @@ def dependency_notices(root):
                 prefix = f"third-party-notices/{key}/"
                 output[prefix + "package.json"] = raw
                 notices = []
-                for item in sorted(package.iterdir()):
-                    if item.is_file() and not item.is_symlink() and item.name.lower().startswith(("license", "licence", "copying", "notice")):
-                        output[prefix + item.name] = item.read_bytes()
-                        notices.append(prefix + item.name)
+                for directory, directories, filenames in os.walk(package, followlinks=False):
+                    directories[:] = sorted(name for name in directories if not (Path(directory) / name).is_symlink())
+                    for filename in sorted(filenames):
+                        normalized = filename.lower().replace("-", "").replace("_", "").replace(".", "")
+                        if not normalized.startswith(("license", "licence", "copying", "notice", "thirdpartynotice", "thirdpartylicense")):
+                            continue
+                        item = Path(directory) / filename
+                        if item.is_symlink() or not item.is_file():
+                            continue
+                        destination = prefix + item.relative_to(package).as_posix()
+                        output[destination] = item.read_bytes()
+                        notices.append(destination)
                 records[key] = {"name": name, "version": version, "declaredLicense": metadata_file.get("license"), "notices": notices}
     output["third-party-notices/index.json"] = (json.dumps({"packages": records}, ensure_ascii=False, indent=2) + "\n").encode()
     return output
