@@ -17,7 +17,8 @@ class CandidateTests(unittest.TestCase):
     def test_archive_is_reproducible_and_hashes_every_entry(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            for name in ("LICENSE", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "AGENTS.md", "mise.toml", "package.json", "bun.lock", ".gitignore", ".prettierignore", ".prettierrc.json"):
+            for name in ("LICENSE", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "AGENTS.md", "mise.toml", "package.json", "bun.lock", ".gitignore", ".prettierignore", ".prettierrc.json", ".github/workflows/validate.yml"):
+                (root / name).parent.mkdir(parents=True, exist_ok=True)
                 (root / name).write_text(name)
             for directory in ("dist/svelte", "dist/storybook", "docs", "licenses", "assets", "examples", "tokens", "src", "scripts", "tests", "patches", "reference/svelte"):
                 (root / directory).mkdir(parents=True)
@@ -43,6 +44,7 @@ class CandidateTests(unittest.TestCase):
                 manifest = json.loads(archive.read("manifest.json"))
                 self.assertEqual(manifest["status"], "candidate")
                 self.assertEqual(manifest["svelteVersion"], "0.8.0")
+                self.assertIn(".github/workflows/validate.yml", archive.namelist())
                 self.assertEqual(set(manifest["sha256"]), set(archive.namelist()) - {"manifest.json"})
                 self.assertNotIn("reference/svelte/node_modules/secret.txt", archive.namelist())
                 notices = json.loads(archive.read("third-party-notices/index.json"))["packages"]

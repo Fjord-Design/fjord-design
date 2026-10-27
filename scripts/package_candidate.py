@@ -58,7 +58,8 @@ def dependency_notices(root):
 def files(root):
     root = Path(root)
     required = [root / name for name in ("LICENSE", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "AGENTS.md",
-                                         "mise.toml", "package.json", "bun.lock", ".gitignore", ".prettierignore", ".prettierrc.json")]
+                                         "mise.toml", "package.json", "bun.lock", ".gitignore", ".prettierignore", ".prettierrc.json",
+                                         ".github/workflows/validate.yml")]
     required.append(root / "dist/accessibility-contrast.json")
     required += [root / "dist" / f"{mode}.{suffix}" for mode in MODES for suffix in SUFFIXES]
     for folder in ("dist/svelte", "dist/storybook", "docs", "licenses", "assets", "examples", "tokens", "src", "scripts", "tests", "patches", "reference/svelte"):
