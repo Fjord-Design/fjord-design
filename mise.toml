@@ -173,6 +173,11 @@ run = [
   "mise run artifacts:check",
 ]
 
+[tasks."release:prepare"]
+description = "Prepare a local, unaccepted MVP candidate"
+depends = ["build", "storybook:build", "accessibility:report"]
+run = "python3 scripts/package_candidate.py"
+
 [tasks."test:clean"]
 description = "Verify a clean source copy with a frozen dependency install"
 run = "node scripts/check-clean.mjs"
