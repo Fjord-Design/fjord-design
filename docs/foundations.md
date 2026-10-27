@@ -27,6 +27,8 @@ Set `data-fjord-density="compact"` on `.fjord-foundation`. Typography keeps its 
 
 Below 480 CSS pixels, the reference caps horizontal page and panel padding relative to viewport width. This leaves more room for text when the root font size is enlarged. Vertical spacing continues to follow the selected density.
 
+The stack uses one `minmax(0, 1fr)` grid column so long native controls and code do not enlarge the page. Scrolling content must provide its own overflow region.
+
 ## Shape and depth
 
 | Token | Value / role |

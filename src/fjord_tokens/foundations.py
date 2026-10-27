@@ -76,7 +76,7 @@ def foundation_css(report):
 .fjord-foundation *, .fjord-foundation *::before, .fjord-foundation *::after {box-sizing:border-box;}
 .fjord-foundation .fjord-page {max-inline-size:var(--fjord-content-max);margin-inline:auto;padding:var(--fjord-page-gutter);overflow-wrap:anywhere;}
 .fjord-foundation .fjord-grid {display:grid;grid-template-columns:minmax(0,1fr);gap:var(--fjord-gap);}
-.fjord-foundation .fjord-stack {display:grid;gap:var(--fjord-gap);}
+.fjord-foundation .fjord-stack {display:grid;grid-template-columns:minmax(0,1fr);gap:var(--fjord-gap);}
 .fjord-foundation .fjord-panel {min-inline-size:0;padding:var(--fjord-padding);border-radius:var(--fjord-radius-panel);background:var(--fjord-bg-surface);}
 .fjord-foundation .fjord-window {border-radius:var(--fjord-radius-window);background:var(--fjord-bg-raised);box-shadow:var(--fjord-shadow-overlay);}
 .fjord-foundation .fjord-separator {border:0;border-block-start:var(--fjord-border-hairline) solid var(--fjord-line);margin-block:var(--fjord-space-6);}
