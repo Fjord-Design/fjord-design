@@ -16,7 +16,7 @@ The same design roles and principles guide each mode. Fjord is intended for desi
 
 The DTCG token sources define colour, typography and component roles. A Python core composes themes and overrides and validates their values and contrast. The repository also contains design guidance, a code and terminal specimen, and a Svelte reference library with Storybook.
 
-The Svelte reference currently includes ThemeScope, Icon, Button and Badge. The component library and platform adapters are being delivered in stages. See the [component inventory](docs/components/inventory.md) and [platform boundaries](docs/decisions/0001-platform-boundaries.md) for the planned scope and verification requirements.
+The Svelte reference implements all 23 MVP components, with ThemeScope and Icon as supporting primitives. Storybook includes form, choice, layout, overlay, data, loading and typography examples, plus an interactive token inspector. The [component inventory](docs/components/inventory.md) distinguishes the 23 MVP components from the 43 planned additions. Implementation is available; [MVP acceptance](docs/verification/xer-120.md) remains open for the recorded browser, accessibility, terminal and user checks.
 
 ## Get started
 
@@ -73,6 +73,8 @@ Edit `tokens/` sources. `dist/` files are disposable build results.
 | `mise run semantics:build`   | Write semantic CSS, role/state evidence and `dist/semantics.html`                       |
 
 `mise run ci` runs the complete verification sequence. `mise run test:clean` installs and builds in a temporary source copy. [The reference workspace](reference/svelte/README.md) lists development-server commands.
+
+`mise run release:prepare` assembles the local MVP candidate ZIP. `mise run test:candidate` also verifies its file checksums and version consistency, extracts it into a temporary directory, installs the locked dependencies and runs CI from the extracted sources. These tasks do not publish or accept a release. Checksums detect archive damage; they do not authenticate its publisher.
 
 Build a variant using an explicit theme and override:
 

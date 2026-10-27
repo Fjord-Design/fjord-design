@@ -104,7 +104,7 @@ For Neovim, also map `Normal` → `ink` on `bg-base`, `NormalFloat` → `bg-rais
 
 ## Browser and web
 
-- A future web adapter should expose CSS custom properties and `data-theme` on `<html>`; follow `prefers-color-scheme` for Night/Day and expose Aurora as a user choice.
+- The current web reference exposes scoped CSS custom properties through `ThemeScope`, using `data-fjord-mode`, `data-fjord-preference` and `data-fjord-identity`. Night is the default; explicit System follows `prefers-color-scheme` for Night/Day, and Aurora is a user choice. General CSS exports provide `--fjord-token-*` properties for other integrations. See the [theme guide](theme-guide.md) for both paths.
 - For styling sites you visit (Stylus, Dark Reader custom theme): background `bg-base`, text `ink`, selection `selection`, links `accent`, scrollbar thumb `line-strong`.
 - Browser chrome themes (Firefox `manifest.json` theme, Chrome theme): frame `bg-sunken`, toolbar and active tab `bg-base`, tab text `ink`, inactive tab text `ink-muted`, URL bar `bg-surface`, popups `bg-raised`, accent `accent`.
 

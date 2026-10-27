@@ -39,4 +39,4 @@ return config
 
 Select a different exported file to change mode. Remove the `config.colors` assignment to restore your previous colour settings, or restore your saved configuration. Do not overwrite an existing file. The scheme does not configure shell prompts, fonts, window styling or automatic appearance switching. Applications that emit their own colours can override these defaults.
 
-The installed WezTerm loader accepted each generated mode through an isolated temporary configuration on macOS 26.7.1. Visual inspection of ANSI colours, the cursor, selections and prompt context remains open until the Mac can be unlocked. This does not establish native visual support yet.
+The installed WezTerm loader accepted each generated mode through an isolated temporary configuration on macOS 26.7.1. Native visual inspection of ANSI colours, the cursor, selections and prompt context remains open because the computer-use tool cannot access WezTerm. This does not establish native visual support yet.
