@@ -41,7 +41,7 @@
   }
 </script>
 
-<section class="fjord-code-block" aria-label={label}>
+<section class="fjord-code-block">
   <div class="fjord-code-block-header">
     <span>{label}</span><button type="button" onclick={copy}>{copyLabel}</button
     >

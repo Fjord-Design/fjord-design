@@ -3,6 +3,7 @@ import TypographyCode from "./TypographyCode.svelte";
 const meta = {
   title: "Components/Typography Code Block Kbd",
   component: TypographyCode,
+  parameters: { layout: "fullscreen" },
   args: { mode: "night", identity: "fjord" },
 } satisfies Meta<typeof TypographyCode>;
 export default meta;

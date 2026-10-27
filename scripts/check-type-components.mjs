@@ -49,6 +49,7 @@ try {
   assert.match(html, /<h2 class="fjord-type-title-2">Section<\/h2>/);
   assert.match(html, /<kbd[^>]*>Ctrl<\/kbd>/);
   assert.match(html, /role="region" aria-label="Example" tabindex="0"/);
+  assert.match(html, /<section class="fjord-code-block">/);
   assert.match(html, /data-syntax="comment">\/\/ Æøå &amp; &lt;x>/);
   assert.match(html, /role="status"/);
   assert.throws(() => htmlFor({ ...props, label: " " }), /requires a label/);
