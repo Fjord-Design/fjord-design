@@ -113,6 +113,10 @@ run = "bun run format:check"
 description = "Format reference, scripts and CI configuration"
 run = "bun run format"
 
+[tasks."accessibility:report"]
+description = "Build token contrast evidence for every mode and identity"
+run = "python3 scripts/accessibility_report.py"
+
 [tasks."catalogue:build"]
 description = "Build validated token inspection data for Storybook"
 depends = ["semantics:build"]
