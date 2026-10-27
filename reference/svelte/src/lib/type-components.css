@@ -24,6 +24,7 @@
     var(--fjord-button-primary-font-family);
 }
 .fjord-code-block button {
+  appearance: none;
   font: inherit;
   color: var(--fjord-ink);
   background: var(--fjord-bg-surface);
