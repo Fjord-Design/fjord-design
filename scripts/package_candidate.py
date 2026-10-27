@@ -53,7 +53,7 @@ def files(root):
                                          "mise.toml", "package.json", "bun.lock", ".gitignore", ".prettierignore", ".prettierrc.json")]
     required.append(root / "dist/accessibility-contrast.json")
     required += [root / "dist" / f"{mode}.{suffix}" for mode in MODES for suffix in SUFFIXES]
-    for folder in ("dist/svelte", "dist/storybook", "docs", "assets", "examples", "tokens", "src", "scripts", "tests", "patches", "reference/svelte"):
+    for folder in ("dist/svelte", "dist/storybook", "docs", "licenses", "assets", "examples", "tokens", "src", "scripts", "tests", "patches", "reference/svelte"):
         path = root / folder
         if not path.is_dir():
             raise ValueError(f"missing candidate directory: {path}")

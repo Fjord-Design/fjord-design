@@ -19,7 +19,7 @@ class CandidateTests(unittest.TestCase):
             root = Path(tmp)
             for name in ("LICENSE", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "AGENTS.md", "mise.toml", "package.json", "bun.lock", ".gitignore", ".prettierignore", ".prettierrc.json"):
                 (root / name).write_text(name)
-            for directory in ("dist/svelte", "dist/storybook", "docs", "assets", "examples", "tokens", "src", "scripts", "tests", "patches", "reference/svelte"):
+            for directory in ("dist/svelte", "dist/storybook", "docs", "licenses", "assets", "examples", "tokens", "src", "scripts", "tests", "patches", "reference/svelte"):
                 (root / directory).mkdir(parents=True)
                 (root / directory / "sample.txt").write_text(directory)
             (root / "dist/svelte/package.json").write_text('{"version":"0.8.0"}')
