@@ -99,7 +99,7 @@ Validation errors go to stderr and return exit code 1. Invalid CLI arguments ret
 
 The [code and terminal specification](docs/code-and-terminal.md) defines portable role bindings, ANSI behaviour and non-colour markers. [Verification results](docs/verification/xer-108.md) record the checked examples and browser behaviour.
 
-The web reference is Svelte + TypeScript with Vite and Storybook. XER-102 provides the workspace, packaging and diagnostic checks under the latest-stable policy. The TypeScript 7 compiler uses the approved Svelte support arrangement. The library includes nine self-hosted font faces, original licences and typography CSS. Validated DTCG, resolved JSON, CSS and WezTerm exports are described in the [token export guide](docs/token-export.md).
+The web reference is Svelte + TypeScript with Vite and Storybook. XER-102 provides the workspace, packaging and diagnostic checks under the latest-stable policy. The TypeScript 7 compiler uses the approved Svelte support arrangement. The library includes nine self-hosted font faces, original licences and typography CSS. Validated DTCG, resolved JSON, CSS and WezTerm exports are described in the [token export guide](docs/token-export.md) and [theme guide](docs/theme-guide.md).
 
 WezTerm 20240203-110809-5046fc22 on macOS is the MVP terminal target. Zed 1.25.3 is the first editor target after MVP, followed by VS Code and Neovim. Application support is recorded after target-specific tests.
 

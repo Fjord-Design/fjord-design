@@ -56,6 +56,12 @@ def parser():
     export.add_argument("--theme", type=Path, help="replace the default theme layer")
     export.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
     export.add_argument("--output", type=Path, help="output path; default: dist/<mode>.<format>")
+    theme_css = commands.add_parser("theme-css", help="build scoped Svelte identity colours for all modes", allow_abbrev=False)
+    theme_css.add_argument("--root", type=Path, default=ROOT, help="project directory")
+    theme_css.add_argument("--identity", required=True, help="lower-case identity name")
+    theme_css.add_argument("--theme", type=Path, help="replace the default theme layer")
+    theme_css.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
+    theme_css.add_argument("--output", type=Path, help="output path; default: dist/<identity>.theme.css")
     preview = commands.add_parser("preview", help="build the interactive code and terminal specimen", allow_abbrev=False)
     preview.add_argument("--root", type=Path, default=ROOT, help="project directory")
     preview.add_argument("--theme", type=Path, help="replace the default theme layer in every mode")
@@ -115,6 +121,18 @@ def main(argv=None):
             else:
                 write_text_output(destination, result, forbidden)
             print(f"Exported {args.mode} {args.format}: {destination}")
+        elif args.command == "theme-css":
+            from .theme_css import theme_css
+
+            validate_project(args.root)
+            content = theme_css(args.root, args.identity, args.theme, args.override)
+            destination = args.output or args.root / "dist" / f"{args.identity}.theme.css"
+            forbidden = [args.root / name for name in ("tokens", "src", "docs", "assets", "examples", "tests", "reference",
+                                                      "scripts", "patches", ".github", ".git", "README.md", "LICENSE",
+                                                      "mise.toml", "package.json", "bun.lock")]
+            forbidden += [*args.override] + ([args.theme] if args.theme else [])
+            write_text_output(destination, content, forbidden)
+            print(f"Built scoped identity {args.identity}: {destination}")
         elif args.command == "preview":
             from .preview import render_preview
             from .fonts import font_bundle, load_fonts
