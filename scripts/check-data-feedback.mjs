@@ -63,6 +63,7 @@ try {
     loading: "Loading",
   };
   const html = htmlFor(valid);
+  assert.match(html, /id="items" class="fjord-table-scroll"/);
   assert.match(
     html,
     /role="region"[^>]*aria-labelledby="items-caption"[^>]*tabindex="0"/,

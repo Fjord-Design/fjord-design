@@ -14,6 +14,7 @@
 
 <!-- svelte-ignore a11y_no_noninteractive_tabindex (The named scroll region must be keyboard accessible.) -->
 <div
+  id={checkedId}
   class="fjord-table-scroll"
   role="region"
   aria-labelledby={`${checkedId}-caption`}

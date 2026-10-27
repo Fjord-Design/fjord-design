@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { tick } from "svelte";
   import {
     Alert,
     Button,
@@ -18,6 +19,11 @@
     identity = "fjord",
   }: { mode?: ModePreference; identity?: string } = $props();
   let state = $state<"data" | "loading" | "empty" | "error">("data");
+  async function showResult() {
+    state = "data";
+    await tick();
+    document.getElementById("recent-work")?.focus();
+  }
 </script>
 
 <ThemeScope {mode} {identity}>
@@ -97,10 +103,7 @@
           <Empty
             title="No work yet"
             description="There are no projects in this example."
-            ><Button
-              label="View sample projects"
-              onclick={() => (state = "data")}
-            /></Empty
+            ><Button label="View sample projects" onclick={showResult} /></Empty
           >
         {:else}
           <Alert
@@ -113,7 +116,7 @@
             <Button
               label="Try again"
               variant="secondary"
-              onclick={() => (state = "data")}
+              onclick={showResult}
             />
           </div>
         {/if}
