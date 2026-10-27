@@ -25,6 +25,8 @@ Paths start with `semantic.`. Breakpoints describe available content space, not 
 
 Set `data-fjord-density="compact"` on `.fjord-foundation`. Typography keeps its size and line height. Use minimum heights so enlarged or translated text can grow. Do not clip an action's only label. If an override reduces a general spacing role used by comfortable density, adjust its compact counterpart too; compact gap and padding must not exceed comfortable values.
 
+Below 480 CSS pixels, the reference caps horizontal page and panel padding relative to viewport width. This leaves more room for text when the root font size is enlarged. Vertical spacing continues to follow the selected density.
+
 ## Shape and depth
 
 | Token | Value / role |

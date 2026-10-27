@@ -97,6 +97,10 @@ def foundation_css(report):
 .fjord-foundation .fjord-loading {display:inline-flex;align-items:center;gap:var(--fjord-space-2);}
 .fjord-foundation .fjord-loading .fjord-icon {animation:fjord-spin calc(var(--fjord-duration-slow) * 4) linear infinite;}
 .fjord-foundation .fjord-reveal {animation:fjord-enter var(--fjord-duration-base) var(--fjord-easing-standard);}
+@media (max-width:480px) {
+  .fjord-foundation .fjord-page {padding-inline:min(var(--fjord-page-gutter),4vw);}
+  .fjord-foundation .fjord-panel {padding-inline:min(var(--fjord-padding),5vw);}
+}
 @keyframes fjord-spin {to {transform:rotate(360deg);}}
 @keyframes fjord-enter {from {transform:translateY(var(--fjord-space-1));} to {transform:translateY(0);}}
 @media (any-pointer:coarse) {
