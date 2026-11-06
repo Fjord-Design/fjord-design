@@ -16,7 +16,7 @@ The same design roles and principles guide each mode. Fjord is intended for desi
 
 The DTCG token sources define colour, typography and component roles. A Python core composes themes and overrides and validates their values and contrast. The repository also contains design guidance, a code and terminal specimen, and a Svelte reference library with Storybook.
 
-The Svelte reference implements all 23 MVP components, with ThemeScope and Icon as supporting primitives. Storybook includes form, choice, layout, overlay, data, loading and typography examples, plus an interactive token inspector. The [component inventory](docs/components/inventory.md) distinguishes the 23 MVP components from the 43 planned additions. Implementation is available; [MVP acceptance](docs/verification/xer-120.md) remains open for the recorded browser, accessibility, terminal and user checks.
+The Svelte reference implements all 23 MVP components, with ThemeScope and Icon as supporting primitives. Storybook includes form, choice, layout, overlay, data, loading and typography examples, plus an interactive token inspector. The [component inventory](docs/components/inventory.md) distinguishes the 23 MVP components from the 43 planned additions. The owner accepted MVP 0.1.0 for local distribution on 29 October 2026 with [recorded verification limits](docs/verification/xer-120.md).
 
 ## Get started
 
