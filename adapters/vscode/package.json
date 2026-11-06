@@ -1,0 +1,37 @@
+{
+  "name": "fjord-themes",
+  "displayName": "Fjord",
+  "description": "Calm Nordic Night, Day and Aurora themes generated from Fjord tokens",
+  "version": "0.1.0",
+  "publisher": "fjord",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.145.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xerrion/fjord-design"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "Fjord Night",
+        "uiTheme": "vs-dark",
+        "path": "./themes/fjord-night-color-theme.json"
+      },
+      {
+        "label": "Fjord Day",
+        "uiTheme": "vs",
+        "path": "./themes/fjord-day-color-theme.json"
+      },
+      {
+        "label": "Fjord Aurora",
+        "uiTheme": "vs-dark",
+        "path": "./themes/fjord-aurora-color-theme.json"
+      }
+    ]
+  }
+}

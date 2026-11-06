@@ -18,7 +18,7 @@ The DTCG token sources define colour, typography and component roles. A Python c
 
 The Svelte reference implements all 23 MVP components, with ThemeScope and Icon as supporting primitives. Storybook includes form, choice, layout, overlay, data, loading and typography examples, plus an interactive token inspector. The [component inventory](docs/components/inventory.md) distinguishes the 23 MVP components from the 43 planned additions. The owner accepted MVP 0.1.0 for local distribution on 29 October 2026 with [recorded verification limits](docs/verification/xer-120.md).
 
-[Platform adapters](docs/adapters.md) translate the same semantic tokens to native applications. The WezTerm reference and [Zed themes](adapters/zed/README.md) generate Night, Day and Aurora with mapping, fallback and contrast reports. Native version coverage is recorded separately from generated-format validation.
+[Platform adapters](docs/adapters.md) translate the same semantic tokens to native applications. The WezTerm reference, [Zed themes](adapters/zed/README.md) and [VS Code themes](adapters/vscode/README.md) generate Night, Day and Aurora with mapping, fallback and contrast reports. VS Code also has a local installable VSIX. Native version coverage is recorded separately from generated-format validation.
 
 ## Get started
 

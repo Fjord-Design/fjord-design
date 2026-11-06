@@ -4,6 +4,8 @@ Run `mise run adapters:wezterm` to build the reference adapter in `dist/adapters
 
 Run `mise run adapters:zed` to generate the first editor adapter. The [Zed guide](../adapters/zed/README.md) covers installation, retained-text highlight fallbacks and version limits; [XER-140 verification](verification/xer-140.md) records the checks.
 
+Run `mise run adapters:vscode` to generate the [VS Code themes](../adapters/vscode/README.md) and `dist/release/fjord-themes-0.1.0.vsix`. The package contains only declarative themes, its manifest and documentation/licence. It is built locally without contacting Marketplace. [XER-134 verification](verification/xer-134.md) records the tested version and remaining limits.
+
 Adapters consume semantic tokens through the platform-independent Python core. Target-specific manifests, serializers, fixtures and installation instructions belong in `adapters/<platform>/`. A generated file establishes format and mapping evidence; native support requires separate application tests. See [ADR 0001](decisions/0001-platform-boundaries.md).
 
 ## Declare a mapping

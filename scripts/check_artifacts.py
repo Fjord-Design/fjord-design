@@ -2,6 +2,7 @@
 
 import re
 import hashlib
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -58,7 +59,7 @@ def main():
             return {path.relative_to(folder).as_posix(): path.read_bytes()
                     for path in sorted(folder.rglob("*")) if path.is_file()}
 
-        for platform in ("wezterm", "zed"):
+        for platform in ("wezterm", "zed", "vscode"):
             snapshots = []
             for label in ("first", "second"):
                 destination = directory / f"{label}-{platform}"
@@ -68,6 +69,17 @@ def main():
                 snapshots.append(adapter_snapshot(destination))
             if not snapshots[0] or snapshots[0] != snapshots[1] or snapshots[0] != adapter_snapshot(ROOT / "dist/adapters" / platform):
                 raise ValueError(f"dist/adapters/{platform}: output differs between builds")
+        packages = []
+        for label in ("first", "second"):
+            destination = directory / f"{label}.vsix"
+            subprocess.run([sys.executable, str(ROOT / "scripts/package_vscode.py"),
+                            "--root", str(ROOT), "--output", str(destination)],
+                           cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
+            packages.append(destination.read_bytes())
+        vscode_manifest = json.loads((ROOT / "dist/adapters/vscode/package.json").read_text(encoding="utf-8"))
+        vscode_package = ROOT / "dist/release" / f"{vscode_manifest['name']}-{vscode_manifest['version']}.vsix"
+        if packages[0] != packages[1] or packages[0] != vscode_package.read_bytes():
+            raise ValueError("VS Code VSIX differs between builds")
     for name in ("svelte/index.js", "svelte/index.d.ts", "svelte/ThemeScope.svelte.d.ts", "svelte/LICENSE",
                  "reference/index.html", "storybook/index.html", "storybook/index.json",
                  "typography.html", "typography.json", "fonts/typography.css", "svelte/fonts/typography.css"):

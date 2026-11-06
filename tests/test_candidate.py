@@ -31,6 +31,12 @@ class CandidateTests(unittest.TestCase):
             for name in adapter_files:
                 (zed / name).parent.mkdir(parents=True, exist_ok=True)
                 (zed / name).write_text(name)
+            vscode = root / "adapters/vscode"
+            vscode.mkdir()
+            vscode_files = ("adapter.json", "generate.py", "package.json", "README.md", "LICENSE")
+            for name in vscode_files:
+                (vscode / name).write_text(name)
+            (root / "scripts/package_vscode.py").write_text("VSIX packager")
             dependency = root / "node_modules/.bun/example@1.0.0/node_modules/example"
             dependency.mkdir(parents=True)
             (dependency / "package.json").write_text('{"name":"example","version":"1.0.0","license":"MIT"}')
@@ -53,6 +59,9 @@ class CandidateTests(unittest.TestCase):
                 self.assertIn(".github/workflows/validate.yml", archive.namelist())
                 for name in adapter_files:
                     self.assertEqual(archive.read("adapters/zed/" + name), name.encode())
+                for name in vscode_files:
+                    self.assertEqual(archive.read("adapters/vscode/" + name), name.encode())
+                self.assertEqual(archive.read("scripts/package_vscode.py"), b"VSIX packager")
                 self.assertEqual(set(manifest["sha256"]), set(archive.namelist()) - {"manifest.json"})
                 self.assertNotIn("reference/svelte/node_modules/secret.txt", archive.namelist())
                 notices = json.loads(archive.read("third-party-notices/index.json"))["packages"]
