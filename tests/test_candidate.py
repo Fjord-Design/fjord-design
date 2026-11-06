@@ -20,11 +20,17 @@ class CandidateTests(unittest.TestCase):
             for name in ("LICENSE", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "AGENTS.md", "mise.toml", "package.json", "bun.lock", ".gitignore", ".prettierignore", ".prettierrc.json", ".github/workflows/validate.yml"):
                 (root / name).parent.mkdir(parents=True, exist_ok=True)
                 (root / name).write_text(name)
-            for directory in ("dist/svelte", "dist/storybook", "docs", "licenses", "assets", "examples", "tokens", "src", "scripts", "tests", "patches", "reference/svelte"):
+            for directory in ("dist/svelte", "dist/storybook", "docs", "licenses", "assets", "examples", "tokens", "src", "scripts", "tests", "patches", "reference/svelte", "adapters"):
                 (root / directory).mkdir(parents=True)
                 (root / directory / "sample.txt").write_text(directory)
             (root / "dist/svelte/package.json").write_text('{"version":"0.8.0"}')
             (root / "dist/accessibility-contrast.json").write_text('{}')
+            zed = root / "adapters/zed"
+            zed.mkdir()
+            adapter_files = ("adapter.json", "generate.py", "schema/themes-v0.2.0.json", "schema/LICENSE-GPL")
+            for name in adapter_files:
+                (zed / name).parent.mkdir(parents=True, exist_ok=True)
+                (zed / name).write_text(name)
             dependency = root / "node_modules/.bun/example@1.0.0/node_modules/example"
             dependency.mkdir(parents=True)
             (dependency / "package.json").write_text('{"name":"example","version":"1.0.0","license":"MIT"}')
@@ -45,6 +51,8 @@ class CandidateTests(unittest.TestCase):
                 self.assertEqual(manifest["status"], "candidate")
                 self.assertEqual(manifest["svelteVersion"], "0.8.0")
                 self.assertIn(".github/workflows/validate.yml", archive.namelist())
+                for name in adapter_files:
+                    self.assertEqual(archive.read("adapters/zed/" + name), name.encode())
                 self.assertEqual(set(manifest["sha256"]), set(archive.namelist()) - {"manifest.json"})
                 self.assertNotIn("reference/svelte/node_modules/secret.txt", archive.namelist())
                 notices = json.loads(archive.read("third-party-notices/index.json"))["packages"]

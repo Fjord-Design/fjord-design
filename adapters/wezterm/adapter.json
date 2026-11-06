@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "wezterm",
+  "target": {
+    "application": "WezTerm",
+    "version": "20240203-110809-5046fc22",
+    "os": "macOS"
+  },
+  "modes": [
+    "night",
+    "day",
+    "aurora"
+  ],
+  "mapping": {
+    "foreground": "semantic.color.ink",
+    "background": "semantic.color.bg-base",
+    "cursor_bg": "semantic.color.accent",
+    "cursor_border": "semantic.color.accent",
+    "cursor_fg": "semantic.color.on-accent",
+    "selection_bg": "semantic.color.selection",
+    "selection_fg": "semantic.color.ink",
+    "ansi.0": "semantic.color.ansi-black",
+    "brights.0": "semantic.color.ansi-bright-black",
+    "ansi.1": "semantic.color.ansi-red",
+    "brights.1": "semantic.color.ansi-bright-red",
+    "ansi.2": "semantic.color.ansi-green",
+    "brights.2": "semantic.color.ansi-bright-green",
+    "ansi.3": "semantic.color.ansi-yellow",
+    "brights.3": "semantic.color.ansi-bright-yellow",
+    "ansi.4": "semantic.color.ansi-blue",
+    "brights.4": "semantic.color.ansi-bright-blue",
+    "ansi.5": "semantic.color.ansi-magenta",
+    "brights.5": "semantic.color.ansi-bright-magenta",
+    "ansi.6": "semantic.color.ansi-cyan",
+    "brights.6": "semantic.color.ansi-bright-cyan",
+    "ansi.7": "semantic.color.ansi-white",
+    "brights.7": "semantic.color.ansi-bright-white"
+  },
+  "requiredRoles": [
+    "semantic.color.accent",
+    "semantic.color.ansi-black",
+    "semantic.color.ansi-blue",
+    "semantic.color.ansi-bright-black",
+    "semantic.color.ansi-bright-blue",
+    "semantic.color.ansi-bright-cyan",
+    "semantic.color.ansi-bright-green",
+    "semantic.color.ansi-bright-magenta",
+    "semantic.color.ansi-bright-red",
+    "semantic.color.ansi-bright-white",
+    "semantic.color.ansi-bright-yellow",
+    "semantic.color.ansi-cyan",
+    "semantic.color.ansi-green",
+    "semantic.color.ansi-magenta",
+    "semantic.color.ansi-red",
+    "semantic.color.ansi-white",
+    "semantic.color.ansi-yellow",
+    "semantic.color.bg-base",
+    "semantic.color.ink",
+    "semantic.color.on-accent",
+    "semantic.color.selection"
+  ],
+  "unsupported": {},
+  "fallbacks": {
+    "colorSpace": "Convert validated opaque sRGB tokens to 8-bit HEX; check source and emitted HEX contrast before output.",
+    "fonts": "The colour scheme does not install fonts or change font settings; retain the user's configured font fallback and ligature preferences.",
+    "radius": "Window and control radii belong to WezTerm configuration and are not part of this colour scheme.",
+    "shadows": "Window and text shadows are not represented by the colour scheme.",
+    "motion": "The colour scheme defines no animations; retain the application's reduced-motion behaviour.",
+    "interaction": "Map cursor and selection colours; keyboard bindings, prompt markers, focus and shell behaviour remain owned by the application and shell."
+  }
+}

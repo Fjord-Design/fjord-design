@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Rebuilt the declarative adapter foundation and Zed themes from the shared token source. See the [adapter guide](docs/adapters.md) and [Zed verification](docs/verification/xer-140.md).
+
 ## 0.1.0 · 29 October 2026
 
 - Added Night, Day and Aurora token sources, scoped Fern accent example, DTCG, JSON, CSS and WezTerm exports.

@@ -18,6 +18,8 @@ The DTCG token sources define colour, typography and component roles. A Python c
 
 The Svelte reference implements all 23 MVP components, with ThemeScope and Icon as supporting primitives. Storybook includes form, choice, layout, overlay, data, loading and typography examples, plus an interactive token inspector. The [component inventory](docs/components/inventory.md) distinguishes the 23 MVP components from the 43 planned additions. The owner accepted MVP 0.1.0 for local distribution on 29 October 2026 with [recorded verification limits](docs/verification/xer-120.md).
 
+[Platform adapters](docs/adapters.md) translate the same semantic tokens to native applications. The WezTerm reference and [Zed themes](adapters/zed/README.md) generate Night, Day and Aurora with mapping, fallback and contrast reports. Native version coverage is recorded separately from generated-format validation.
+
 ## Get started
 
 From the project directory, run the following. The setup task installs the locked JavaScript dependencies; obtain permission before installing a missing runtime or library.
@@ -45,6 +47,7 @@ src/fjord_tokens/          Parsing, composition, validation and CLI
 reference/svelte/          Typed Svelte source, Vite specimen and Storybook
 scripts/                   Packaging, diagnostic and reproducibility checks
 patches/                   Version-specific dependency fixes and upstream licences
+adapters/                  Native mappings, generators, fixtures and installation guides
 tests/                     Token, platform and type-check regression fixtures
 docs/                      Token contract, design guidance and platform mappings
   components/              Framework-independent component specifications
@@ -64,7 +67,7 @@ Edit `tokens/` sources. `dist/` files are disposable build results.
 | ---------------------------- | --------------------------------------------------------------------------------------- |
 | `mise run check`             | Token regression tests, mode/platform validation, reference types and formatting        |
 | `mise run validate`          | Validate sources without writing output                                                 |
-| `mise run build`             | Write DTCG documents, the typed Svelte library and Vite specimen to `dist/`             |
+| `mise run build`             | Write tokens, the typed Svelte library, Vite specimen and native adapters to `dist/` |
 | `mise run test`              | Run regression tests using temporary fixtures                                           |
 | `mise run preview`           | Write the interactive specimen to `dist/code-and-terminal.html`                         |
 | `mise run palette`           | Write colour scales and source/HEX contrast evidence to `dist/palette.html` and `.json` |
