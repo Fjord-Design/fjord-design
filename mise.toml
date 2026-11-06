@@ -23,8 +23,20 @@ description = "Run all local checks"
 depends = ["test", "validate", "fonts:validate", "foundations:validate", "semantics:validate", "test:theme-preference", "test:form-fields", "test:choice-controls", "test:layout-components", "test:overlays", "test:data-feedback", "test:type-components", "format:check", "reference:check"]
 
 [tasks.build]
-description = "Build token documents, the Svelte library and Vite specimen"
-depends = ["tokens:build", "tokens:export", "reference:build", "palette"]
+description = "Build tokens, the Svelte reference and native adapters"
+depends = ["tokens:build", "tokens:export", "reference:build", "palette", "adapters:build"]
+
+[tasks."adapters:build"]
+description = "Build validated WezTerm and Zed adapters with coverage reports"
+depends = ["adapters:wezterm", "adapters:zed"]
+
+[tasks."adapters:wezterm"]
+description = "Build the declarative WezTerm reference adapter"
+run = "python3 adapters/wezterm/generate.py"
+
+[tasks."adapters:zed"]
+description = "Build Fjord Night, Day and Aurora for Zed"
+run = "python3 adapters/zed/generate.py"
 
 [tasks.palette]
 description = "Build colour scales and source/HEX contrast evidence"

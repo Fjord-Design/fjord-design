@@ -54,6 +54,20 @@ def main():
             run(*command, "--output", second)
             if first.read_bytes() != second.read_bytes() or first.read_bytes() != (ROOT / "dist" / name).read_bytes():
                 raise ValueError(f"dist/{name}: output differs between builds")
+        def adapter_snapshot(folder):
+            return {path.relative_to(folder).as_posix(): path.read_bytes()
+                    for path in sorted(folder.rglob("*")) if path.is_file()}
+
+        for platform in ("wezterm", "zed"):
+            snapshots = []
+            for label in ("first", "second"):
+                destination = directory / f"{label}-{platform}"
+                subprocess.run([sys.executable, str(ROOT / "adapters" / platform / "generate.py"),
+                                "--root", str(ROOT), "--output-dir", str(destination)],
+                               cwd=ROOT, check=True, stdout=subprocess.DEVNULL)
+                snapshots.append(adapter_snapshot(destination))
+            if not snapshots[0] or snapshots[0] != snapshots[1] or snapshots[0] != adapter_snapshot(ROOT / "dist/adapters" / platform):
+                raise ValueError(f"dist/adapters/{platform}: output differs between builds")
     for name in ("svelte/index.js", "svelte/index.d.ts", "svelte/ThemeScope.svelte.d.ts", "svelte/LICENSE",
                  "reference/index.html", "storybook/index.html", "storybook/index.json",
                  "typography.html", "typography.json", "fonts/typography.css", "svelte/fonts/typography.css"):
@@ -61,7 +75,7 @@ def main():
             raise ValueError(f"dist/{name}: required build output is missing")
     count = 0
     for source in [ROOT / "README.md", ROOT / "CONTRIBUTING.md", *sorted((ROOT / "docs").rglob("*.md")),
-                   ROOT / "assets/brand/README.md", ROOT / "assets/fonts/README.md", ROOT / "assets/icons/README.md", ROOT / "reference/svelte/README.md", ROOT / "patches/README.md"]:
+                   ROOT / "assets/brand/README.md", ROOT / "assets/fonts/README.md", ROOT / "assets/icons/README.md", ROOT / "reference/svelte/README.md", ROOT / "patches/README.md", *sorted((ROOT / "adapters").glob("*/README.md"))]:
         for target in re.findall(r"\]\(<?([^\s)>]+)>?\)", source.read_text(encoding="utf-8")):
             if "://" in target or target.startswith(("#", "mailto:")):
                 continue
@@ -69,7 +83,7 @@ def main():
             if not (source.parent / path).exists():
                 raise ValueError(f"{source.relative_to(ROOT)}: missing link target {target}")
             count += 1
-    print(f"PASS deterministic token/specimen outputs, reference/catalogue artifacts and {count} local links")
+    print(f"PASS deterministic token/specimen/adapter outputs, reference/catalogue artifacts and {count} local links")
 
 
 if __name__ == "__main__":
