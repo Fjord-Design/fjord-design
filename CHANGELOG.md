@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added generated Night, Day and Aurora VS Code themes and a reproducible local VSIX. See the [VS Code guide](adapters/vscode/README.md) and [verification record](docs/verification/xer-134.md).
 - Rebuilt the declarative adapter foundation and Zed themes from the shared token source. See the [adapter guide](docs/adapters.md) and [Zed verification](docs/verification/xer-140.md).
 
 ## 0.1.0 · 29 October 2026
