@@ -41,6 +41,21 @@ class ZedAdapterTests(unittest.TestCase):
             self.assertEqual(self.report["modes"][mode]["unmapped"], [])
             self.assertIn("semantic.color.search-match-current", self.report["modes"][mode]["unsupported"])
 
+    def test_disabled_elements_keep_surface_backgrounds_and_disabled_foregrounds(self):
+        for identity, theme in (("fjord", None), ("fern", ROOT / "examples/themes/fern.tokens.json")):
+            family = self.family if theme is None else zed.build(ROOT, theme=theme)[0]
+            for mode, editor_theme in zip(("night", "day", "aurora"), family["themes"]):
+                with self.subTest(identity=identity, mode=mode):
+                    values = Project(ROOT).compose(mode, theme).values
+                    style = editor_theme["style"]
+                    for foreground in ("text.disabled", "icon.disabled"):
+                        self.assertEqual(style[foreground], hex_color(values["semantic.color.ink-disabled"]))
+                    for background, role in (("element.disabled", "bg-surface"),
+                                             ("ghost_element.disabled", "bg-sunken")):
+                        self.assertEqual(style[background], hex_color(values["semantic.color." + role]))
+                        for foreground in ("text.disabled", "icon.disabled"):
+                            self.assertNotEqual(style[foreground], style[background])
+
     def test_highlight_fallback_preserves_foregrounds_and_measures_emitted_hex(self):
         for mode, theme in zip(("night", "day", "aurora"), self.family["themes"]):
             values = Project(ROOT).compose(mode).values
