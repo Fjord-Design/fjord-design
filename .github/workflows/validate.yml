@@ -19,7 +19,5 @@ jobs:
       - uses: jdx/mise-action@v5
         with:
           version: "2026.10.19"
-      - name: Install the frozen dependency set
-        run: mise run setup
-      - name: Check sources, types, builds and deterministic output
+      - name: Validate and export the design foundation
         run: mise run ci

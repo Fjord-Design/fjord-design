@@ -3,10 +3,9 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
-import tomllib
 import unittest
 
-from fjord_tokens.contract import ANSI, THEMES
+from fjord_tokens.contract import THEMES
 from fjord_tokens.dtcg import TokenError, hex_color, nest
 from fjord_tokens.export import css_document, export
 from fjord_tokens.project import Project, metadata
@@ -21,7 +20,7 @@ class ExportTests(unittest.TestCase):
             for mode in THEMES:
                 with self.subTest(theme=theme, mode=mode):
                     composed = project.compose(mode, theme)
-                    for kind in ("dtcg", "resolved", "css", "wezterm"):
+                    for kind in ("dtcg", "resolved", "css"):
                         self.assertEqual(export(composed, kind), export(composed, kind))
                     self.assertEqual(export(composed, "dtcg"), nest(composed.tokens, dict(metadata(), mode=mode, colorSpace="srgb")))
                     resolved = export(composed, "resolved")
@@ -33,13 +32,6 @@ class ExportTests(unittest.TestCase):
                     css = export(composed, "css")
                     self.assertIn("--fjord-token-semantic-color-accent: " + hex_color(composed.values["semantic.color.accent"]) + ";", css)
                     self.assertIn("--fjord-token-semantic-typography-type-body-font-size: 15.0px;", css)
-                    scheme = tomllib.loads(export(composed, "wezterm"))["colors"]
-                    for field, role in (("foreground", "ink"), ("background", "bg-base"), ("cursor_bg", "accent"),
-                                        ("cursor_border", "accent"), ("cursor_fg", "on-accent"),
-                                        ("selection_bg", "selection"), ("selection_fg", "ink")):
-                        self.assertEqual(scheme[field], hex_color(composed.values["semantic.color." + role]))
-                    self.assertEqual(scheme["ansi"] + scheme["brights"],
-                                     [hex_color(composed.values["semantic.color." + name]) for name in ANSI])
 
     def test_aliases_and_missing_roles_are_rejected_before_export(self):
         project = Project(ROOT)
@@ -52,7 +44,7 @@ class ExportTests(unittest.TestCase):
         composed = project.compose("night")
         del composed.tokens["semantic.color.syn-comment"]
         with self.assertRaises(TokenError):
-            export(composed, "wezterm")
+            export(composed, "css")
 
     def test_name_collisions_are_rejected(self):
         composed = Project(ROOT).compose("night")
@@ -65,8 +57,8 @@ class ExportTests(unittest.TestCase):
 
     def test_cli_cannot_replace_sources_and_is_repeatable(self):
         with tempfile.TemporaryDirectory() as tmp:
-            output = Path(tmp) / "night.toml"
-            command = [sys.executable, "-m", "fjord_tokens", "export", "--format", "wezterm", "--output", str(output)]
+            output = Path(tmp) / "night.tokens.css"
+            command = [sys.executable, "-m", "fjord_tokens", "export", "--format", "css", "--output", str(output)]
             for _ in range(2):
                 result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
                 self.assertEqual(result.returncode, 0, result.stderr)

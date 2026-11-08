@@ -1,23 +1,24 @@
-Fjord is a calm, cool, Nordic theme system for every surface you sit in front of: editor, terminal, desktop, browser, the sites you build and the games you play. It is a quiet workspace by day and a personal room at night. When rules conflict, **calm wins** - over density, over personality, over novelty.
+# Design guidelines
+
+Fjord is a calm, cool, Nordic design foundation. Separate implementations apply these shared values and rules to their own surfaces. It is a quiet workspace by day and a personal room at night. When rules conflict, **calm wins** - over density, over personality, over novelty.
 
 ## Principles
 
 - **Calm first.** Colour is an accent, never a surface. Large areas are always one of the `bg-*` blues; the café and Nordic hues appear in small doses: a button, a badge, a line of code.
 - **Cool ground, warm sparks.** The ground is a cool dark blue (`bg-base`, seeded from oklch(20.88% 0.018 245)). Warmth comes from café tones (`latte`, `foam`) and `rose`, kept muted so they glow instead of shout.
 - **Discreet, but recognisably yours.** No neon, no synthwave gradients, no baroque ornament, no shabby texture. Personality lives in the combination: frost-blue interaction, café-toned code, square windows with round buttons.
-- **Clear contrast.** Every text token meets 4.5:1 on the surfaces its note names, in every theme. Comments in code are content: `syn-comment` holds 7.5:1 on `bg-base` in Night.
-- **Depth, not glass.** Floating things get `shadow-raised` or `shadow-overlay` with a faint top highlight. Never transparency or backdrop blur in panels, terminals or windows.
-- **Few frames.** Separate regions with 1px hairlines (`line`) and fill changes (`bg-base` → `bg-surface`), not boxes inside boxes. The one coloured edge Fjord allows is the 3px `accent` marker on the current item in navigation (Sidebar); never on cards or alerts.
+- **Clear contrast.** Every text token meets 4.5:1 on the surfaces its note names, in every mode. Comments in code are content: `syn-comment` holds 7.5:1 on `bg-base` in Night.
+- **Quiet depth.** Floating surfaces use `shadow-raised` or `shadow-overlay` with a faint top highlight. Keep panels and windows opaque, without blur. Separate regions with 1px hairlines and fill changes. A 3px `accent` edge marks the current navigation item; do not add it to cards or alerts.
 
-## Themes and moods
+## Modes
 
-| Theme | id | When | Character |
+| Mode | id | When | Character |
 | --- | --- | --- | --- |
 | Night | `night` | Default. Home office, evenings, anywhere dim. | Cool dark blue, frost-blue `accent`. |
 | Day | `day` | Bright offices and daylight. | Pale blue-grey ground, deep blue `accent`; every hue darkened to stay legible. |
 | Aurora | `aurora` | Gaming and late nights. | Deeper, almost-black blue ground; aurora-teal `accent`; the palette a touch brighter. |
 
-Night is the default when no theme is selected. Every colour token must define a value for Night, Day and Aurora. Aliases resolve within the selected theme. Generators must reject missing values or unresolved aliases and report the token and theme; they must never substitute Night's value. All three share every token name, so a theme built for one platform gets all three moods by swapping the value column. Follow the OS light/dark setting with Day ↔ Night; offer Aurora as an explicit choice (a "gaming" profile).
+Night is the default mode. Each mode supplies complete values for the same token names; missing values cannot fall back to another mode. A consumer may offer an explicit System preference, mapping light to Day and dark to Night. Explicit choices take precedence; Aurora is never selected automatically.
 
 ## Colour
 
@@ -46,16 +47,17 @@ Night is the default when no theme is selected. Every colour token must define a
 
 **Status:** `info`, `success`, `warning`, `danger` with `*-soft` backgrounds. `danger` is a stronger, redder rose of its own so it never blends with the latte `warning`. Status is never colour alone: pair it with an icon (`info`, `success`, `warning`, `danger` glyphs) or a word. Status colours stay inside the palette, so errors and git changes are visible without breaking the calm.
 
-**Focus:** a 2px solid `focus-ring` (= `accent`) outline offset 2px from the control, at least 3:1 against every surface in every theme.
+**Focus:** a 2px solid `focus-ring` (= `accent`) outline offset 2px from the control, at least 3:1 against every surface in every mode.
 
 ## Typography
 
 - **Display** - Raleway, 600, with 700 for `type-title-4`: `type-display`, `type-title-1` … `type-title-4`. Headings and dialog titles only.
 - **Text** - Noto Sans (Open Sans fallback): `type-lead`, `type-body` (15/24), `type-body-strong`, `type-small`, `type-label`, `type-caption`, `type-overline`. UI defaults to 14px (`text-md`); reading text to `type-body`.
 - **Code** - Self-hosted Cascadia Code, upright and standard slanted italic, weights 200 to 700, falling back to Fira Code: `type-code` (14/22), `type-code-small`, `type-code-italic`. Ligatures default to on; handwritten cursive defaults to off. Users can change either preference independently. Fira's upright fallback retains readable comments.
-- The typography stylesheet maps roles to `.fjord-type-*` classes, including `.fjord-type-body`. See [the scale, font assets and import contract](typography.md). For a size on its own, use the `text-*` scale: `text-2xs` (11) … `text-3xl` (24).
 - Sentence case for everything except `overline` (uppercase, +0.08em tracking).
-- A little air: body line height 1.6, controls 34px tall, 16px default gap. Editors may go denser (13-14px); web pages may go roomier (17px `lead`).
+- A little air: body line height 1.6, 16px default gap. Comfortable controls have a 40px minimum height; compact controls use 34px. Editors may go denser (13-14px); reading surfaces may use 17px `type-lead`.
+
+The complete scale is in `semantic.typography` and `semantic.font-size`; size roles run from `text-2xs` (11px) to `text-3xl` (24px). [Font sources](../assets/fonts/README.md) include the original licences. Preserve readable fallbacks, allow text enlargement and keep long labels and paths wrapping.
 
 ## Space, shape and depth
 
@@ -64,9 +66,28 @@ Night is the default when no theme is selected. Every colour token must define a
 - **Borders** are `border-hairline` (1px). Selected markers and focus are `border-active` / `border-focus` (2px).
 - **Elevation:** `shadow-sm` (buttons), `shadow-raised` (cards), `shadow-overlay` (anything floating), `shadow-pressed` (wells). The scrim behind modals uses the `scrim` colour and its alpha value, without blur.
 
+## Layout and interaction
+
+Spacing follows the existing 4px grid. Reading text stays near 70 characters per line. Start with one column and preserve reading order; content determines whether additional columns fit.
+
+| Rule | Value |
+| --- | --- |
+| Page gutter | 16px, increasing to 32px from 640px |
+| Content maximum | 1200px |
+| Breakpoints | 640px, 960px and 1280px |
+| Comfortable density | 40px minimum control height, 16px gap, 20px panel padding |
+| Compact density | 34px minimum control height, 12px gap and panel padding |
+| Coarse pointer | At least 44px control target in either density |
+
+These values live in the semantic layout, breakpoint and density roles. Use minimum heights so enlarged or translated text can grow. Compact gap and padding must not exceed comfortable values. Scrollable code and tables need a named, keyboard-accessible region.
+
+Layers use `z-base` 0, `z-sticky` 10, `z-popover` 50, `z-modal` 60, `z-toast` 70 and `z-tooltip` 80. They order surfaces within the consuming platform's stacking rules; they do not implement focus or modality.
+
+Preserve a 2px focus outline with a 2px offset. Keep focus visible and stable through updates. Selected items need a marker or outline as well as colour. Invalid fields need associated error text. Loading actions keep readable labels and suppress duplicate activation. Disabled text belongs only to unavailable controls, never help text or ordinary content. `tokens/usage.json` records the shared meanings, states and contrast pairs.
+
 ## Motion
 
-Functional only. `duration-fast` (120ms) for hover, press and menus; `duration-base` (180ms) for expanding, switching and dialogs; `duration-slow` (260ms) for sheets, drawers and slides. Use `easing-standard` by default and `easing-exit` when a separate exit curve helps. Spinners and skeleton shimmer stop under `prefers-reduced-motion`. No auto-advancing carousels or parallax. [Foundation rules](foundations.md) define density, breakpoints, target sizes, layer order, reduced motion and forced colours.
+Functional only. `duration-fast` (120ms) for hover, press and menus; `duration-base` (180ms) for expanding, switching and dialogs; `duration-slow` (260ms) for sheets, drawers and slides. Use `easing-standard` by default and `easing-exit` when a separate exit curve helps. Spinners and skeleton shimmer stop under `prefers-reduced-motion`. No auto-advancing carousels or parallax. Respect reduced-motion preferences by stopping decorative movement while retaining visible status text. In forced-colour environments, preserve boundaries and focus with the platform’s system colours; do not depend on shadows or colour alone.
 
 ## Logo
 
@@ -80,31 +101,24 @@ The canonical files, Day token bindings and accessibility guidance are in [brand
 
 ## Iconography
 
-Use Phosphor Fill in `currentColor`, with a 24 CSS pixel reference box. The Svelte `Icon` primitive uses 16 pinned SVGs with their original MIT notice. Sizes are 16px in controls, 18px in status/navigation, 20px for larger inline content and 24-28px for standalone or empty-state icons. [Foundation guidance](foundations.md) defines alignment and accessible names; [icon assets](../assets/icons/README.md) records provenance and update rules.
+Use Phosphor Fill in `currentColor`, with a 24 CSS pixel reference box. The foundation supplies 16 pinned SVGs with their original MIT notice. Sizes are 16px in controls, 18px in status/navigation, 20px for larger inline content and 24-28px for standalone or empty-state icons. Keep the icon size separate from its hit area. Hide decorative icons from assistive technology, and give meaningful standalone icons an accessible name. Use visible text for status. [Icon assets](../assets/icons/README.md) record provenance and update rules.
 
 ## Code and terminal
 
 - Syntax colours stand out from the UI on purpose (Horizon-inspired, muted): keywords `syn-keyword` (lilac, italic), strings `syn-string` (foam), functions `syn-function` (aurora), types `syn-type` (frost), properties/tags `syn-property` (rose), numbers/constants `syn-number` (latte), operators `syn-operator`, regex/escapes `syn-regex`, punctuation `syn-punctuation`, comments `syn-comment` (grey-teal italic, never dim).
-- The seven main syntax colours are kept at least 7 apart in perceptual colour difference (ΔE OKLab × 100) in every theme, and operators and regex at least 5, so a glance is enough to tell a string from a number. Re-check this whenever you change a syntax token.
+- The seven main syntax colours are kept at least 7 apart in perceptual colour difference (ΔE OKLab × 100) in every mode, and operators and regex at least 5, so a glance is enough to tell a string from a number. Re-check this whenever you change a syntax token.
 - Diffs: `git-added`, `git-modified`, `git-removed` for gutter marks; `diff-add-bg`, `warning-soft`, `diff-del-bg` for added, changed and deleted line backgrounds. Use `ink` for text on these fills. Keep the `+ Added`, `~ Changed`, `- Deleted` markers visible. Search: `search-match` and `search-match-current`, with `ink` for matched text.
 - The terminal uses `ansi-*` (16 colours) on `bg-base`, with the cursor in `accent` and selection in `selection`. A prompt may show context - path, git branch and status, runtime versions, duration - with the path in `frost`, branch in `lilac`, clean/dirty as `git-added`/`git-modified`, durations in `ink-subtle`.
-- Dim or hint text uses `ansi-bright-black` on `bg-base` at full opacity, with at least 4.5:1 contrast in every theme. Do not apply extra dimming to autosuggestions or helper text.
-- Wallpaper and desktop: a solid `bg-sunken` (or `bg-base`) colour - no images, no gradients.
+- Dim or hint text uses `ansi-bright-black` on `bg-base` at full opacity, with at least 4.5:1 contrast in every mode. Do not apply extra dimming to autosuggestions or helper text.
 
-The complete bindings and non-colour markers are in [code and terminal roles](code-and-terminal.md). Run `mise run preview` for the interactive examples. Automatic checks enforce both contrast and syntax colour distance.
+Automatic checks enforce shared contrast and syntax colour distance. Terminal programs that choose their own colours, dimming or inverse video need implementation-specific checks. Solid `bg-sunken` or `bg-base` can provide a desktop background without images or gradients.
 
 ## Writing
 
 Short, plain, sentence case. Verbs on buttons ("Apply theme", "Delete theme"). Errors say what happened and what to do. No exclamation marks, no emoji in UI text.
 
-## Using this system
+## Using the foundation
 
-The repository delivers the token core, code specimen, canonical SVG brand assets and verified self-hosted fonts. Svelte components and the Storybook catalogue are delivered through the MVP tasks. [Typography verification](verification/xer-105.md) records font, licence, fallback and browser checks.
+Use the [consumer guide](consumer-guide.md) to export design data and inherit themes. The foundation supplies generic CSS variables, resolved JSON and DTCG tokens; each implementation owns its controls, rendering and target-specific mappings.
 
-- Web adapters should expose tokens as CSS custom properties: `var(--bg-base)`, `var(--space-4)`, `var(--radius-full)`, `var(--font-mono)`. Set `data-theme="night" | "day" | "aurora"` on `<html>`; with no attribute you get Night.
-- The web reference uses Svelte + TypeScript, Vite and Storybook. Components consume generated token output and have framework-independent specifications. The [architecture decision](decisions/0001-platform-boundaries.md) defines boundaries and distribution; the [dependency policy](dependency-policy.md) defines stable-version selection and the TypeScript 7 bridge.
-- Building a theme for another app (VS Code, terminals, JetBrains, Neovim, KDE/GNOME, Windows, browsers): read the **Platforms** section for which token goes where. Values per mode are resolved from the DTCG sources in `tokens/`; see [platform mappings](platforms.md).
-
-## Validation
-
-Use `mise run check`. The format and validation rules are in [the token contract](token-contract.md). Release rules are in [versions and token lifecycle](versioning.md).
+Run `mise run check` after source changes. The [token contract](token-contract.md) defines validation and compatibility. A passing foundation check does not establish native rendering or accessibility support.

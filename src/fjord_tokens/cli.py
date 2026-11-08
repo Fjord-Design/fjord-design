@@ -39,172 +39,64 @@ def write_binary_output(path, content, forbidden):
 
 
 def parser():
-    result = argparse.ArgumentParser(description="Validate and build Fjord DTCG tokens.", allow_abbrev=False)
+    result = argparse.ArgumentParser(description="Validate and export the Fjord design foundation.", allow_abbrev=False)
     commands = result.add_subparsers(dest="command", required=True)
-    validate = commands.add_parser("validate", help="check every mode and the platform tables", allow_abbrev=False)
+    validate = commands.add_parser("validate", help="check tokens, contrast, fonts, icons and licences", allow_abbrev=False)
     validate.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    build = commands.add_parser("build", help="compose validated DTCG tokens for one mode", allow_abbrev=False)
-    build.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    build.add_argument("--mode", choices=THEMES, default="night")
-    build.add_argument("--theme", type=Path, help="replace the default theme layer")
-    build.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
-    build.add_argument("--output", type=Path, help="output path; default: dist/<mode>.tokens.json")
-    export = commands.add_parser("export", help="export validated tokens or a WezTerm colour scheme", allow_abbrev=False)
-    export.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    export.add_argument("--mode", choices=THEMES, default="night")
-    export.add_argument("--format", choices=("dtcg", "resolved", "css", "wezterm"), required=True)
-    export.add_argument("--theme", type=Path, help="replace the default theme layer")
-    export.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
-    export.add_argument("--output", type=Path, help="output path; default: dist/<mode>.<format>")
-    theme_css = commands.add_parser("theme-css", help="build scoped Svelte identity colours for all modes", allow_abbrev=False)
-    theme_css.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    theme_css.add_argument("--identity", required=True, help="lower-case identity name")
-    theme_css.add_argument("--theme", type=Path, help="replace the default theme layer")
-    theme_css.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
-    theme_css.add_argument("--output", type=Path, help="output path; default: dist/<identity>.theme.css")
-    preview = commands.add_parser("preview", help="build the interactive code and terminal specimen", allow_abbrev=False)
-    preview.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    preview.add_argument("--theme", type=Path, help="replace the default theme layer in every mode")
-    preview.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
-    preview.add_argument("--output", type=Path, help="HTML output path; default: dist/code-and-terminal.html")
-    palette = commands.add_parser("palette", help="build colour scales and HEX contrast evidence", allow_abbrev=False)
-    palette.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    palette.add_argument("--format", choices=("html", "json"), default="html")
-    palette.add_argument("--theme", type=Path, help="replace the default theme layer in every mode")
-    palette.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
-    palette.add_argument("--output", type=Path, help="output path; default: dist/palette.<format>")
-    typography = commands.add_parser("typography", help="validate or build self-hosted fonts and type scales", allow_abbrev=False)
-    typography.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    typography.add_argument("--check", action="store_true", help="validate assets and roles without writing output")
-    foundations = commands.add_parser("foundations", help="validate or build layout rules and icon assets", allow_abbrev=False)
-    foundations.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    foundations.add_argument("--check", action="store_true", help="validate layout and icon assets without writing output")
-    semantics = commands.add_parser("semantics", help="validate or build semantic roles, states and theme identity evidence", allow_abbrev=False)
-    semantics.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    semantics.add_argument("--check", action="store_true", help="validate both identities in all modes without writing output")
+    for name, help_text in (("build", "compose validated DTCG tokens for one mode"),
+                            ("export", "export validated tokens as DTCG, resolved JSON or CSS")):
+        command = commands.add_parser(name, help=help_text, allow_abbrev=False)
+        command.add_argument("--root", type=Path, default=ROOT, help="project directory")
+        command.add_argument("--mode", choices=THEMES, default="night")
+        command.add_argument("--theme", type=Path, help="replace the default theme layer")
+        command.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
+        command.add_argument("--output", type=Path, help="output path; defaults to dist/ inside the project")
+        if name == "export":
+            command.add_argument("--format", choices=("dtcg", "resolved", "css"), required=True)
     return result
+
+
+def source_paths(root):
+    return [root / name for name in ("tokens", "src", "docs", "assets", "examples", "tests", "scripts",
+                                     ".github", ".git", "README.md", "LICENSE", "AGENTS.md", "CONTRIBUTING.md",
+                                     "CHANGELOG.md", "mise.toml", ".gitignore")]
 
 
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        report = validate_project(args.root)
+        for warning in report.deprecated:
+            print(f"WARN deprecated {warning}", file=sys.stderr)
         if args.command == "validate":
-            report = validate_project(args.root)
-            for warning in report.deprecated:
-                print(f"WARN deprecated {warning}", file=sys.stderr)
-            print(f"PASS: {report.tokens} DTCG tokens per mode; 3 modes; "
-                  f"{report.contrast_checks} contrast pairs in sRGB and HEX; {report.platform_values} platform values.")
-        elif args.command == "build":
-            validate_project(args.root)
-            project = Project(args.root)
-            composition = project.compose(args.mode, args.theme, args.override)
+            from .fonts import load_fonts
+            from .icons import load_icons
+
+            fonts = load_fonts(args.root)
+            icons = load_icons(args.root)
+            faces = sum(len(family["faces"]) for family in fonts["families"])
+            print(f"PASS: {report.tokens} DTCG tokens per mode; {len(THEMES)} modes; "
+                  f"{report.contrast_checks} contrast pairs in sRGB and HEX; "
+                  f"{faces} font faces and {len(icons['icons'])} icons with pinned licences.")
+            return 0
+
+        composition = Project(args.root).compose(args.mode, args.theme, args.override)
+        forbidden = source_paths(args.root) + args.override + ([args.theme] if args.theme else [])
+        if args.command == "build":
             check_contrast(composition)
-            info = dict(metadata(), mode=args.mode)
+            result = nest(composition.tokens, dict(metadata(), mode=args.mode))
             destination = args.output or args.root / "dist" / f"{args.mode}.tokens.json"
-            forbidden = [args.root / "tokens", *args.override] + ([args.theme] if args.theme else [])
-            write_output(destination, nest(composition.tokens, info), forbidden)
-            print(f"Built {args.mode}: {destination}")
-        elif args.command == "export":
+        else:
             from .export import export
 
-            validate_project(args.root)
-            composition = Project(args.root).compose(args.mode, args.theme, args.override)
             result = export(composition, args.format)
-            suffix = {"dtcg": "dtcg.json", "resolved": "resolved.json", "css": "tokens.css", "wezterm": "wezterm.toml"}[args.format]
+            suffix = {"dtcg": "dtcg.json", "resolved": "resolved.json", "css": "tokens.css"}[args.format]
             destination = args.output or args.root / "dist" / f"{args.mode}.{suffix}"
-            forbidden = [args.root / name for name in ("tokens", "src", "docs", "assets", "examples", "tests", "reference",
-                                                      "scripts", "patches", ".github", ".git", "README.md", "LICENSE",
-                                                      "mise.toml", "package.json", "bun.lock")]
-            forbidden += [*args.override] + ([args.theme] if args.theme else [])
-            if isinstance(result, dict):
-                write_output(destination, result, forbidden)
-            else:
-                write_text_output(destination, result, forbidden)
-            print(f"Exported {args.mode} {args.format}: {destination}")
-        elif args.command == "theme-css":
-            from .theme_css import theme_css
-
-            validate_project(args.root)
-            content = theme_css(args.root, args.identity, args.theme, args.override)
-            destination = args.output or args.root / "dist" / f"{args.identity}.theme.css"
-            forbidden = [args.root / name for name in ("tokens", "src", "docs", "assets", "examples", "tests", "reference",
-                                                      "scripts", "patches", ".github", ".git", "README.md", "LICENSE",
-                                                      "mise.toml", "package.json", "bun.lock")]
-            forbidden += [*args.override] + ([args.theme] if args.theme else [])
-            write_text_output(destination, content, forbidden)
-            print(f"Built scoped identity {args.identity}: {destination}")
-        elif args.command == "preview":
-            from .preview import render_preview
-            from .fonts import font_bundle, load_fonts
-
-            content = render_preview(args.root, args.theme, args.override)
-            files = font_bundle(args.root, load_fonts(args.root))
-            destination = args.output or args.root / "dist/code-and-terminal.html"
-            forbidden = [args.root / name for name in ("tokens", "examples", "src", "assets", "docs", "tests", "reference",
-                                                       "scripts", "patches", ".git", ".github", "README.md", "LICENSE", "mise.toml", "package.json", "bun.lock")]
-            forbidden += args.override
-            if args.theme:
-                forbidden.append(args.theme)
-            write_text_output(destination, content, forbidden)
-            for name, data in files.items():
-                write_binary_output(destination.parent / "fonts" / name, data, forbidden)
-            print(f"Built code and terminal preview: {destination}")
-        elif args.command == "palette":
-            from .palette import build_palette, render_palette
-
-            report = build_palette(args.root, args.theme, args.override)
-            destination = args.output or args.root / f"dist/palette.{args.format}"
-            forbidden = [args.root / name for name in ("tokens", "src", "docs", "assets", "examples", "tests", "reference",
-                                                      "scripts", "patches", ".github", ".git", "README.md", "LICENSE",
-                                                      "mise.toml", "package.json", "bun.lock")]
-            forbidden += [*args.override] + ([args.theme] if args.theme else [])
-            if args.format == "html":
-                write_text_output(destination, render_palette(report), forbidden)
-            else:
-                write_output(destination, report, forbidden)
-            print(f"Built colour palette: {destination}")
-        elif args.command == "semantics":
-            from .semantics import semantic_bundle
-
-            files = semantic_bundle(args.root)
-            if args.check:
-                print("PASS: 34 semantic UI roles, 8 states and 2 identities across 3 modes.")
-            else:
-                forbidden = [args.root / name for name in ("assets", "tokens", "src", "docs", "tests", "reference", "scripts", "patches", ".git",
-                                                           ".github", "examples", "README.md", "LICENSE", "mise.toml", "package.json", "bun.lock")]
-                for name, data in files.items():
-                    write_binary_output(args.root / "dist" / name, data, forbidden)
-                print(f"Built semantic states: {args.root / 'dist/semantics.html'}")
-        elif args.command == "foundations":
-            from .foundations import foundation_bundle
-
-            files = foundation_bundle(args.root)
-            if args.check:
-                print("PASS: layout, density, layers, motion and 16 pinned Phosphor Fill icons.")
-            else:
-                forbidden = [args.root / name for name in ("assets", "tokens", "src", "docs", "tests", "reference", "scripts", "patches", ".git",
-                                                           ".github", "examples", "README.md", "LICENSE", "mise.toml", "package.json", "bun.lock")]
-                for name, data in files.items():
-                    write_binary_output(args.root / "dist" / name, data, forbidden)
-                print(f"Built foundations: {args.root / 'dist/foundations.html'}")
-        elif args.command == "typography":
-            from .fonts import font_bundle, load_fonts
-            from .typography import render_typography, typography_report
-
-            manifest = load_fonts(args.root)
-            report = typography_report(args.root, manifest)
-            if args.check:
-                print("PASS: 9 pinned WOFF2 faces, 5 licences and 15 typography roles.")
-            else:
-                files = font_bundle(args.root, manifest)
-                html = render_typography(args.root, report)
-                forbidden = [args.root / name for name in ("assets", "tokens", "src", "docs", "tests", "reference", "scripts", "patches", ".git",
-                                                           ".github", "examples", "README.md", "LICENSE", "mise.toml", "package.json", "bun.lock")]
-                for name, content in files.items():
-                    write_binary_output(args.root / "dist/fonts" / name, content, forbidden)
-                write_text_output(args.root / "dist/typography.html", html, forbidden)
-                write_output(args.root / "dist/typography.json", report, forbidden)
-                print(f"Built typography: {args.root / 'dist/typography.html'}")
+        if isinstance(result, dict):
+            write_output(destination, result, forbidden)
+        else:
+            write_text_output(destination, result, forbidden)
+        print(f"Built {args.mode}: {destination}")
     except (TokenError, OSError, UnicodeError) as error:
         print(f"ERROR {error}", file=sys.stderr)
         return 1

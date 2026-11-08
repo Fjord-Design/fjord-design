@@ -1,4 +1,4 @@
-"""Validate pinned self-hosted font assets and derive typography CSS from tokens."""
+"""Validate pinned font sources, licences and typography role support."""
 
 import hashlib
 import json
@@ -41,12 +41,15 @@ def load_fonts(root):
     directory = Path(root) / "assets/fonts"
     manifest = read_json(directory / "manifest.json")
     inspection = read_json(directory / "inspection.json")
-    if manifest.get("schemaVersion") != 1 or manifest.get("fontDisplay") != "swap":
+    if (not isinstance(manifest, dict) or type(manifest.get("schemaVersion")) is not int
+            or manifest["schemaVersion"] != 1 or manifest.get("fontDisplay") != "swap"):
         raise TokenError("font manifest: expected schemaVersion 1 and fontDisplay swap")
     families = manifest.get("families")
     if (not isinstance(families, list) or any(not isinstance(f, dict) or not isinstance(f.get("family"), str) for f in families)
             or {family.get("family") for family in families} != FAMILIES or len(families) != 5):
         raise TokenError("font manifest: retain the five approved font families exactly once")
+    if not isinstance(inspection, dict):
+        raise TokenError("font inspection: expected an object")
     inspected_faces = inspection.get("faces")
     if (not isinstance(inspected_faces, list) or any(not isinstance(face, dict) or not isinstance(face.get("file"), str)
                                                     for face in inspected_faces)
@@ -72,7 +75,7 @@ def load_fonts(root):
             name, style, weights = face["file"], face["style"], face["weight"]
             if not isinstance(name, str) or not re.fullmatch(r"[a-z0-9-]+/[A-Za-z0-9-]+\.woff2", name):
                 raise TokenError(f"{name}: use a family directory and a WOFF2 filename")
-            if name in seen or style not in {"normal", "italic"} or style in styles:
+            if name in seen or not isinstance(style, str) or style not in {"normal", "italic"} or style in styles:
                 raise TokenError(f"{name}: duplicate font face or unsupported style")
             seen.add(name)
             styles.add(style)
@@ -95,14 +98,17 @@ def load_fonts(root):
             raise TokenError(f"{family['family']}: expected styles {sorted(required)}")
     if seen != evidence.keys():
         raise TokenError("font inspection: face list differs from the font manifest")
-    shared = Project(root).compose("night")
+    shared = project.compose("night")
     for mode in ("night", "day", "aurora"):
         composition = project.compose(mode)
+        stacks = [composition.values["semantic.font." + name] for name in ("sans", "display", "mono")]
         for role in ROLES:
             path = "semantic.typography." + role
             if path not in composition.values:
                 raise TokenError(f"{path}: missing typography role")
             value = composition.values[path]
+            if value["fontFamily"] not in stacks:
+                raise TokenError(f"{path}: bind fontFamily to one of the shared semantic font stacks")
             style = composition.tokens[path].get("$extensions", {}).get(EXTENSION, {}).get("fontStyle")
             if value != shared.values[path] or style != shared.tokens[path].get("$extensions", {}).get(EXTENSION, {}).get("fontStyle"):
                 raise TokenError(f"{path}: share typography values and styles across all modes")
@@ -118,58 +124,3 @@ def load_fonts(root):
 
 def family_css(families):
     return ", ".join(family if family in GENERIC else json.dumps(family, ensure_ascii=False) for family in families)
-
-
-def rem(value):
-    amount = value["value"] / 16 if value["unit"] == "px" else value["value"]
-    return f"{amount:g}rem"
-
-
-def typography_css(root, manifest):
-    composition = Project(root).compose("night")
-    result = ["/* Generated from Fjord tokens and the pinned font manifest. */"]
-    for family in manifest["families"]:
-        for face in family["faces"]:
-            result.append("@font-face {" + f"font-family:{json.dumps(family['family'])};"
-                          + f"src:url(\"./{face['file']}\") format(\"woff2\");font-style:{face['style']};"
-                          + f"font-weight:{face['weight'][0]} {face['weight'][1]};font-display:swap;"
-                          + (f"unicode-range:{face['unicodeRange']};" if "unicodeRange" in face else "") + "}")
-    stacks = {name: composition.values["semantic.font." + name] for name in ("sans", "display", "mono")}
-    result.append(":root {" + "".join(f"--fjord-font-{name}:{family_css(stack)};" for name, stack in stacks.items())
-                  + "--fjord-code-ligatures:1;--fjord-code-alternates:normal;}")
-    result.extend([
-        '@font-feature-values "Cascadia Code" { @styleset { fjord-cursive:1; } }',
-        ':root[data-fjord-ligatures="off"] {--fjord-code-ligatures:0;}',
-        ':root[data-fjord-cursive="on"] {--fjord-code-alternates:styleset(fjord-cursive);}',
-        ':root[data-fjord-fonts="fallback"] {--fjord-font-sans:"Open Sans",system-ui,sans-serif;'
-        '--fjord-font-display:"Noto Sans","Open Sans",system-ui,sans-serif;--fjord-font-mono:"Fira Code",ui-monospace,monospace;}',
-        ':root[data-fjord-fonts="system"] {--fjord-font-sans:system-ui,sans-serif;'
-        '--fjord-font-display:system-ui,sans-serif;--fjord-font-mono:ui-monospace,Menlo,Consolas,monospace;}',
-    ])
-    for role in ROLES:
-        path = "semantic.typography." + role
-        value = composition.values[path]
-        style = composition.tokens[path]["$extensions"][EXTENSION]["fontStyle"]
-        stack = next((name for name, families in stacks.items() if families == value["fontFamily"]), None)
-        if stack is None:
-            raise TokenError(f"{path}: bind fontFamily to one of the shared semantic font stacks")
-        result.append(f".fjord-{role} {{font-family:var(--fjord-font-{stack});font-size:{rem(value['fontSize'])};"
-                      + f"font-weight:{value['fontWeight']};font-style:{style};line-height:{value['lineHeight']};"
-                      + f"letter-spacing:{rem(value['letterSpacing'])};font-synthesis:none;"
-                      + ('font-feature-settings:"calt" var(--fjord-code-ligatures),"liga" var(--fjord-code-ligatures);'
-                         if stack == "mono" else "")
-                      + ('font-variant-alternates:var(--fjord-code-alternates);' if style == "italic" and stack == "mono" else "") + "}")
-    result.append('[data-fjord-ligatures="off"] .fjord-code {font-variant-ligatures:none;}')
-    return "\n".join(result) + "\n"
-
-
-def font_bundle(root, manifest):
-    directory = Path(root) / "assets/fonts"
-    files = {"typography.css": typography_css(root, manifest).encode("utf-8")}
-    for name in ("manifest.json", "inspection.json"):
-        files[name] = (directory / name).read_bytes()
-    for family in manifest["families"]:
-        files[family["licenseFile"]] = asset_path(directory, family["licenseFile"]).read_bytes()
-        for face in family["faces"]:
-            files[face["file"]] = asset_path(directory, face["file"]).read_bytes()
-    return files

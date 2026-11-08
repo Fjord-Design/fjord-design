@@ -1,250 +1,25 @@
 [tools]
-node = "26.12.1"
-bun = "1.4.4"
 python = "3.15.0"
 
 [env]
 PYTHONPATH = "{{config_root}}/src"
 
-[tasks.setup]
-description = "Install the exact JavaScript dependency set from bun.lock"
-run = "bun install --frozen-lockfile"
-
 [tasks.test]
-description = "Run DTCG, contrast and platform regression tests"
+description = "Test token inheritance, exports and design validation"
 run = "python3 -m unittest discover -s tests -v"
 
 [tasks.validate]
-description = "Validate DTCG sources, all modes, contrast and platform tables"
+description = "Validate design tokens, contrast, fonts and icons"
 run = "python3 -m fjord_tokens validate"
 
 [tasks.check]
-description = "Run all local checks"
-depends = ["test", "validate", "fonts:validate", "foundations:validate", "semantics:validate", "test:theme-preference", "test:form-fields", "test:choice-controls", "test:layout-components", "test:overlays", "test:data-feedback", "test:type-components", "test:complete-components", "format:check", "reference:check"]
-
-[tasks."test:complete-components"]
-description = "Verify the full component matrix, theme SSR, dates and invalid input"
-run = "node scripts/check-complete-components.mjs"
-
-[tasks."test:controls:firefox"]
-description = "Check slider and selection regressions in an existing isolated Firefox; installs nothing"
-depends = ["storybook:build"]
-run = "python3 scripts/check_controls_firefox.py"
+description = "Check the shared design foundation"
+depends = ["test", "validate"]
 
 [tasks.build]
-description = "Build tokens, the Svelte reference and native adapters"
-depends = ["tokens:build", "tokens:export", "reference:build", "palette", "adapters:build"]
-
-[tasks."adapters:build"]
-description = "Build five native adapters and two variants with coverage reports"
-depends = ["adapters:wezterm", "adapters:zed", "adapters:vscode", "adapters:neovim", "adapters:kde", "variants:build"]
-
-[tasks."adapters:neovim"]
-description = "Build the opaque Neovim highlights and terminal palette"
-run = "python3 adapters/neovim/generate.py"
-
-[tasks."adapters:kde"]
-description = "Build the bounded KDE colour proof of concept without applying it"
-run = "python3 adapters/kde/generate.py"
-
-[tasks."variants:build"]
-description = "Build work/gaming scoped CSS and separately named native adapters"
-run = "python3 scripts/build_variants.py"
-
-[tasks."test:neovim"]
-description = "Check an existing native Neovim runtime in isolation; installs nothing"
-depends = ["adapters:neovim"]
-run = "python3 scripts/check_neovim.py"
-
-[tasks."adapters:wezterm"]
-description = "Build the declarative WezTerm reference adapter"
-run = "python3 adapters/wezterm/generate.py"
-
-[tasks."adapters:zed"]
-description = "Build Fjord Night, Day and Aurora for Zed"
-run = "python3 adapters/zed/generate.py"
-
-[tasks."adapters:vscode"]
-description = "Build Fjord Night, Day and Aurora themes and an installable VS Code package"
-run = ["python3 adapters/vscode/generate.py", "python3 scripts/package_vscode.py"]
-
-[tasks.palette]
-description = "Build colour scales and source/HEX contrast evidence"
-run = ["python3 -m fjord_tokens palette", "python3 -m fjord_tokens palette --format json"]
-
-[tasks."tokens:build"]
-description = "Build the three validated DTCG mode documents"
-run = [
-  "python3 -m fjord_tokens build --mode night",
-  "python3 -m fjord_tokens build --mode day",
-  "python3 -m fjord_tokens build --mode aurora",
-]
-
-[tasks."tokens:export"]
-description = "Export DTCG, resolved JSON, CSS and WezTerm schemes for all modes"
-run = "set -e; for mode in night day aurora; do for format in dtcg resolved css wezterm; do python3 -m fjord_tokens export --mode \"$mode\" --format \"$format\"; done; done"
-
-[tasks.preview]
-description = "Build the interactive code and terminal specimen"
-depends = ["fonts:build"]
-run = "python3 -m fjord_tokens preview"
-
-[tasks."fonts:validate"]
-description = "Validate font files, licences, pinned inspection and type roles"
-run = "python3 -m fjord_tokens typography --check"
-
-[tasks."icons:sync"]
-description = "Regenerate typed icon data from the pinned SVG assets"
-run = "python3 scripts/sync_icons.py"
-
-[tasks."foundations:validate"]
-description = "Validate layout, interaction, motion and the licensed icon subset"
-run = "python3 -m fjord_tokens foundations --check"
-
-[tasks."foundations:build"]
-description = "Build foundation CSS, icon assets and the interactive specimen"
-depends = ["fonts:build"]
-run = "python3 -m fjord_tokens foundations"
-
-[tasks."semantics:validate"]
-description = "Validate semantic states, contrast and both identity variants"
-run = "python3 -m fjord_tokens semantics --check"
-
-[tasks."semantics:build"]
-description = "Build semantic CSS, state evidence and the mode/identity specimen"
-depends = ["foundations:build"]
-run = "python3 -m fjord_tokens semantics"
-
-[tasks."test:theme-preference"]
-description = "Verify dark defaults, explicit choices and system listener cleanup"
-run = "node scripts/check-theme-preference.mjs"
-
-[tasks."test:form-fields"]
-description = "Verify native form markup and accessible associations"
-run = "node scripts/check-form-fields.mjs"
-
-[tasks."test:choice-controls"]
-description = "Verify choice semantics and form attributes"
-run = "node scripts/check-choice-controls.mjs"
-
-[tasks."test:layout-components"]
-description = "Verify card, separator and tab semantics"
-run = "node scripts/check-layout-components.mjs"
-
-[tasks."test:overlays"]
-description = "Verify dialog, alert and tooltip semantics"
-run = "node scripts/check-overlays.mjs"
-
-[tasks."test:data-feedback"]
-description = "Verify table and feedback semantics"
-run = "node scripts/check-data-feedback.mjs"
-
-[tasks."test:type-components"]
-description = "Verify typography, keyboard and code markup"
-run = "node scripts/check-type-components.mjs"
-
-[tasks."fonts:build"]
-description = "Build self-hosted font files, CSS and the typography specimen"
-run = "python3 -m fjord_tokens typography"
-
-[tasks."format:check"]
-description = "Check reference, script and CI formatting"
-run = "bun run format:check"
-
-[tasks.format]
-description = "Format reference, scripts and CI configuration"
-run = "bun run format"
-
-[tasks."accessibility:report"]
-description = "Build token contrast evidence for every mode and identity"
-run = "python3 scripts/accessibility_report.py"
-
-[tasks."catalogue:build"]
-description = "Build validated token inspection data for Storybook"
-depends = ["semantics:build", "variants:build"]
-run = "python3 scripts/build_catalogue.py"
-
-[tasks."reference:check"]
-description = "Check Svelte and TypeScript with the TypeScript 7 compiler"
-depends = ["catalogue:build"]
-run = "bun run check:reference"
-
-[tasks."reference:build"]
-description = "Build the typed Svelte library and Vite specimen"
-depends = ["catalogue:build"]
-run = "bun run build:reference"
-
-[tasks."reference:dev"]
-description = "Open the local Vite development server"
-dir = "reference/svelte"
-depends = ["catalogue:build"]
-run = "bun run dev"
-
-[tasks."storybook:dev"]
-description = "Open the local Storybook development server"
-dir = "reference/svelte"
-depends = ["catalogue:build"]
-run = "bun run storybook"
-
-[tasks."storybook:build"]
-description = "Build the static Storybook catalogue"
-depends = ["catalogue:build"]
-run = "bun run build:storybook"
-
-[tasks."test:types"]
-description = "Prove TypeScript 7 rejects source and distributed-consumer errors"
-run = "bun run test:types"
-
-[tasks."test:storybook-types"]
-description = "Check the Storybook declaration patch and reject invalid args"
-run = "bun run test:storybook-types"
-
-[tasks."artifacts:check"]
-description = "Check deterministic token output, build artifacts and document links"
-run = "python3 scripts/check_artifacts.py"
+description = "Export DTCG, resolved JSON and token CSS for every mode"
+run = "set -e; for mode in night day aurora; do for format in dtcg resolved css; do python3 -m fjord_tokens export --mode \"$mode\" --format \"$format\"; done; done"
 
 [tasks.ci]
-description = "Run the complete CI verification locally"
-run = [
-  "mise run check",
-  "mise run build",
-  "mise run preview",
-  "mise run storybook:build",
-  "mise run test:types",
-  "mise run test:storybook-types",
-  "mise run artifacts:check",
-]
-
-[tasks."release:prepare"]
-description = "Prepare a local, unaccepted MVP candidate"
-depends = ["build", "storybook:build", "accessibility:report"]
-run = "python3 scripts/package_candidate.py"
-
-[tasks."test:clean"]
-description = "Verify a clean source copy with a frozen dependency install"
-run = "node scripts/check-clean.mjs"
-
-[tasks."test:candidate"]
-description = "Verify candidate integrity and rebuild its extracted sources"
-depends = ["release:prepare"]
-run = "python3 scripts/check_candidate.py"
-
-[tasks."test:wezterm"]
-description = "Check the existing native WezTerm Lua sandbox and configuration preservation"
-depends = ["adapters:wezterm", "variants:build"]
-run = "python3 scripts/check_wezterm.py"
-
-[tasks."release:library"]
-description = "Build the accepted complete-library local release with native bundles and notices"
-depends = ["build", "storybook:build", "accessibility:report"]
-run = "python3 scripts/package_library.py"
-
-[tasks."test:library"]
-description = "Verify and rebuild the complete-library archive in an isolated directory"
-depends = ["release:library"]
-run = "python3 scripts/check_candidate.py dist/release/fjord-library-1.0.0.zip --expected-status accepted-local"
-
-[tasks."test:kde"]
-description = "Build and capture isolated previews using existing KDE/Qt tools"
-depends = ["adapters:kde", "variants:build"]
-run = "python3 scripts/check_kde.py"
+description = "Check and build the design foundation using Python only"
+run = ["mise run check", "mise run build"]

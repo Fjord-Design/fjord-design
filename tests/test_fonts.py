@@ -1,17 +1,12 @@
 import hashlib
 import json
 from pathlib import Path
-import re
 import shutil
-import subprocess
-import sys
 import tempfile
 import unittest
 
-from fjord_tokens.cli import write_binary_output
 from fjord_tokens.dtcg import EXTENSION, TokenError
-from fjord_tokens.fonts import ROLES, asset_path, font_bundle, load_fonts
-from fjord_tokens.typography import render_typography, typography_report
+from fjord_tokens.fonts import ROLES, asset_path, load_fonts
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,8 +19,6 @@ class FontTests(unittest.TestCase):
         self.root = Path(directory.name)
         shutil.copytree(ROOT / "tokens", self.root / "tokens")
         shutil.copytree(ROOT / "assets/fonts", self.root / "assets/fonts")
-        (self.root / "docs").mkdir()
-        shutil.copy2(ROOT / "docs/platforms.md", self.root / "docs/platforms.md")
 
     def edit(self, name, change):
         path = self.root / name
@@ -33,25 +26,19 @@ class FontTests(unittest.TestCase):
         change(data)
         path.write_text(json.dumps(data))
 
+
     def test_pinned_assets_cover_roles_and_keep_original_licences(self):
         manifest = load_fonts(self.root)
-        files = font_bundle(self.root, manifest)
-        self.assertEqual(len([name for name in files if name.endswith(".woff2")]), 9)
-        self.assertEqual(len([name for name in files if name.endswith("/OFL.txt")]), 5)
-        report = typography_report(self.root, manifest)
-        self.assertEqual(set(report["roles"]), set(ROLES))
+        self.assertEqual(sum(len(family["faces"]) for family in manifest["families"]), 9)
+        self.assertEqual(len(manifest["families"]), 5)
         self.assertEqual(len(ROLES), 15)
-        css = files["typography.css"].decode()
-        self.assertEqual(len(re.findall(r"@font-face", css)), 9)
-        for name in re.findall(r'url\("\./([^\"]+)"\)', css):
-            self.assertIn(name, files)
-        self.assertIn("font-size:0.9375rem", css)
-        self.assertIn("line-height:1.6", css)
-        self.assertIn("font-synthesis:none", css)
-        self.assertIn('@font-feature-values "Cascadia Code"', css)
-        self.assertNotIn('"ss01"', css)
-        self.assertNotIn("https://", css)
-        self.assertNotIn("local(", css)
+        self.assertTrue(all(family["license"] == "OFL-1.1" for family in manifest["families"]))
+
+    def test_typography_must_use_a_shared_semantic_font_stack(self):
+        self.edit("tokens/base.tokens.json", lambda data: data["semantic"]["typography"]["type-code"]["$value"].update(
+            fontFamily=["Cascadia Code", "Unexpected fallback"]))
+        with self.assertRaisesRegex(TokenError, "shared semantic font stacks"):
+            load_fonts(self.root)
 
     def test_corrupt_font_is_rejected(self):
         path = self.root / "assets/fonts/cascadia-code/CascadiaCode.woff2"
@@ -112,35 +99,6 @@ class FontTests(unittest.TestCase):
         self.edit("tokens/source.tokens.json", lambda data: data["$extensions"][EXTENSION].update(fontAssets="elsewhere.json"))
         with self.assertRaisesRegex(TokenError, "fontAssets"):
             load_fonts(self.root)
-
-    def test_specimen_and_bundle_are_deterministic(self):
-        manifest = load_fonts(self.root)
-        first = typography_report(self.root, manifest)
-        self.assertEqual(first, typography_report(self.root, manifest))
-        self.assertEqual(font_bundle(self.root, manifest), font_bundle(self.root, manifest))
-        html = render_typography(self.root, first)
-        self.assertEqual(html, render_typography(self.root, first))
-        self.assertNotIn("{{", html)
-        self.assertNotIn("https://", html)
-        for control in ("fonts", "mode", "size", "ligatures", "cursive"):
-            self.assertIn(f'id="{control}"', html)
-
-    def test_check_does_not_write_and_build_keeps_sources_safe(self):
-        command = [sys.executable, "-m", "fjord_tokens", "typography", "--root", str(self.root)]
-        checked = subprocess.run([*command, "--check"], capture_output=True, text=True)
-        self.assertEqual(checked.returncode, 0, checked.stderr)
-        self.assertFalse((self.root / "dist").exists())
-        built = subprocess.run(command, capture_output=True, text=True)
-        self.assertEqual(built.returncode, 0, built.stderr)
-        self.assertEqual((self.root / "dist/fonts/cascadia-code/CascadiaCode.woff2").read_bytes(),
-                         (self.root / "assets/fonts/cascadia-code/CascadiaCode.woff2").read_bytes())
-        target = self.root / "tokens/base.tokens.json"
-        before = target.read_bytes()
-        link = self.root / "dist/output.woff2"
-        link.symlink_to(target)
-        with self.assertRaisesRegex(TokenError, "must not replace token sources"):
-            write_binary_output(link, b"bad", [self.root / "tokens"])
-        self.assertEqual(target.read_bytes(), before)
 
 
 if __name__ == "__main__":

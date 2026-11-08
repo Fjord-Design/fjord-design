@@ -1,14 +1,11 @@
 import json
 from pathlib import Path
 import shutil
-import subprocess
-import sys
 import tempfile
 import unittest
 
-from fjord_tokens.color import in_srgb_gamut, map_oklch_to_srgb, oklch_to_srgb, parse_oklch, srgb_to_oklab, srgb_to_oklch
+from fjord_tokens.color import design_seed_values, in_srgb_gamut, map_oklch_to_srgb, oklch_to_srgb, parse_oklch, srgb_to_oklab, srgb_to_oklch
 from fjord_tokens.dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color
-from fjord_tokens.palette import GROUPS, build_palette, render_palette
 from fjord_tokens.project import Project, check_contrast, contrast_value, validate_project
 
 
@@ -83,61 +80,20 @@ class ColorTests(unittest.TestCase):
             check_contrast(composition)
 
 
-class PaletteTests(unittest.TestCase):
-    def setUp(self):
-        directory = tempfile.TemporaryDirectory(prefix="fjord-palette-")
-        self.addCleanup(directory.cleanup)
-        self.root = Path(directory.name)
-        shutil.copytree(ROOT / "tokens", self.root / "tokens")
-        (self.root / "docs").mkdir()
-        shutil.copy2(ROOT / "docs/platforms.md", self.root / "docs/platforms.md")
-
-    def test_original_seeds_and_every_rendered_pair_are_retained(self):
-        report = build_palette(ROOT)
-        self.assertEqual([seed["reference"] for seed in report["seeds"]], SEEDS)
-        self.assertEqual(set(report["modes"]), {"night", "day", "aurora"})
-        self.assertEqual(sum(len(mode["contrastPairs"]) for mode in report["modes"].values()), 430)
-        for mode in report["modes"].values():
-            self.assertTrue(set(name for names in GROUPS.values() for name in names) <= mode["colors"].keys())
-            for pair in mode["contrastPairs"]:
-                self.assertGreaterEqual(pair["sourceRatio"], pair["minimum"])
-                self.assertGreaterEqual(pair["hexRatio"], pair["minimum"])
-
-    def test_seed_metadata_is_validated_before_build(self):
-        path = self.root / "tokens/base.tokens.json"
-        document = json.loads(path.read_text())
-        document["$extensions"][EXTENSION]["designSeeds"]["primary"][0] += "-"
-        path.write_text(json.dumps(document))
-        with self.assertRaisesRegex(TokenError, "invalid Fjord OKLCH seed"):
-            validate_project(self.root)
-
-    def test_palette_is_deterministic_and_offline(self):
-        first, second = build_palette(ROOT), build_palette(ROOT)
-        self.assertEqual(first, second)
-        html = render_palette(first)
-        self.assertEqual(html, render_palette(second))
-        self.assertIn('data-mode="night"', html)
-        self.assertIn('data-mode="day"', html)
-        self.assertIn('data-mode="aurora"', html)
-        self.assertNotIn("{{", html)
-        self.assertNotIn("https://", html)
-        self.assertNotIn("http://", html)
-
-    def test_palette_follows_the_contract_base_path(self):
-        (self.root / "tokens/base.tokens.json").rename(self.root / "tokens/source.tokens.json")
-        path = self.root / "tokens/contract.json"
-        contract = json.loads(path.read_text())
-        contract["base"] = "source.tokens.json"
-        path.write_text(json.dumps(contract))
-        self.assertEqual([seed["reference"] for seed in build_palette(self.root)["seeds"]], SEEDS)
-
-    def test_palette_cli_cannot_overwrite_sources(self):
-        target = self.root / "docs/platforms.md"
-        original = target.read_bytes()
-        result = subprocess.run([sys.executable, "-m", "fjord_tokens", "palette", "--root", str(self.root),
-                                 "--output", str(target)], text=True, capture_output=True)
-        self.assertEqual(result.returncode, 1, result.stderr)
-        self.assertEqual(target.read_bytes(), original)
+class DesignSeedTests(unittest.TestCase):
+    def test_original_seed_metadata_is_retained_and_validated(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(ROOT / "tokens", root / "tokens")
+            path = root / "tokens/base.tokens.json"
+            document = json.loads(path.read_text())
+            seeds = document["$extensions"][EXTENSION]["designSeeds"]
+            self.assertEqual(seeds["primary"] + seeds["accents"], SEEDS)
+            self.assertEqual(len(design_seed_values(seeds)), 7)
+            seeds["primary"][0] += "-"
+            path.write_text(json.dumps(document))
+            with self.assertRaisesRegex(TokenError, "invalid Fjord OKLCH seed"):
+                validate_project(root)
 
 
 if __name__ == "__main__":

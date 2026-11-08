@@ -1,8 +1,0 @@
-{
-  "name": "Fjord",
-  "modes": ["Night", "Day", "Aurora"],
-  "selectionAndSearch": "Fjord remains readable in each mode",
-  "count": 42,
-  "enabled": true,
-  "optional": null
-}

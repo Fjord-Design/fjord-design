@@ -1,8 +1,0 @@
-{
-  "url": "https://zed.dev/schema/themes/v0.2.0.json",
-  "retrieved": "2026-11-06",
-  "sha256": "c5a82ba7b133adfd48f60b88daa472d81ade95b78ce85e9a2ef2aef6ca2ba43e",
-  "license": "GPL-3.0-or-later",
-  "licenseSource": "https://raw.githubusercontent.com/zed-industries/zed/4a6121bb0f10c6e8037b741b7dc0a4cd639ae289/LICENSE-GPL",
-  "sourcePackage": "https://github.com/zed-industries/zed/blob/4a6121bb0f10c6e8037b741b7dc0a4cd639ae289/crates/theme/Cargo.toml"
-}
