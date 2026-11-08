@@ -32,9 +32,17 @@
       id={`${id}-progress`}
       label={`Uploading ${filename}`}
       value={progress}
-    />{:else if status === "error"}<p role="alert">Upload failed</p>
-    {#if onretry}<button type="button" onclick={onretry}
-        >Retry {filename}</button
+    />{:else if status === "error"}<div
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <p id={`${id}-error`}>Upload failed</p>
+    </div>
+    {#if onretry}<button
+        type="button"
+        onclick={onretry}
+        aria-describedby={`${id}-error`}>Retry {filename}</button
       >{/if}{:else if href}<a {href} download={filename}>Download {filename}</a
     >{:else}<span>Ready</span>{/if}
 </article>

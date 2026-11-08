@@ -210,9 +210,13 @@
           value={option.value}
           disabled={option.disabled}>{option.label}</option
         >{/each}
-    </select>{#if invalid}<p role="alert">
-        Choose an available option for {label}.
-      </p>{/if}{/if}
+    </select>{#if invalid}<div
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <p>Choose an available option for {label}.</p>
+      </div>{/if}{/if}
   <div
     id={`${id}-list`}
     class="fjord-listbox"

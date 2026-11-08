@@ -29,7 +29,7 @@
   let open = $state(false);
 </script>
 
-<div class="fjord-widget fjord-date-picker">
+<div class="fjord-widget fjord-date-picker" role="group" aria-label={label}>
   <label for={id}>{label}</label><input
     {id}
     {name}

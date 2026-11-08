@@ -7,7 +7,8 @@
 - Added the Neovim generator (native runtime not run), daily-use WezTerm configuration and optional prompt, and an isolated KDE/Qt colour proof of concept.
 - Added reproducible full-library local packaging, support/version/migration guides, native check commands and screenshot comparison tooling.
 - Fixed stale combobox submission, select constraint validation, hover-card focus/tap handling, disabled-date keyboard entry and bounded numeric inputs during implementation review.
-- Retained explicit acceptance limits: unobserved spoken screen-reader output, touch checks unavailable in this browser, Neovim runtime declined, and new editor variants not natively verified. See [verification](docs/verification/m3-m4.md).
+- Fixed native date-field context, sort-direction announcements, questionnaire validation announcements and readable alert content after Orca/Firefox checks. Added isolated screen-reader and Firefox touch-event verification.
+- Retained explicit acceptance limits: physical touch devices and a full browser/screen-reader matrix remain unverified, Neovim runtime declined, and new editor variants not natively verified. See [verification](docs/verification/m3-m4.md).
 
 ## Unreleased
 

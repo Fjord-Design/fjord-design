@@ -66,9 +66,11 @@
       ? "Loading…"
       : error
         ? "Could not load data"
-        : `${visible.length} rows; ${selected.length} selected`}
+        : `${visible.length} rows; ${selected.length} selected${sortKey ? `. Sorted by ${columns.find((column) => column.key === sortKey)?.label ?? sortKey}, ${ascending ? "ascending" : "descending"}.` : ""}`}
   </div>
-  {#if error}<p role="alert">{error}</p>
+  {#if error}<div role="alert" aria-live="assertive" aria-atomic="true">
+      <p>{error}</p>
+    </div>
     {#if onretry}<button type="button" onclick={onretry}>Try again</button
       >{/if}{/if}
   <!-- svelte-ignore a11y_no_noninteractive_tabindex (Named scroll regions need keyboard scrolling, as in the existing Table component.) -->

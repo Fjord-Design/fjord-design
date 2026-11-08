@@ -615,3 +615,7 @@ dialog.fjord-panel-dialog {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+.fjord-questionnaire form > [role="alert"] {
+  margin: 0;
+}

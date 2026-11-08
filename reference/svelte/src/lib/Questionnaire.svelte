@@ -95,7 +95,14 @@
           error || undefined,
         )}
       </div>
-      {#if error}<p id={`${id}-error`} role="alert">{error}</p>{/if}
+      <p
+        id={`${id}-error`}
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {error}
+      </p>
       <div class="fjord-button-group">
         <button
           type="button"
