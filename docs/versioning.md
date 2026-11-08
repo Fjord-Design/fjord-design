@@ -14,7 +14,7 @@ The [dependency policy](dependency-policy.md) governs library and development-to
 
 Contract 0.3.0 includes the layout roles, semantic usage/state source, semantic CLI, System preference and scoped identity contract. All source/override metadata must declare a supported 0.3.x contract. `tokens/contract.json` identifies `usage.json`; consumers import the scoped semantic stylesheet and may choose `mode="system"`. Existing token names and merge order remain unchanged. The Svelte package is versioned independently; 0.8.0 adds Typography, Code Block and Kbd; 0.8.1 corrects the code font and landmark semantics; 0.8.2 exposes the table scroll-region ID for focus management; 0.8.3 explicitly resets native appearance on the code copy button.
 
-The complete Svelte library is `1.0.0-rc.1`, independent of the unchanged `0.3.0` token contract and `0.1.0` declarative editor-theme packages. It adds exports and optional CSS without renaming MVP exports. See [migration](migration-v1.md), [distribution](distribution.md) and the [support matrix](support-matrix.md). A release candidate does not establish native support on targets that were not run.
+The complete Svelte library is `1.0.0`, independent of the unchanged `0.3.0` token contract and `0.1.0` declarative editor-theme packages. The owner accepted it for local distribution on 8 November 2026 with the documented limits. It adds exports and optional CSS without renaming MVP exports. See [migration](migration-v1.md), [distribution](distribution.md) and the [support matrix](support-matrix.md). Release acceptance does not establish native support on untested targets.
 
 ## Release rules
 

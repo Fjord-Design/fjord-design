@@ -16,9 +16,9 @@ The same design roles and principles guide each mode. Fjord is intended for desi
 
 The DTCG token sources define colour, typography and component roles. A Python core composes themes and overrides and validates their values and contrast. The repository also contains design guidance, a code and terminal specimen, and a Svelte reference library with Storybook.
 
-The Svelte reference now implements the exact 66-component source inventory. The complete-library candidate adds 43 components, typed APIs, family specifications and a combined settings/data/messages workspace. The [component matrix](docs/components/matrix.json) connects each name to its owning issue, specification and reference. The owner accepted the earlier MVP 0.1.0 for local distribution with [recorded limits](docs/verification/xer-120.md); the new `1.0.0-rc.1` candidate has its own [verification record](docs/verification/m3-m4.md).
+The Svelte reference implements the exact 66-component source inventory. Version `1.0.0` adds 43 components, typed APIs, family specifications and a combined settings/data/messages workspace. The [component matrix](docs/components/matrix.json) connects each name to its owning issue, specification and reference. The owner accepted `1.0.0` for local distribution on 8 November 2026 with [recorded verification limits](docs/verification/m3-m4.md). The earlier MVP `0.1.0` retains its [historical acceptance record](docs/verification/xer-120.md).
 
-[Platform adapters](docs/adapters.md) generate WezTerm, Zed, VS Code, Neovim and a bounded KDE colour proof of concept. Work and Gaming are optional accent identities across the same components and token names. The [support matrix](docs/support-matrix.md) distinguishes native results from generation checks, and the [distribution guide](docs/distribution.md) explains local packages, upgrades and remaining acceptance checks.
+[Platform adapters](docs/adapters.md) generate WezTerm, Zed, VS Code, Neovim and a bounded KDE colour proof of concept. Work and Gaming are optional accent identities across the same components and token names. The [support matrix](docs/support-matrix.md) distinguishes native results from generation checks. The [distribution guide](docs/distribution.md) explains local packages, upgrades and release ownership.
 
 ## Get started
 
@@ -77,7 +77,7 @@ Edit `tokens/` sources. `dist/` files are disposable build results.
 
 `mise run ci` runs the complete verification sequence. `mise run test:clean` installs and builds in a temporary source copy. [The reference workspace](reference/svelte/README.md) lists development-server commands.
 
-`mise run release:prepare` assembles the local MVP candidate ZIP. `mise run test:candidate` also verifies its file checksums and version consistency, extracts it into a temporary directory, installs the locked dependencies and runs CI from the extracted sources. These tasks do not publish or accept a release. Checksums detect archive damage; they do not authenticate its publisher.
+`mise run release:library` assembles the complete local `1.0.0` archive. `mise run test:library` verifies its checksums and versions, installs locked dependencies in a temporary directory, and runs CI from extracted sources. The historical `release:prepare` and `test:candidate` tasks retain the MVP archive format. Building an archive does not accept a future release or publish it to a registry or store. Checksums detect archive damage. They do not authenticate its publisher.
 
 Build a variant using an explicit theme and override:
 

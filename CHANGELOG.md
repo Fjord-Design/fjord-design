@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.0.0-rc.1 · local candidate · 8 November 2026
+## 1.0.0 · accepted local release · 8 November 2026
 
+- Accepted by the owner for local distribution, including the Slider and selection fixes in `d535c4c`. See [acceptance and verification](docs/verification/m3-m4.md).
 - Added the remaining 43 components, exact 66-component matrix, family contracts and a combined settings/data/messages workspace.
 - Added Work/Gaming overrides and separately named adapter bundles without changing token names or existing component bindings.
 - Added the Neovim generator (native runtime not run), daily-use WezTerm configuration and optional prompt, and an isolated KDE/Qt colour proof of concept.
@@ -9,7 +10,7 @@
 - Fixed stale combobox submission, select constraint validation, hover-card focus/tap handling, disabled-date keyboard entry and bounded numeric inputs during implementation review.
 - Fixed native date-field context, sort-direction announcements, questionnaire validation announcements and readable alert content after Orca/Firefox checks. Added isolated screen-reader and Firefox touch-event verification.
 - Normalized incoming Slider values and committed numeric edits, kept active combobox options visible during keyboard navigation, and rejected unavailable required Select values. Added repeatable browser regression checks.
-- Retained explicit acceptance limits: physical touch devices and a full browser/screen-reader matrix remain unverified, Neovim runtime declined, and new editor variants not natively verified. See [verification](docs/verification/m3-m4.md).
+- Retained the accepted verification limits: physical touch devices, human listening assessment and a full browser/screen-reader matrix remain unverified. Neovim remains generation only, new editor variants lack native verification, and KDE remains a bounded application-colour proof of concept. See [verification](docs/verification/m3-m4.md).
 
 ## Unreleased
 

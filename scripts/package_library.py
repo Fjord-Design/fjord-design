@@ -1,4 +1,4 @@
-"""Build the complete-library local candidate with native packages; never publish."""
+"""Build the accepted complete-library local release; never publish externally."""
 from hashlib import sha256
 from io import BytesIO
 import json
@@ -9,7 +9,7 @@ from fjord_tokens.cli import ROOT, write_binary_output
 from fjord_tokens.project import metadata
 from package_candidate import files, dependency_notices
 
-VERSION = "1.0.0-rc.1"
+VERSION = "1.0.0"
 PLATFORMS = ("wezterm", "zed", "vscode", "neovim", "kde")
 
 
@@ -30,9 +30,10 @@ def bundle(root):
         if f"platforms/{platform}/report.json" not in contents:
             raise ValueError(f"missing platform report: {platform}")
     if json.loads(contents["svelte/package.json"])["version"] != VERSION:
-        raise ValueError("library and Svelte candidate versions differ")
+        raise ValueError("library and Svelte release versions differ")
     contents["platforms/vscode/fjord-themes-0.1.0.vsix"] = (root / "dist/release/fjord-themes-0.1.0.vsix").read_bytes()
-    manifest = {"status": "candidate", "libraryVersion": VERSION,
+    manifest = {"status": "accepted-local", "distribution": "local", "libraryVersion": VERSION,
+                "acceptance": {"owner": "Xerrion", "date": "2026-11-08", "record": "docs/verification/m3-m4.md"},
                 "svelteVersion": VERSION, "tokenContract": metadata()["contractVersion"],
                 "componentCount": 66, "platforms": list(PLATFORMS),
                 "supportMatrix": "docs/support-matrix.md",
@@ -56,4 +57,4 @@ if __name__ == "__main__":
         raise ValueError("library archive is not reproducible")
     write_binary_output(target, first, [ROOT / folder for folder in ("tokens", "src", "docs", "assets", "tests", "reference", "scripts", ".git")])
     write_binary_output(target.with_suffix(".zip.sha256"), (sha256(first).hexdigest() + "  " + target.name + "\n").encode(), [])
-    print(f"Prepared reproducible local library candidate: {target}")
+    print(f"Prepared reproducible accepted local library release: {target}")
