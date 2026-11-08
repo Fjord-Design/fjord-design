@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0-rc.1 · local candidate · 8 November 2026
+
+- Added the remaining 43 components, exact 66-component matrix, family contracts and a combined settings/data/messages workspace.
+- Added Work/Gaming overrides and separately named adapter bundles without changing token names or existing component bindings.
+- Added the Neovim generator (native runtime not run), daily-use WezTerm configuration and optional prompt, and an isolated KDE/Qt colour proof of concept.
+- Added reproducible full-library local packaging, support/version/migration guides, native check commands and screenshot comparison tooling.
+- Fixed stale combobox submission, select constraint validation, hover-card focus/tap handling, disabled-date keyboard entry and bounded numeric inputs during implementation review.
+- Retained explicit acceptance limits: unobserved spoken screen-reader output, touch checks unavailable in this browser, Neovim runtime declined, and new editor variants not natively verified. See [verification](docs/verification/m3-m4.md).
+
 ## Unreleased
 
 - Added generated Night, Day and Aurora VS Code themes and a reproducible local VSIX. See the [VS Code guide](adapters/vscode/README.md) and [verification record](docs/verification/xer-134.md).

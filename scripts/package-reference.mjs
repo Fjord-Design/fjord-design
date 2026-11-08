@@ -29,6 +29,9 @@ await writeFile(
         "./overlay-components.css": "./overlay-components.css",
         "./data-feedback.css": "./data-feedback.css",
         "./type-components.css": "./type-components.css",
+        "./complete-components.css": "./complete-components.css",
+        "./work.css": "./work.css",
+        "./gaming.css": "./gaming.css",
       },
       files: [
         "*.js",
@@ -67,3 +70,10 @@ await copyFile(
   new URL("reference/svelte/README.md", root),
   new URL("README.md", destination),
 );
+
+for (const identity of ["work", "gaming"]) {
+  await copyFile(
+    new URL(`dist/variants/${identity}.css`, root),
+    new URL(`${identity}.css`, destination),
+  );
+}

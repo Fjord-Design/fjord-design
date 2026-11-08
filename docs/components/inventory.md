@@ -2,6 +2,8 @@
 
 The [source brief](https://chatgpt.com/space/page_bf1179e0aa208191bf1b556beecae213) names exactly 66 components. MVP contains 23; the complete-library milestone adds 43. Each source name has one owning delivery issue. Implementation status and detailed acceptance live in the linked issue.
 
+The machine-readable [66-component matrix](matrix.json) links each source name to its public export, specification, Svelte reference and catalogue family. Implementation and acceptance evidence for the new candidate is in [M3/M4 verification](../verification/m3-m4.md).
+
 The [glossary](glossary.md) defines ambiguous names and related controls. [XER-132](https://linear.app/xerrion/issue/XER-132/kontroller-alle-66-komponenter-og-udgiv-bibliotek-v10) accepts the complete set after the component deliveries.
 
 | Source component | Delivery | Owning issue |

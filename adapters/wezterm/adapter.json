@@ -3,8 +3,8 @@
   "id": "wezterm",
   "target": {
     "application": "WezTerm",
-    "version": "20240203-110809-5046fc22",
-    "os": "macOS"
+    "version": "20260716-195552-76b606ec",
+    "os": "CachyOS Linux; KDE Plasma 6.8.2 Wayland session, isolated XWayland window"
   },
   "modes": [
     "night",

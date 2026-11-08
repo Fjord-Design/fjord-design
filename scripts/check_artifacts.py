@@ -59,7 +59,7 @@ def main():
             return {path.relative_to(folder).as_posix(): path.read_bytes()
                     for path in sorted(folder.rglob("*")) if path.is_file()}
 
-        for platform in ("wezterm", "zed", "vscode"):
+        for platform in ("wezterm", "zed", "vscode", "neovim", "kde"):
             snapshots = []
             for label in ("first", "second"):
                 destination = directory / f"{label}-{platform}"
@@ -69,6 +69,12 @@ def main():
                 snapshots.append(adapter_snapshot(destination))
             if not snapshots[0] or snapshots[0] != snapshots[1] or snapshots[0] != adapter_snapshot(ROOT / "dist/adapters" / platform):
                 raise ValueError(f"dist/adapters/{platform}: output differs between builds")
+        snapshots = []
+        from build_variants import bundle as variant_bundle
+        for _ in range(2):
+            snapshots.append({name: value.encode("utf-8") if isinstance(value, str) else value for name, value in variant_bundle(ROOT).items()})
+        if snapshots[0] != snapshots[1] or snapshots[0] != adapter_snapshot(ROOT / "dist/variants"):
+            raise ValueError("dist/variants: output differs between builds")
         packages = []
         for label in ("first", "second"):
             destination = directory / f"{label}.vsix"

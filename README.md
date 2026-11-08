@@ -16,9 +16,9 @@ The same design roles and principles guide each mode. Fjord is intended for desi
 
 The DTCG token sources define colour, typography and component roles. A Python core composes themes and overrides and validates their values and contrast. The repository also contains design guidance, a code and terminal specimen, and a Svelte reference library with Storybook.
 
-The Svelte reference implements all 23 MVP components, with ThemeScope and Icon as supporting primitives. Storybook includes form, choice, layout, overlay, data, loading and typography examples, plus an interactive token inspector. The [component inventory](docs/components/inventory.md) distinguishes the 23 MVP components from the 43 planned additions. The owner accepted MVP 0.1.0 for local distribution on 29 October 2026 with [recorded verification limits](docs/verification/xer-120.md).
+The Svelte reference now implements the exact 66-component source inventory. The complete-library candidate adds 43 components, typed APIs, family specifications and a combined settings/data/messages workspace. The [component matrix](docs/components/matrix.json) connects each name to its owning issue, specification and reference. The owner accepted the earlier MVP 0.1.0 for local distribution with [recorded limits](docs/verification/xer-120.md); the new `1.0.0-rc.1` candidate has its own [verification record](docs/verification/m3-m4.md).
 
-[Platform adapters](docs/adapters.md) translate the same semantic tokens to native applications. The WezTerm reference, [Zed themes](adapters/zed/README.md) and [VS Code themes](adapters/vscode/README.md) generate Night, Day and Aurora with mapping, fallback and contrast reports. VS Code also has a local installable VSIX. Native version coverage is recorded separately from generated-format validation.
+[Platform adapters](docs/adapters.md) generate WezTerm, Zed, VS Code, Neovim and a bounded KDE colour proof of concept. Work and Gaming are optional accent identities across the same components and token names. The [support matrix](docs/support-matrix.md) distinguishes native results from generation checks, and the [distribution guide](docs/distribution.md) explains local packages, upgrades and remaining acceptance checks.
 
 ## Get started
 

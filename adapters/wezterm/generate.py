@@ -7,7 +7,9 @@ import re
 import sys
 
 from fjord_tokens.adapters import map_adapter, write_adapter_files
-from fjord_tokens.dtcg import TokenError
+from fjord_tokens.dtcg import TokenError, hex_color
+from fjord_tokens.project import Project
+from fjord_tokens.code_roles import ROLES
 from fjord_tokens.project import metadata
 
 
@@ -34,6 +36,14 @@ def bundle(root=ROOT, theme=None, overrides=()):
     modes, report = map_adapter(root, "adapters/wezterm/adapter.json", theme, overrides)
     files = {f"{mode}.toml": scheme(mode, values) for mode, values in modes.items()}
     files["report.json"] = json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
+    directory = Path(root) / "adapters/wezterm"
+    for filename in ("init.lua", "prompt.py", "README.md", "LICENSE"):
+        files[filename] = (directory / filename).read_text()
+    palette = {}
+    for mode in modes:
+        composition = Project(root).compose(mode, theme, overrides)
+        palette[mode] = {name: hex_color(composition.values[role.token]) for name, role in ROLES.items() if name.startswith("prompt-")}
+    files["prompt-colors.json"] = json.dumps(palette, indent=2) + "\n"
     return files
 
 

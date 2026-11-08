@@ -8,6 +8,8 @@ Run `mise run adapters:vscode` to generate the [VS Code themes](../adapters/vsco
 
 Adapters consume semantic tokens through the platform-independent Python core. Target-specific manifests, serializers, fixtures and installation instructions belong in `adapters/<platform>/`. A generated file establishes format and mapping evidence; native support requires separate application tests. See [ADR 0001](decisions/0001-platform-boundaries.md).
 
+Run `mise run adapters:neovim` for the [generation-only Neovim bundle](../adapters/neovim/README.md), `mise run adapters:kde` for the [bounded KDE proof of concept](../adapters/kde/README.md), and `mise run variants:build` for [Work/Gaming](variants.md). `mise run adapters:build` generates all five targets and both identities. Existing-runtime native checks are separate tasks: `test:wezterm`, `test:kde`, and `test:neovim`; none installs tools or changes global appearance.
+
 ## Declare a mapping
 
 Start from [`adapters/wezterm/adapter.json`](../adapters/wezterm/adapter.json). Schema version `1` requires these fields:
@@ -59,6 +61,6 @@ Repeat `--override path` to apply additional layers in order. `--root` selects a
 
 Use the [WezTerm installation example](token-export.md#wezterm) after preserving your existing configuration. Copy one generated TOML to an unused filename and explicitly point the colour configuration at it. The adapter does not modify `wezterm.lua` or choose fonts.
 
-For an upgrade, generate into a new directory, inspect the coverage report, compare the scheme and test the new file before changing the configured filename. Retain the previous scheme and configuration for restoration. To uninstall, restore the previous colour setting or saved configuration, then remove only the Fjord files you added. The manifest's macOS/WezTerm version remains a test target until native results are recorded; regenerated equality with XER-116 is not a new native verification.
+For an upgrade, generate into a new directory, inspect the coverage report, compare the scheme and test the new file before changing the configured filename. Retain the previous scheme and configuration for restoration. To uninstall, restore the previous colour setting or saved configuration, then remove only the Fjord files you added. WezTerm 20260716-195552-76b606ec was checked in an isolated XWayland window in KDE Plasma 6.8.2 on Linux. This does not establish macOS or native Wayland coverage. See the [daily-use guide](../adapters/wezterm/README.md) and [support matrix](support-matrix.md).
 
 Fjord's adapter code and manifests use the repository's [MIT licence](../LICENSE). Retain any target schema or other upstream asset licences with the relevant adapter.

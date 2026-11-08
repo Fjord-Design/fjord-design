@@ -11,7 +11,7 @@
     },
     "reference/svelte": {
       "name": "@fjord/svelte",
-      "version": "0.8.3",
+      "version": "1.0.0-rc.1",
       "devDependencies": {
         "@storybook/react": "10.6.3",
         "@storybook/svelte-vite": "10.6.3",

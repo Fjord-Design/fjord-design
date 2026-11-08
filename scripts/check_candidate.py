@@ -54,8 +54,8 @@ def verify(archive):
     return manifest
 
 
-def main():
-    with ZipFile(ARCHIVE) as archive:
+def main(archive_path=ARCHIVE):
+    with ZipFile(archive_path) as archive:
         manifest = verify(archive)
         print(f"PASS candidate integrity: {len(manifest['sha256'])} files", flush=True)
         with tempfile.TemporaryDirectory(prefix="fjord-candidate-") as temporary:
@@ -72,7 +72,10 @@ def main():
 
 if __name__ == "__main__":
     try:
-        main()
+        import argparse
+        parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument("archive", nargs="?", type=Path, default=ARCHIVE)
+        main(parser.parse_args().archive)
     except (OSError, ValueError, BadZipFile, subprocess.CalledProcessError) as error:
         print(f"ERROR {error}", file=sys.stderr)
         sys.exit(1)

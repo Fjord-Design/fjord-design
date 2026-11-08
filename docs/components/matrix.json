@@ -1,0 +1,530 @@
+[
+  {
+    "name": "Accordion",
+    "export": "Accordion",
+    "issue": "XER-121",
+    "spec": "docs/components/disclosures-items.md",
+    "reference": "reference/svelte/src/lib/Accordion.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Alert",
+    "export": "Alert",
+    "issue": "XER-113",
+    "spec": "docs/components/dialog-alert-tooltip.md",
+    "reference": "reference/svelte/src/lib/Alert.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Alert Dialog",
+    "export": "AlertDialog",
+    "issue": "XER-123",
+    "spec": "docs/components/panels-popovers.md",
+    "reference": "reference/svelte/src/lib/AlertDialog.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Aspect Ratio",
+    "export": "AspectRatio",
+    "issue": "XER-121",
+    "spec": "docs/components/disclosures-items.md",
+    "reference": "reference/svelte/src/lib/AspectRatio.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Attachment",
+    "export": "Attachment",
+    "issue": "XER-129",
+    "spec": "docs/components/messages-attachments.md",
+    "reference": "reference/svelte/src/lib/Attachment.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Avatar",
+    "export": "Avatar",
+    "issue": "XER-122",
+    "spec": "docs/components/navigation-avatar.md",
+    "reference": "reference/svelte/src/lib/Avatar.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Badge",
+    "export": "Badge",
+    "issue": "XER-109",
+    "spec": "docs/components/button.md",
+    "reference": "reference/svelte/src/lib/Badge.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Breadcrumb",
+    "export": "Breadcrumb",
+    "issue": "XER-122",
+    "spec": "docs/components/navigation-avatar.md",
+    "reference": "reference/svelte/src/lib/Breadcrumb.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Bubble",
+    "export": "Bubble",
+    "issue": "XER-129",
+    "spec": "docs/components/messages-attachments.md",
+    "reference": "reference/svelte/src/lib/Bubble.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Button",
+    "export": "Button",
+    "issue": "XER-109",
+    "spec": "docs/components/button.md",
+    "reference": "reference/svelte/src/lib/Button.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Button Group",
+    "export": "ButtonGroup",
+    "issue": "XER-125",
+    "spec": "docs/components/grouped-controls.md",
+    "reference": "reference/svelte/src/lib/ButtonGroup.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Calendar",
+    "export": "Calendar",
+    "issue": "XER-126",
+    "spec": "docs/components/dates-slider.md",
+    "reference": "reference/svelte/src/lib/Calendar.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Card",
+    "export": "Card",
+    "issue": "XER-112",
+    "spec": "docs/components/cards-separators-tabs.md",
+    "reference": "reference/svelte/src/lib/Card.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Carousel",
+    "export": "Carousel",
+    "issue": "XER-131",
+    "spec": "docs/components/layout-direction.md",
+    "reference": "reference/svelte/src/lib/Carousel.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Chart",
+    "export": "Chart",
+    "issue": "XER-127",
+    "spec": "docs/components/data-pagination-chart.md",
+    "reference": "reference/svelte/src/lib/Chart.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Checkbox",
+    "export": "Checkbox",
+    "issue": "XER-111",
+    "spec": "docs/components/choice-controls.md",
+    "reference": "reference/svelte/src/lib/Checkbox.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Code Block",
+    "export": "CodeBlock",
+    "issue": "XER-115",
+    "spec": "docs/components/typography-code-kbd.md",
+    "reference": "reference/svelte/src/lib/CodeBlock.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Collapsible",
+    "export": "Collapsible",
+    "issue": "XER-121",
+    "spec": "docs/components/disclosures-items.md",
+    "reference": "reference/svelte/src/lib/Collapsible.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Combobox",
+    "export": "Combobox",
+    "issue": "XER-124",
+    "spec": "docs/components/selection-menus.md",
+    "reference": "reference/svelte/src/lib/Combobox.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Command",
+    "export": "Command",
+    "issue": "XER-130",
+    "spec": "docs/components/commands-questionnaire-trace.md",
+    "reference": "reference/svelte/src/lib/Command.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Context Menu",
+    "export": "ContextMenu",
+    "issue": "XER-124",
+    "spec": "docs/components/selection-menus.md",
+    "reference": "reference/svelte/src/lib/ContextMenu.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Data Table",
+    "export": "DataTable",
+    "issue": "XER-127",
+    "spec": "docs/components/data-pagination-chart.md",
+    "reference": "reference/svelte/src/lib/DataTable.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Date Picker",
+    "export": "DatePicker",
+    "issue": "XER-126",
+    "spec": "docs/components/dates-slider.md",
+    "reference": "reference/svelte/src/lib/DatePicker.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Dialog",
+    "export": "Dialog",
+    "issue": "XER-113",
+    "spec": "docs/components/dialog-alert-tooltip.md",
+    "reference": "reference/svelte/src/lib/Dialog.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Direction",
+    "export": "Direction",
+    "issue": "XER-131",
+    "spec": "docs/components/layout-direction.md",
+    "reference": "reference/svelte/src/lib/Direction.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Drawer",
+    "export": "Drawer",
+    "issue": "XER-123",
+    "spec": "docs/components/panels-popovers.md",
+    "reference": "reference/svelte/src/lib/Drawer.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Dropdown Menu",
+    "export": "DropdownMenu",
+    "issue": "XER-124",
+    "spec": "docs/components/selection-menus.md",
+    "reference": "reference/svelte/src/lib/DropdownMenu.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Empty",
+    "export": "Empty",
+    "issue": "XER-114",
+    "spec": "docs/components/table-and-feedback.md",
+    "reference": "reference/svelte/src/lib/Empty.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Field",
+    "export": "Field",
+    "issue": "XER-110",
+    "spec": "docs/components/form-fields.md",
+    "reference": "reference/svelte/src/lib/Field.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Hover Card",
+    "export": "HoverCard",
+    "issue": "XER-123",
+    "spec": "docs/components/panels-popovers.md",
+    "reference": "reference/svelte/src/lib/HoverCard.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Input",
+    "export": "Input",
+    "issue": "XER-110",
+    "spec": "docs/components/form-fields.md",
+    "reference": "reference/svelte/src/lib/Input.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Input Group",
+    "export": "InputGroup",
+    "issue": "XER-125",
+    "spec": "docs/components/grouped-controls.md",
+    "reference": "reference/svelte/src/lib/InputGroup.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Input OTP",
+    "export": "InputOTP",
+    "issue": "XER-125",
+    "spec": "docs/components/grouped-controls.md",
+    "reference": "reference/svelte/src/lib/InputOTP.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Item",
+    "export": "Item",
+    "issue": "XER-121",
+    "spec": "docs/components/disclosures-items.md",
+    "reference": "reference/svelte/src/lib/Item.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Kbd",
+    "export": "Kbd",
+    "issue": "XER-115",
+    "spec": "docs/components/typography-code-kbd.md",
+    "reference": "reference/svelte/src/lib/Kbd.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Label",
+    "export": "Label",
+    "issue": "XER-110",
+    "spec": "docs/components/form-fields.md",
+    "reference": "reference/svelte/src/lib/Label.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Marker",
+    "export": "Marker",
+    "issue": "XER-128",
+    "spec": "docs/components/toast-progress-marker.md",
+    "reference": "reference/svelte/src/lib/Marker.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Menubar",
+    "export": "Menubar",
+    "issue": "XER-124",
+    "spec": "docs/components/selection-menus.md",
+    "reference": "reference/svelte/src/lib/Menubar.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Message",
+    "export": "Message",
+    "issue": "XER-129",
+    "spec": "docs/components/messages-attachments.md",
+    "reference": "reference/svelte/src/lib/Message.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Message Scroller",
+    "export": "MessageScroller",
+    "issue": "XER-129",
+    "spec": "docs/components/messages-attachments.md",
+    "reference": "reference/svelte/src/lib/MessageScroller.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Native Select",
+    "export": "NativeSelect",
+    "issue": "XER-110",
+    "spec": "docs/components/form-fields.md",
+    "reference": "reference/svelte/src/lib/NativeSelect.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Navigation Menu",
+    "export": "NavigationMenu",
+    "issue": "XER-122",
+    "spec": "docs/components/navigation-avatar.md",
+    "reference": "reference/svelte/src/lib/NavigationMenu.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Pagination",
+    "export": "Pagination",
+    "issue": "XER-127",
+    "spec": "docs/components/data-pagination-chart.md",
+    "reference": "reference/svelte/src/lib/Pagination.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Popover",
+    "export": "Popover",
+    "issue": "XER-123",
+    "spec": "docs/components/panels-popovers.md",
+    "reference": "reference/svelte/src/lib/Popover.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Progress",
+    "export": "Progress",
+    "issue": "XER-128",
+    "spec": "docs/components/toast-progress-marker.md",
+    "reference": "reference/svelte/src/lib/Progress.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Questionnaire",
+    "export": "Questionnaire",
+    "issue": "XER-130",
+    "spec": "docs/components/commands-questionnaire-trace.md",
+    "reference": "reference/svelte/src/lib/Questionnaire.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Radio Group",
+    "export": "RadioGroup",
+    "issue": "XER-111",
+    "spec": "docs/components/choice-controls.md",
+    "reference": "reference/svelte/src/lib/RadioGroup.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Resizable",
+    "export": "Resizable",
+    "issue": "XER-131",
+    "spec": "docs/components/layout-direction.md",
+    "reference": "reference/svelte/src/lib/Resizable.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Scroll Area",
+    "export": "ScrollArea",
+    "issue": "XER-131",
+    "spec": "docs/components/layout-direction.md",
+    "reference": "reference/svelte/src/lib/ScrollArea.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Select",
+    "export": "Select",
+    "issue": "XER-124",
+    "spec": "docs/components/selection-menus.md",
+    "reference": "reference/svelte/src/lib/Select.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Separator",
+    "export": "Separator",
+    "issue": "XER-112",
+    "spec": "docs/components/cards-separators-tabs.md",
+    "reference": "reference/svelte/src/lib/Separator.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Sheet",
+    "export": "Sheet",
+    "issue": "XER-123",
+    "spec": "docs/components/panels-popovers.md",
+    "reference": "reference/svelte/src/lib/Sheet.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Sidebar",
+    "export": "Sidebar",
+    "issue": "XER-122",
+    "spec": "docs/components/navigation-avatar.md",
+    "reference": "reference/svelte/src/lib/Sidebar.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Skeleton",
+    "export": "Skeleton",
+    "issue": "XER-114",
+    "spec": "docs/components/table-and-feedback.md",
+    "reference": "reference/svelte/src/lib/Skeleton.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Slider",
+    "export": "Slider",
+    "issue": "XER-126",
+    "spec": "docs/components/dates-slider.md",
+    "reference": "reference/svelte/src/lib/Slider.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Spinner",
+    "export": "Spinner",
+    "issue": "XER-114",
+    "spec": "docs/components/table-and-feedback.md",
+    "reference": "reference/svelte/src/lib/Spinner.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Switch",
+    "export": "Switch",
+    "issue": "XER-111",
+    "spec": "docs/components/choice-controls.md",
+    "reference": "reference/svelte/src/lib/Switch.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Table",
+    "export": "Table",
+    "issue": "XER-114",
+    "spec": "docs/components/table-and-feedback.md",
+    "reference": "reference/svelte/src/lib/Table.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Tabs",
+    "export": "Tabs",
+    "issue": "XER-112",
+    "spec": "docs/components/cards-separators-tabs.md",
+    "reference": "reference/svelte/src/lib/Tabs.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Textarea",
+    "export": "Textarea",
+    "issue": "XER-110",
+    "spec": "docs/components/form-fields.md",
+    "reference": "reference/svelte/src/lib/Textarea.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Toast",
+    "export": "Toast",
+    "issue": "XER-128",
+    "spec": "docs/components/toast-progress-marker.md",
+    "reference": "reference/svelte/src/lib/Toast.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Toggle",
+    "export": "Toggle",
+    "issue": "XER-125",
+    "spec": "docs/components/grouped-controls.md",
+    "reference": "reference/svelte/src/lib/Toggle.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Toggle Group",
+    "export": "ToggleGroup",
+    "issue": "XER-125",
+    "spec": "docs/components/grouped-controls.md",
+    "reference": "reference/svelte/src/lib/ToggleGroup.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Tooltip",
+    "export": "Tooltip",
+    "issue": "XER-113",
+    "spec": "docs/components/dialog-alert-tooltip.md",
+    "reference": "reference/svelte/src/lib/Tooltip.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  },
+  {
+    "name": "Trace",
+    "export": "Trace",
+    "issue": "XER-130",
+    "spec": "docs/components/commands-questionnaire-trace.md",
+    "reference": "reference/svelte/src/lib/Trace.svelte",
+    "catalogue": "reference/svelte/src/stories/Complete.svelte"
+  },
+  {
+    "name": "Typography",
+    "export": "Typography",
+    "issue": "XER-115",
+    "spec": "docs/components/typography-code-kbd.md",
+    "reference": "reference/svelte/src/lib/Typography.svelte",
+    "catalogue": "reference/svelte/src/stories"
+  }
+]
