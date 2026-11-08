@@ -52,6 +52,8 @@
           >Identity <select bind:value={identity}
             ><option value="fjord">Fjord</option><option value="fern"
               >Fern</option
+            ><option value="work">Work</option><option value="gaming"
+              >Gaming</option
             ></select
           ></label
         >

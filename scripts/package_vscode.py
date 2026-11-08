@@ -60,7 +60,7 @@ def extension_manifest(files):
         if not isinstance(files.get(name), str) or not files[name].strip():
             raise TokenError(f"VSIX: missing generated text file {name}")
     manifest = json_document(files["package.json"], "package.json")
-    if manifest.get("name") != "fjord-themes" or manifest.get("publisher") != "fjord":
+    if manifest.get("name") not in ("fjord-themes", "fjord-themes-work", "fjord-themes-gaming") or manifest.get("publisher") != "fjord":
         raise TokenError("package.json: expected local extension identity fjord.fjord-themes")
     version = manifest.get("version")
     if not isinstance(version, str) or not re.fullmatch(SEMVER, version):

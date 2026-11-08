@@ -20,15 +20,41 @@ run = "python3 -m fjord_tokens validate"
 
 [tasks.check]
 description = "Run all local checks"
-depends = ["test", "validate", "fonts:validate", "foundations:validate", "semantics:validate", "test:theme-preference", "test:form-fields", "test:choice-controls", "test:layout-components", "test:overlays", "test:data-feedback", "test:type-components", "format:check", "reference:check"]
+depends = ["test", "validate", "fonts:validate", "foundations:validate", "semantics:validate", "test:theme-preference", "test:form-fields", "test:choice-controls", "test:layout-components", "test:overlays", "test:data-feedback", "test:type-components", "test:complete-components", "format:check", "reference:check"]
+
+[tasks."test:complete-components"]
+description = "Verify the full component matrix, theme SSR, dates and invalid input"
+run = "node scripts/check-complete-components.mjs"
+
+[tasks."test:controls:firefox"]
+description = "Check slider and selection regressions in an existing isolated Firefox; installs nothing"
+depends = ["storybook:build"]
+run = "python3 scripts/check_controls_firefox.py"
 
 [tasks.build]
 description = "Build tokens, the Svelte reference and native adapters"
 depends = ["tokens:build", "tokens:export", "reference:build", "palette", "adapters:build"]
 
 [tasks."adapters:build"]
-description = "Build validated WezTerm, Zed and VS Code adapters with coverage reports"
-depends = ["adapters:wezterm", "adapters:zed", "adapters:vscode"]
+description = "Build five native adapters and two variants with coverage reports"
+depends = ["adapters:wezterm", "adapters:zed", "adapters:vscode", "adapters:neovim", "adapters:kde", "variants:build"]
+
+[tasks."adapters:neovim"]
+description = "Build the opaque Neovim highlights and terminal palette"
+run = "python3 adapters/neovim/generate.py"
+
+[tasks."adapters:kde"]
+description = "Build the bounded KDE colour proof of concept without applying it"
+run = "python3 adapters/kde/generate.py"
+
+[tasks."variants:build"]
+description = "Build work/gaming scoped CSS and separately named native adapters"
+run = "python3 scripts/build_variants.py"
+
+[tasks."test:neovim"]
+description = "Check an existing native Neovim runtime in isolation; installs nothing"
+depends = ["adapters:neovim"]
+run = "python3 scripts/check_neovim.py"
 
 [tasks."adapters:wezterm"]
 description = "Build the declarative WezTerm reference adapter"
@@ -135,7 +161,7 @@ run = "python3 scripts/accessibility_report.py"
 
 [tasks."catalogue:build"]
 description = "Build validated token inspection data for Storybook"
-depends = ["semantics:build"]
+depends = ["semantics:build", "variants:build"]
 run = "python3 scripts/build_catalogue.py"
 
 [tasks."reference:check"]
@@ -202,3 +228,23 @@ run = "node scripts/check-clean.mjs"
 description = "Verify candidate integrity and rebuild its extracted sources"
 depends = ["release:prepare"]
 run = "python3 scripts/check_candidate.py"
+
+[tasks."test:wezterm"]
+description = "Check the existing native WezTerm Lua sandbox and configuration preservation"
+depends = ["adapters:wezterm", "variants:build"]
+run = "python3 scripts/check_wezterm.py"
+
+[tasks."release:library"]
+description = "Prepare the complete-library local candidate with native bundles and notices"
+depends = ["build", "storybook:build", "accessibility:report"]
+run = "python3 scripts/package_library.py"
+
+[tasks."test:library"]
+description = "Verify and rebuild the complete-library archive in an isolated directory"
+depends = ["release:library"]
+run = "python3 scripts/check_candidate.py dist/release/fjord-library-1.0.0-rc.1.zip"
+
+[tasks."test:kde"]
+description = "Build and capture isolated previews using existing KDE/Qt tools"
+depends = ["adapters:kde", "variants:build"]
+run = "python3 scripts/check_kde.py"
