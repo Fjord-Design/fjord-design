@@ -9,7 +9,7 @@ from .contract import THEMES, mode_roles, required_roles
 from .color import design_seed_values
 from .code_roles import check_syntax_distances, validate_bindings
 from .dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color, read_json
-from .quality import Report, check_platforms, contrast_rules
+from .quality import Report, contrast_rules
 from .layout_rules import check_layout
 from .usage import load_usage, usage_pairs, validate_usage
 
@@ -210,21 +210,10 @@ def validate_project(root):
     check_metadata(base, base_path)
     design_seed_values(base["$extensions"][EXTENSION].get("designSeeds"))
     report = ValidationReport()
-    colors = {}
     for mode in THEMES:
         composed = project.compose(mode)
         report.tokens = len(composed.tokens)
         report.contrast_checks += check_contrast(composed)
         report.deprecated.extend(f"{mode}:{path}: {token['$deprecated']}" for path, token in composed.tokens.items()
                                  if token.get("$deprecated"))
-        for path, value in composed.values.items():
-            if path.startswith("semantic.color."):
-                colors[(path.removeprefix("semantic.color."), mode)] = hex_color(value)
-    try:
-        markdown = (Path(root) / "docs/platforms.md").read_text(encoding="utf-8")
-    except (OSError, UnicodeError) as error:
-        raise TokenError(f"docs/platforms.md: {error}") from error
-    check_platforms(markdown, colors, report)
-    if report.errors:
-        raise TokenError("\n".join(report.errors))
     return report

@@ -6,9 +6,6 @@ ANSI = ("ansi-black ansi-red ansi-green ansi-yellow ansi-blue ansi-magenta "
         "ansi-cyan ansi-white ansi-bright-black ansi-bright-red ansi-bright-green "
         "ansi-bright-yellow ansi-bright-blue ansi-bright-magenta ansi-bright-cyan "
         "ansi-bright-white").split()
-CORE_TABLE = ("bg-base bg-surface bg-raised bg-sunken line ink ink-muted ink-subtle "
-              "accent on-accent selection syn-comment syn-keyword syn-string "
-              "syn-function syn-type syn-property syn-number").split()
 REQUIRED = {
     "color": set((
         "bg-sunken bg-base bg-surface bg-raised bg-hover bg-active bg-inverse "

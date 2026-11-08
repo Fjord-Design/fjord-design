@@ -1,6 +1,5 @@
-"""Export one validated composition to portable formats and WezTerm colours."""
+"""Export one validated composition to portable data formats."""
 
-from .contract import ANSI
 from .dtcg import TokenError, hex_color, nest
 from .fonts import family_css
 from .project import check_contrast, metadata
@@ -63,21 +62,6 @@ def css_document(composition):
     return header + "".join(f"  {key}: {value};\n" for key, value in properties.items()) + "}\n"
 
 
-def wezterm_document(composition):
-    values = composition.values
-    def color(name):
-        return hex_color(values["semantic.color." + name])
-    fields = {
-        "foreground": "ink", "background": "bg-base", "cursor_bg": "accent", "cursor_border": "accent",
-        "cursor_fg": "on-accent", "selection_bg": "selection", "selection_fg": "ink",
-    }
-    header = f"# Fjord contract {metadata()['contractVersion']}; mode {composition.mode}; sRGB HEX\n[colors]\n"
-    lines = [f'{field} = "{color(token)}"\n' for field, token in fields.items()]
-    for field, names in (("ansi", ANSI[:8]), ("brights", ANSI[8:])):
-        lines.append(field + " = [" + ", ".join('"' + color(name) + '"' for name in names) + "]\n")
-    return header + "".join(lines) + f'\n[metadata]\nname = "Fjord {composition.mode.title()}"\nauthor = "Fjord contributors"\n'
-
-
 def export(composition, format):
     check_contrast(composition)
     if format == "dtcg":
@@ -86,6 +70,4 @@ def export(composition, format):
         return resolved_document(composition)
     if format == "css":
         return css_document(composition)
-    if format == "wezterm":
-        return wezterm_document(composition)
     raise TokenError(f"unsupported export format {format}")

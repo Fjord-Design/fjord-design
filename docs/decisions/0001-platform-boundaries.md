@@ -1,6 +1,6 @@
 # ADR 0001: Shared tokens, Svelte reference and platform adapters
 
-Status: accepted
+Status: superseded for delivery scope by [ADR 0002](0002-shared-design-foundation.md)
 
 Date: 25 October 2026
 
@@ -8,15 +8,17 @@ Decision authority: Fjord project owner. The owner selected Svelte + TypeScript,
 
 Tracking: [XER-101](https://linear.app/xerrion/issue/XER-101/afgraens-tokenkerne-referencekomponenter-og-platformadaptere). Requirements: [design brief](https://chatgpt.com/space/page_bf1179e0aa208191bf1b556beecae213), particularly questions 24, 25, 32, 35 and 36.
 
+This historical record preserves the original decision and rationale. Its component and platform delivery requirements no longer define the active foundation scope. Links below point to the source revision that retains those deliverables.
+
 ## Decision
 
 Fjord has one token source, framework-independent component specifications, a Svelte web reference and separate platform adapters. The core owns token names, types, aliases, composition and validation. Framework and platform code consume its outputs.
 
-The web reference uses Svelte + TypeScript, Vite and Storybook. Bun handles JavaScript packages and mise provides task entry points. The [dependency policy](../dependency-policy.md) defines current version evidence, stable-release selection, exact locking and the approved TypeScript 7 bridge.
+The web reference uses Svelte + TypeScript, Vite and Storybook. Bun handles JavaScript packages and mise provides task entry points. The [dependency policy](https://github.com/Xerrion/fjord-design/blob/dec618b921e37723045c29b10cb3d62752bc8fdb/docs/dependency-policy.md) defines current version evidence, stable-release selection, exact locking and the approved TypeScript 7 bridge.
 
 ## Context and alternatives
 
-The repository contains a working Python token core and a standalone code specimen. The source brief requires configurable themes across websites, applications, editors, terminals and desktop environments, with 66 named components. The [delivery inventory](../components/inventory.md) assigns 23 to MVP and 43 to the complete library.
+The repository contains a working Python token core and a standalone code specimen. The source brief requires configurable themes across websites, applications, editors, terminals and desktop environments, with 66 named components. The [delivery inventory](https://github.com/Xerrion/fjord-design/blob/dec618b921e37723045c29b10cb3d62752bc8fdb/docs/components/inventory.md) assigns 23 to MVP and 43 to the complete library.
 
 | Option | Fit | Cost or limit |
 | --- | --- | --- |
@@ -40,15 +42,15 @@ The token core has no Svelte or platform-runtime dependency. Component specifica
 
 Implementation homes follow these responsibilities: `src/fjord_tokens/` for the core, `docs/components/` for specifications, `reference/svelte/` for the Svelte library and its Storybook catalogue, and `adapters/<platform>/` for target mappings. XER-102 creates the reference workspace; XER-133 creates the adapter starter. No empty implementation directories are needed to record these boundaries.
 
-The token format, merge order, alias rules and failure behaviour remain defined by the [token contract](../token-contract.md). An adapter must identify its target/version, supported modes, mapped roles and limits. Missing required roles fail before output; a target-specific substitution must be explicit and documented.
+The token format, merge order, alias rules and failure behaviour remain defined by the [token contract](https://github.com/Xerrion/fjord-design/blob/dec618b921e37723045c29b10cb3d62752bc8fdb/docs/token-contract.md). An adapter must identify its target/version, supported modes, mapped roles and limits. Missing required roles fail before output; a target-specific substitution must be explicit and documented.
 
 ## Design contract
 
 Nordlys is the visual direction. Night uses frost-blue interaction, Day uses deep blue and Aurora uses teal. Rose is a secondary accent. Large surfaces remain cool, opaque and calm, with square window structure and rounded controls.
 
-Noto Sans serves UI text, Raleway serves display/headings and Cascadia Code serves code. Open Sans and Fira Code provide the relevant named fallbacks. XER-105 supplies the [verified self-hosted files, original font licences and typography contract](../typography.md). Code ligatures, italic comments/keywords, readable comments and the café-toned ANSI yellow follow [design guidance](../design-guidelines.md) and [code roles](../code-and-terminal.md).
+Noto Sans serves UI text, Raleway serves display/headings and Cascadia Code serves code. Open Sans and Fira Code provide the relevant named fallbacks. XER-105 supplies the [verified self-hosted files, original font licences and typography contract](https://github.com/Xerrion/fjord-design/blob/dec618b921e37723045c29b10cb3d62752bc8fdb/docs/typography.md). Code ligatures, italic comments/keywords, readable comments and the café-toned ANSI yellow follow [design guidance](https://github.com/Xerrion/fjord-design/blob/dec618b921e37723045c29b10cb3d62752bc8fdb/docs/design-guidelines.md) and [code roles](https://github.com/Xerrion/fjord-design/blob/dec618b921e37723045c29b10cb3d62752bc8fdb/docs/code-and-terminal.md).
 
-The supplied SVG logo and approved Day variants are the brand sources. [Brand usage](../../assets/brand/README.md) defines variant selection, size, clear space and colour bindings.
+The supplied SVG logo and approved Day variants are the brand sources. [Brand usage](https://github.com/Xerrion/fjord-design/blob/dec618b921e37723045c29b10cb3d62752bc8fdb/assets/brand/README.md) defines variant selection, size, clear space and colour bindings.
 
 ## Platform and accessibility targets
 

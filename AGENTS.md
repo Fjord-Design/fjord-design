@@ -1,32 +1,25 @@
 # Agent guidance
 
-Fjord is a design system with shared DTCG tokens, a Python token core, framework-independent component specifications, and a Svelte and TypeScript web reference. Platform adapters consume the shared contract and need their own verification.
+Fjord contains the shared design foundation: tokens, inheritance, design rules, fonts, icons, portable exports and validation. Implementations belong in separate projects.
 
-## Where to work
+## Scope and ownership
 
-- Edit token sources in `tokens/` and token processing in `src/fjord_tokens/`. Use `tests/` for regression coverage.
-- Keep component contracts in `docs/components/` and the Svelte implementation and stories in `reference/svelte/`.
-- Treat `dist/` as generated output. Change its sources and regenerate it; do not commit generated output, `node_modules/`, or Svelte build caches.
-- Keep third-party asset licences and notices with their assets. When changing the icon subset, follow `assets/icons/README.md` and regenerate the typed icon data.
+- Edit design values in `tokens/`, processing in `src/fjord_tokens/` and regression tests in `tests/`.
+- Keep design and consumer guidance in `docs/`. Preserve original asset licences and provenance under `assets/`.
+- Keep the CLI limited to `validate`, `build` and `export`; keep default tasks independent of application runtimes.
+- Do not add component libraries, platform adapters, previews, catalogues or release infrastructure without a new scope decision.
+- Treat `dist/` as generated output. Change sources and regenerate; do not commit generated files or caches.
 
 ## Contracts
 
-- For token changes, follow `docs/token-contract.md`. Each mode must be complete, component tokens must alias semantic roles, and changes must preserve the contract's validation and contrast checks.
-- For component or visual changes, use the relevant specification in `docs/components/` and `docs/design-guidelines.md`. Preserve native semantics, keyboard access, visible focus, reduced-motion support, and status cues beyond colour where applicable.
-- Keep the token core independent of Svelte and platform runtimes. See `docs/decisions/0001-platform-boundaries.md` for ownership and target-specific verification. Do not claim platform support without testing the target.
-- Follow `docs/dependency-policy.md` for dependency changes and `patches/README.md` for the version-specific Storybook patch. Update the manifest, lockfile, patches, and notices together when applicable. Do not edit cached dependencies.
+Follow `docs/token-contract.md` and `docs/design-guidelines.md`. Each mode must be complete, component tokens must alias semantic roles, and overrides must preserve the declared types and validation rules. Keep source values and their meaning authoritative; implementations own target mappings and runtime behaviour.
 
-## Checks
+Use the Python standard library. Obtain permission before installing a missing runtime or library. Font maintenance may use the existing native inspection probe in `scripts/inspect_fonts.py`; ordinary checks must remain independent of native font tools.
 
-Run commands from the repository root. `mise.toml` defines tool versions and task dependencies.
+## Verification and Git
 
-- Run `mise run test` and `mise run validate` for focused token checks.
-- Run `mise run check` for the combined local checks. Some tasks generate files in `dist/`.
-- Run `mise run ci` before committing. It includes builds, type checks, Storybook, and artifact checks. Use `mise run test:clean` when a clean-install check is needed; it installs dependencies in a temporary copy.
-- Obtain permission before installing a missing runtime or library. `mise run setup` installs the locked JavaScript dependencies.
+Run `mise run test` and `mise run validate` for focused checks. Run `mise run ci` before committing; it checks and builds the foundation. Run relevant regression coverage after changing composition, exports or asset validation.
 
-Choose additional checks for the affected behavior, including browser and accessibility checks for interaction changes. Report what ran, what failed or was skipped, and any remaining verification limits. A local check does not establish remote CI or platform support.
+Inspect the affected sources before changing them. Preserve unrelated work, including untracked files. Use a feature branch and focused conventional commits. Never commit with failing required checks. Report executed checks and remaining limits; foundation validation does not establish platform support.
 
-## Working practices
-
-Inspect the relevant code and documentation before changing behavior. Preserve unrelated work, including untracked files. Work on a feature branch and use focused conventional commits when committing. Never commit with failing required checks; report a blocker if a check cannot run.
+The current boundary is recorded in `docs/decisions/0002-shared-design-foundation.md`.

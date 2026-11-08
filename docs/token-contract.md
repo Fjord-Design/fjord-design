@@ -10,7 +10,7 @@ Use `mise run check` before accepting a token change. The source contract is `to
 | `semantic` | Portable roles consumed by themes and adapters | `semantic.color.accent` |
 | `component` | Component bindings to semantic roles | `component.button.primary.background` |
 
-Names use lower-case letters, digits and hyphens inside dot-separated group paths. Keep application-specific names and mappings in adapters and platform documentation. Every token has a type and a non-empty description. Groups may supply inherited `$type` and `$deprecated` metadata. A token cannot also contain child groups.
+Names use lower-case letters, digits and hyphens inside dot-separated group paths. Keep application-specific names and mappings in separate implementation projects. Every token has a type and a non-empty description. Groups may supply inherited `$type` and `$deprecated` metadata. A token cannot also contain child groups.
 
 Primitives can reference other primitives. Semantic roles can reference primitives or other semantic roles. Every component token must be a whole-token alias directly to a semantic role. Literal colours, dimensions and primitive aliases in component tokens fail validation.
 
@@ -71,7 +71,7 @@ Override rules:
 4. Resolve aliases against the composed graph after each layer. Component and derived semantic values follow the final alias target. The Python composition result records the winning layer in `provenance`.
 5. Declare schema version 2 and a compatible `0.3.x` contract in `$extensions.org.xerrion.fjord`. See the example files for complete metadata. Missing or incompatible metadata fails.
 
-The selected mode's final contrast is checked after composition. `validate` checks all default modes and platform tables. `build` first runs that default project validation, then checks the requested theme and overrides for the selected mode. A Night-only colour override is not automatically approved for Day or Aurora.
+The selected mode's final contrast is checked after composition. `validate` checks the default modes and shared assets. `build` first runs that default project validation, then checks the requested theme and overrides for the selected mode. A Night-only colour override is not automatically approved for Day or Aurora.
 
 ## Validation and output
 
@@ -79,14 +79,20 @@ The validator rejects duplicate JSON keys, non-finite numbers, invalid names, mi
 
 Contrast uses unrounded sRGB components. Text requires 4.5:1; the specified focus and control-border pairs require 3:1. Comments on `bg-base` require 5:1, increased to 7.5:1 in Night. The primary button's default, hover, pressed and focus bindings are checked after overrides. Editor, terminal, Git, diagnostic and diff bindings add checks for their actual surfaces. Alpha is rejected in checked foreground/background pairs. The translucent scrim and shadow layers remain supported outside those pairs. ANSI black has a background role in dark modes; its text contrast is checked in Day. Disabled text and decorative dividers are excluded.
 
-The same pairs must also pass after conversion to the final 8-bit HEX components. Ratios remain unrounded at the comparison. An optional colour `hex` hint must match the rounded RGB components. The seven original OKLCH inspiration values are validated as metadata. [Colour scales and conversion](color-scales.md) define the parser bounds, gamut mapping, rounding and palette report.
+The same pairs must also pass after conversion to the final 8-bit HEX components. Ratios remain unrounded at the comparison. An optional colour `hex` hint must match the rounded RGB components. The seven original OKLCH inspiration values are validated as metadata. Canonical colour values are sRGB; the original design-seed metadata does not introduce another output colour space.
 
-The semantic usage source contributes its documented UI/state pairs to the same checks. Duplicate pairs retain the strongest threshold. Loading text keeps normal contrast; disabled foreground is restricted to unavailable controls and cannot be rebound into help or active text. The Fern example is checked in every mode while preserving component token paths, types and aliases. [Semantic colours and states](semantic-colors.md) defines usage, system preference and scoped identity rules.
+The semantic usage source contributes its documented UI/state pairs to the same checks. Duplicate pairs retain the strongest threshold. Loading text keeps normal contrast; disabled foreground is restricted to unavailable controls and cannot be rebound into help or active text. A theme must retain component token paths, types and aliases. Check each mode your implementation exposes; the [consumer guide](consumer-guide.md) shows composition and export.
 
-The seven main syntax colours must differ by at least 7 in OKLab distance multiplied by 100. Pairs involving operator or regex colours require at least 5. These are Fjord design thresholds, independent of text contrast. The checks run after overrides. See [code and terminal roles](code-and-terminal.md) for bindings and examples.
+The seven main syntax colours must differ by at least 7 in OKLab distance multiplied by 100. Pairs involving operator or regex colours require at least 5. These are Fjord design thresholds, independent of text contrast. The checks run after overrides. See [code and terminal rules](design-guidelines.md#code-and-terminal) for bindings and examples.
 
-The two colour tables in `docs/platforms.md` must include every required row and each mode column. Values are compared with the resolved semantic colour tokens. Unknown names, missing or duplicated rows, incorrect ANSI slots, malformed cells and changed values fail. Short names in those tables, such as `ink`, refer to `semantic.color.ink`.
+Font and icon validation checks the retained manifests, exact asset bytes and original licences. Platform mappings and native output checks belong to consuming implementations; token validation does not read platform documentation.
 
 Builds preserve aliases and include all referenced tokens in a single DTCG document per mode. They validate before writing and replace the generated file atomically. Failed builds preserve an existing output file. Build output cannot replace files under `tokens/` or supplied theme/override files.
 
-`dist/` is ignored by Git. Review source changes and regenerate outputs. `mise run preview` checks the actual foreground/background pairs in the annotated examples and builds one HTML file with all modes. Production components, font loading, platform APIs and a complete accessibility audit remain outside this token validation contract.
+`dist/` is ignored by Git. Review source changes and regenerate exports. Production components, font loading, platform APIs and accessibility testing remain responsibilities of the consuming implementation.
+
+## Compatibility
+
+Source layers declare DTCG `2025.10`, schema `2` and a supported `0.3.x` token contract. Token paths, types, alias rules and merge order are public data contracts. A breaking token change requires a new minor version while the contract is below `1.0`, with affected paths and required consumer changes documented. Use `$deprecated` with a replacement path before removing a role, keeping its type and alias valid throughout the supported contract family.
+
+The foundation-only scope retains this serialized token contract. Removed CLI commands and implementation packages are a separate breaking delivery change recorded in the [changelog](../CHANGELOG.md).

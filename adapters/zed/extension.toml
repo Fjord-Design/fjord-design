@@ -1,7 +1,0 @@
-id = "fjord"
-name = "Fjord"
-version = "0.1.0"
-schema_version = 1
-authors = ["Fjord contributors"]
-description = "Calm Nordic Night, Day and Aurora themes from Fjord tokens"
-repository = "https://github.com/Xerrion/fjord-design"

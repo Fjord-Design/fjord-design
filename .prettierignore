@@ -1,8 +1,0 @@
-node_modules/
-dist/
-.svelte-check/
-.svelte-kit/
-reference/svelte/.verification/
-reference/svelte/src/lib/type-verification-*/
-
-reference/svelte/src/lib/icons.generated.ts

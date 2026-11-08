@@ -1,27 +1,16 @@
 # Changelog
 
-## 1.0.0 · accepted local release · 8 November 2026
+## Unreleased: design foundation only
 
-- Accepted by the owner for local distribution, including the Slider and selection fixes in `d535c4c`. See [acceptance and verification](docs/verification/m3-m4.md).
-- Added the remaining 43 components, exact 66-component matrix, family contracts and a combined settings/data/messages workspace.
-- Added Work/Gaming overrides and separately named adapter bundles without changing token names or existing component bindings.
-- Added the Neovim generator (native runtime not run), daily-use WezTerm configuration and optional prompt, and an isolated KDE/Qt colour proof of concept.
-- Added reproducible full-library local packaging, support/version/migration guides, native check commands and screenshot comparison tooling.
-- Fixed stale combobox submission, select constraint validation, hover-card focus/tap handling, disabled-date keyboard entry and bounded numeric inputs during implementation review.
-- Fixed native date-field context, sort-direction announcements, questionnaire validation announcements and readable alert content after Orca/Firefox checks. Added isolated screen-reader and Firefox touch-event verification.
-- Normalized incoming Slider values and committed numeric edits, kept active combobox options visible during keyboard navigation, and rejected unavailable required Select values. Added repeatable browser regression checks.
-- Retained the accepted verification limits: physical touch devices, human listening assessment and a full browser/screen-reader matrix remain unverified. Neovim remains generation only, new editor variants lack native verification, and KDE remains a bounded application-colour proof of concept. See [verification](docs/verification/m3-m4.md).
+This is a breaking reduction of the project's delivery scope. The existing token names, values, schema `2`, contract `0.3.0` and `base → mode → theme → overrides` composition are retained.
 
-## Unreleased
+- Removed component libraries, platform adapters and their application dependencies from the active project.
+- Removed previews, Storybook, catalogues, native packages, release archives and their commands.
+- Limited the CLI to `validate`, `build` and `export`, with `dtcg`, `resolved` and `css` export formats. Native WezTerm export and `theme-css` are removed.
+- Kept the shared design rules, font/icon/brand assets, theme examples, portable exports and validation.
 
-- Added generated Night, Day and Aurora VS Code themes and a reproducible local VSIX. See the [VS Code guide](adapters/vscode/README.md) and [verification record](docs/verification/xer-134.md).
-- Rebuilt the declarative adapter foundation and Zed themes from the shared token source. See the [adapter guide](docs/adapters.md) and [Zed verification](docs/verification/xer-140.md).
+Consumers using removed commands or packages must keep the previous source revision while extracting their implementation into a separate project. New consumers use the [consumer guide](docs/consumer-guide.md).
 
-## 0.1.0 · 29 October 2026
+## Historical combined releases
 
-- Added Night, Day and Aurora token sources, scoped Fern accent example, DTCG, JSON, CSS and WezTerm exports.
-- Added self-hosted typography, foundations, the 23 MVP components, a Svelte reference and a static Storybook catalogue.
-- Added token validation, contrast reports, reproducible builds and a guide for creating a colour identity.
-- Accepted by the owner for local distribution with recorded browser, screen reader, terminal and environmental verification limits. See [release evidence](docs/verification/xer-120.md). The candidate-building tasks continue to produce unaccepted archives; running them does not accept or publish a new release.
-
-Fjord sources use MIT. Bundled fonts and icons retain their original licences. The Svelte package version and token contract version are independent of the MVP candidate version.
+The owner accepted the combined `1.0.0` release for local distribution on 8 November 2026, and the earlier MVP `0.1.0` on 29 October 2026. Their acceptance and recorded verification limits are unchanged. Their original [changelog](https://github.com/Xerrion/fjord-design/blob/dec618b921e37723045c29b10cb3d62752bc8fdb/CHANGELOG.md), [source](https://github.com/Xerrion/fjord-design/tree/dec618b921e37723045c29b10cb3d62752bc8fdb) and [verification records](https://github.com/Xerrion/fjord-design/tree/dec618b921e37723045c29b10cb3d62752bc8fdb/docs/verification) remain in Git history. This unreleased scope change does not replace those release artifacts or claim a new acceptance.

@@ -23,8 +23,6 @@ class DtcgTests(unittest.TestCase):
         self.addCleanup(directory.cleanup)
         self.root = Path(directory.name)
         shutil.copytree(ROOT / "tokens", self.root / "tokens")
-        (self.root / "docs").mkdir()
-        shutil.copy2(ROOT / "docs/platforms.md", self.root / "docs/platforms.md")
 
     def patch(self, file, path, definition):
         document = read_json(self.root / file)
@@ -44,10 +42,9 @@ class DtcgTests(unittest.TestCase):
         return subprocess.run([sys.executable, "-m", "fjord_tokens", *map(str, arguments)],
                               cwd=self.root, capture_output=True, text=True)
 
-    def test_all_modes_and_platforms_pass(self):
+    def test_all_modes_pass_without_documentation_or_implementations(self):
         report = validate_project(self.root)
         self.assertEqual(report.contrast_checks, 430)
-        self.assertEqual(report.platform_values, 102)
         self.assertGreater(report.tokens, 140)
 
     def test_shadow_has_typed_fields_and_inset(self):
@@ -199,11 +196,6 @@ class DtcgTests(unittest.TestCase):
         with self.assertRaisesRegex(TokenError, "must be opaque"):
             check_contrast(Project(self.root).compose("night", overrides=[layer]))
 
-    def test_platform_mismatch_is_rejected(self):
-        path = self.root / "docs/platforms.md"
-        path.write_text(path.read_text().replace("#788795", "#000000"))
-        with self.assertRaisesRegex(TokenError, "use #788795"):
-            validate_project(self.root)
 
     def test_invalid_typed_values_are_rejected(self):
         cases = [("color", "#ffffff"), ("color", {"colorSpace": "srgb", "components": [2, 0, 0]}),
@@ -337,7 +329,7 @@ class DtcgTests(unittest.TestCase):
         self.assertIn("PASS:", result.stdout)
 
     def test_cli_reports_missing_sources_without_tracebacks(self):
-        for relative in ("tokens/modes/day.tokens.json", "docs/platforms.md"):
+        for relative in ("tokens/modes/day.tokens.json", "tokens/usage.json"):
             with self.subTest(file=relative):
                 path = self.root / relative
                 saved = path.read_bytes()

@@ -8,7 +8,7 @@ The subset covers check, close, info, success, warning, danger, add, remove, sea
 
 1. Select a stable official release and verify the archive against its registry integrity.
 2. Retain its licence and selected filled SVGs; update manifest provenance and hashes.
-3. Run `mise run icons:sync` to regenerate the committed Svelte icon data.
-4. Run `mise run ci` and inspect the icon story and foundation specimen at supported sizes and system preferences.
+3. Run `mise run ci` to validate the source assets and manifests.
+4. Inspect the icons in a consuming implementation at its supported sizes and system preferences.
 
-The validator permits static filled paths only and checks generated data against these files. [Foundation guidance](../../docs/foundations.md) defines sizes, alignment and accessible names.
+The validator permits static filled paths only. Implementations own any generated wrappers. [Design guidance](../../docs/design-guidelines.md#iconography) defines sizes and accessible names.
