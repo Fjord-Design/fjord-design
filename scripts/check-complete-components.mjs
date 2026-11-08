@@ -165,6 +165,39 @@ try {
         .body,
     /finite/,
   );
+  const sliderCases = [
+    { value: 23, min: 0, max: 100, step: 5, expected: 25 },
+    { value: 22.5, min: 0, max: 100, step: 5, expected: 25 },
+    { value: 20, min: 10, max: 20, step: 3, expected: 19 },
+    { value: -20, min: 10, max: 20, step: 3, expected: 10 },
+    { value: 0.3, min: 0.05, max: 0.5, step: 0.1, expected: 0.35 },
+    { value: 0.35, min: 0.1, max: 0.6, step: 0.1, expected: 0.4 },
+    { value: 0.35, min: 0.05, max: 0.35, step: 0.1, expected: 0.35 },
+    { value: 0.3, min: 0, max: 0.35, step: 0.1, expected: 0.3 },
+    { value: 0.3, min: 0, max: 0.3, step: 0.1, expected: 0.3 },
+    { value: -0.85, min: -1, max: 1, step: 0.1, expected: -0.8 },
+    { value: 2.5e-7, min: 1e-7, max: 6.5e-7, step: 1e-7, expected: 3e-7 },
+    { value: 1e15, min: 0, max: 2e15, step: 1, expected: 1e15 },
+  ];
+  for (const { expected, ...props } of sliderCases) {
+    const html = render(Slider, {
+      props: { id: "stepped", label: "Stepped", name: "quantity", ...props },
+    }).body;
+    const inputs = [...html.matchAll(/<input[^>]*>/g)].map((match) => match[0]);
+    assert.equal(inputs.length, 2);
+    for (const input of inputs)
+      assert.equal(
+        input.match(/\bvalue="([^"]+)"/)[1],
+        String(expected),
+        JSON.stringify(props),
+      );
+    assert.equal(
+      html.match(/<output[^>]*>(.*?)<\/output>/s)[1],
+      String(expected),
+      JSON.stringify(props),
+    );
+    assert.ok(inputs[0].includes('name="quantity"'));
+  }
   const { default: Carousel } = await import(
     pathToFileURL(join(directory, "Carousel.js")).href
   );

@@ -8,6 +8,7 @@
 - Added reproducible full-library local packaging, support/version/migration guides, native check commands and screenshot comparison tooling.
 - Fixed stale combobox submission, select constraint validation, hover-card focus/tap handling, disabled-date keyboard entry and bounded numeric inputs during implementation review.
 - Fixed native date-field context, sort-direction announcements, questionnaire validation announcements and readable alert content after Orca/Firefox checks. Added isolated screen-reader and Firefox touch-event verification.
+- Normalized incoming Slider values and committed numeric edits, kept active combobox options visible during keyboard navigation, and rejected unavailable required Select values. Added repeatable browser regression checks.
 - Retained explicit acceptance limits: physical touch devices and a full browser/screen-reader matrix remain unverified, Neovim runtime declined, and new editor variants not natively verified. See [verification](docs/verification/m3-m4.md).
 
 ## Unreleased

@@ -12,6 +12,6 @@ Colours use shared `ink`, opaque `bg-base`/`bg-surface`/`bg-raised`, `accent`/`a
 
 ## Limits and verification
 
-Leap years, invalid dates and month boundaries are checked. Ranges restart after a completed pair. Native manual date editing follows browser/OS presentation. Slider values are clamped and stepped; unit formatting and business validation remain application work.
+Leap years, invalid dates and month boundaries are checked. Ranges restart after a completed pair. Native manual date editing follows browser/OS presentation. Initial and external Slider values are clamped and snapped to the nearest valid step from `min`, with ties toward the larger value. A partial final step cannot exceed `max`. The bound value, range, output and exact field agree after normalization. Range edits update immediately; exact numeric edits normalize when committed with Enter or when leaving the field, so partial typing is preserved. Unit formatting and business validation remain application work. See the [control regression checks](../verification/control-regressions.md).
 
 Tracking: XER-126. See [M3/M4 verification](../verification/m3-m4.md) for executed checks and remaining native/screen-reader limits. Component source is in `reference/svelte/src/lib/`; public props are the generated TypeScript declarations.

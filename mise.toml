@@ -26,6 +26,11 @@ depends = ["test", "validate", "fonts:validate", "foundations:validate", "semant
 description = "Verify the full component matrix, theme SSR, dates and invalid input"
 run = "node scripts/check-complete-components.mjs"
 
+[tasks."test:controls:firefox"]
+description = "Check slider and selection regressions in an existing isolated Firefox; installs nothing"
+depends = ["storybook:build"]
+run = "python3 scripts/check_controls_firefox.py"
+
 [tasks.build]
 description = "Build tokens, the Svelte reference and native adapters"
 depends = ["tokens:build", "tokens:export", "reference:build", "palette", "adapters:build"]

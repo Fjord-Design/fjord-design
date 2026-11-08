@@ -32,6 +32,7 @@
   let root: HTMLDivElement;
   let input = $state<HTMLInputElement>();
   let trigger = $state<HTMLButtonElement>();
+  let listbox = $state<HTMLDivElement>();
   const selected = $derived(
     options.find((o) => o.value === value && !o.disabled),
   );
@@ -48,6 +49,19 @@
       input.setCustomValidity(
         required && !selected ? "Choose an available option." : "",
       );
+  });
+  $effect(() => {
+    if (!open || loading || error || !filtered[active] || !listbox) return;
+    const option = listbox.querySelector<HTMLElement>('[role="option"].active');
+    if (!option) return;
+    const bounds = listbox.getBoundingClientRect();
+    const optionBounds = option.getBoundingClientRect();
+    const top = bounds.top + listbox.clientTop;
+    const bottom = top + listbox.clientHeight;
+    // Scroll only the popup; DOM focus stays on its input or trigger.
+    if (optionBounds.top < top) listbox.scrollTop += optionBounds.top - top;
+    else if (optionBounds.bottom > bottom)
+      listbox.scrollTop += optionBounds.bottom - bottom;
   });
   function choose(option: SelectOption) {
     if (disabled || loading || error || option.disabled) return;
@@ -192,7 +206,7 @@
       {name}
       {disabled}
       {required}
-      {value}
+      value={selected?.value ?? ""}
       oninvalid={(event) => {
         event.preventDefault();
         invalid = true;
@@ -218,6 +232,7 @@
         <p>Choose an available option for {label}.</p>
       </div>{/if}{/if}
   <div
+    bind:this={listbox}
     id={`${id}-list`}
     class="fjord-listbox"
     role="listbox"
