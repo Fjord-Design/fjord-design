@@ -45,11 +45,38 @@ class CandidateVerificationTests(unittest.TestCase):
             (lambda m: m.update({"svelteVersion": "0.8.2"}), "version mismatch"),
             (lambda m: m.update({"tokenContract": "0.2.0"}), "version mismatch"),
             (lambda m: m.update({"status": "accepted"}), "unaccepted candidate"),
+            (lambda m: m.update({"status": "accepted-local"}), "unaccepted candidate"),
+            (lambda m: m.update({"libraryVersion": "1.0.0"}), "library and Svelte version mismatch"),
         ]
         for mutation, message in mutations:
             with self.subTest(message=message), ZipFile(candidate(mutate=mutation)) as archive:
                 with self.assertRaisesRegex(ValueError, message):
                     module.verify(archive)
+
+    def test_local_release_requires_explicit_verification_mode(self):
+        record = "docs/verification/m3-m4.md"
+        acceptance = {"owner": "Xerrion", "date": "2026-11-08", "record": record}
+        update = lambda m: m.update({"status": "accepted-local", "distribution": "local", "acceptance": acceptance})
+        with ZipFile(candidate({record: b"Accepted with recorded limits"}, mutate=update)) as archive:
+            with self.assertRaisesRegex(ValueError, "unaccepted candidate"):
+                module.verify(archive)
+            manifest = module.verify(archive, expected_status="accepted-local")
+            self.assertEqual(manifest["acceptance"], acceptance)
+        with ZipFile(candidate()) as archive:
+            with self.assertRaisesRegex(ValueError, "accepted local release"):
+                module.verify(archive, expected_status="accepted-local")
+            with self.assertRaisesRegex(ValueError, "unknown expected archive status"):
+                module.verify(archive, expected_status="accepted")
+
+    def test_local_release_needs_local_distribution_and_packaged_acceptance(self):
+        for fields, message in [
+            ({"distribution": "registry"}, "local distribution"),
+            ({"distribution": "local"}, "acceptance record"),
+            ({"distribution": "local", "acceptance": {"owner": "Xerrion", "date": "2026-11-08", "record": "absent.md"}}, "acceptance record"),
+        ]:
+            with self.subTest(fields=fields), ZipFile(candidate(mutate=lambda m: m.update({"status": "accepted-local", **fields}))) as archive:
+                with self.assertRaisesRegex(ValueError, message):
+                    module.verify(archive, expected_status="accepted-local")
 
     def test_unsafe_paths_are_rejected_before_extraction(self):
         for name in ("../outside.txt", "/absolute.txt", "a/../../outside.txt", "a\\outside.txt", "./alias.txt"):

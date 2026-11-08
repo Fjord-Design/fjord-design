@@ -17,10 +17,11 @@ from check_candidate import verify
 
 class LibraryTests(unittest.TestCase):
     def test_complete_archive_is_reproducible_and_keeps_sources_and_native_outputs(self):
-        source = {"svelte/package.json": b'{"version":"1.0.0-rc.1"}',
-                  "reference/svelte/package.json": b'{"version":"1.0.0-rc.1"}',
+        source = {"svelte/package.json": b'{"version":"1.0.0"}',
+                  "reference/svelte/package.json": b'{"version":"1.0.0"}',
                   "tokens/contract.json": b'{"version":"0.3.0"}',
                   "docs/support-matrix.md": b"Verified target limits",
+                  "docs/verification/m3-m4.md": b"Owner accepted local v1.0 with recorded limits",
                   "adapters/wezterm/README.md": b"source installation guide"}
         with tempfile.TemporaryDirectory() as tmp, patch.object(LIBRARY, "files", return_value=source), patch.object(LIBRARY, "dependency_notices", return_value={}):
             root = Path(tmp)
@@ -31,9 +32,12 @@ class LibraryTests(unittest.TestCase):
             first = LIBRARY.bundle(root)
             self.assertEqual(first, LIBRARY.bundle(root))
             with ZipFile(BytesIO(first)) as archive:
-                manifest = verify(archive)
+                manifest = verify(archive, expected_status="accepted-local")
+                self.assertEqual(manifest["status"], "accepted-local")
+                self.assertEqual(manifest["distribution"], "local")
+                self.assertEqual(manifest["acceptance"], {"owner": "Xerrion", "date": "2026-11-08", "record": "docs/verification/m3-m4.md"})
                 self.assertEqual(manifest["componentCount"], 66)
-                self.assertEqual(manifest["libraryVersion"], "1.0.0-rc.1")
+                self.assertEqual(manifest["libraryVersion"], "1.0.0")
                 self.assertEqual(archive.read("adapters/wezterm/README.md"), b"source installation guide")
                 self.assertEqual(archive.read("platforms/wezterm/README.md"), b"adapters/wezterm/README.md")
                 for name, digest in manifest["sha256"].items():

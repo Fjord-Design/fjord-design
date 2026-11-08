@@ -1,4 +1,4 @@
-"""Verify the local candidate archive and build its extracted source in isolation."""
+"""Verify a local archive and build its extracted source; defaults to unaccepted MVP candidates."""
 
 from hashlib import sha256
 import json
@@ -21,8 +21,10 @@ def read_object(archive, name):
     return value
 
 
-def verify(archive):
+def verify(archive, expected_status="candidate"):
     """Check exact membership, safe file paths, hashes and version consistency."""
+    if expected_status not in ("candidate", "accepted-local"):
+        raise ValueError("unknown expected archive status")
     names = archive.namelist()
     if len(names) != len(set(names)):
         raise ValueError("candidate contains duplicate archive paths")
@@ -41,8 +43,20 @@ def verify(archive):
     for name, digest in hashes.items():
         if sha256(archive.read(name)).hexdigest() != digest:
             raise ValueError(f"candidate checksum mismatch: {name}")
-    if manifest.get("status") != "candidate":
-        raise ValueError("expected an unaccepted candidate")
+    if manifest.get("status") != expected_status:
+        raise ValueError("expected an unaccepted candidate" if expected_status == "candidate"
+                         else "expected an accepted local release")
+    if expected_status == "accepted-local":
+        acceptance = manifest.get("acceptance")
+        if manifest.get("distribution") != "local":
+            raise ValueError("accepted release must use local distribution")
+        if (not isinstance(acceptance, dict)
+                or not all(isinstance(acceptance.get(field), str) and acceptance[field]
+                           for field in ("owner", "date", "record"))
+                or acceptance["record"] not in hashes):
+            raise ValueError("accepted release is missing its acceptance record")
+    if "libraryVersion" in manifest and manifest["libraryVersion"] != manifest.get("svelteVersion"):
+        raise ValueError("library and Svelte version mismatch")
     for field, name in (("svelteVersion", "svelte/package.json"),
                         ("svelteVersion", "reference/svelte/package.json"),
                         ("tokenContract", "tokens/contract.json")):
@@ -54,10 +68,10 @@ def verify(archive):
     return manifest
 
 
-def main(archive_path=ARCHIVE):
+def main(archive_path=ARCHIVE, expected_status="candidate"):
     with ZipFile(archive_path) as archive:
-        manifest = verify(archive)
-        print(f"PASS candidate integrity: {len(manifest['sha256'])} files", flush=True)
+        manifest = verify(archive, expected_status)
+        print(f"PASS {expected_status} archive integrity: {len(manifest['sha256'])} files", flush=True)
         with tempfile.TemporaryDirectory(prefix="fjord-candidate-") as temporary:
             directory = Path(temporary)
             archive.extractall(directory)
@@ -67,7 +81,7 @@ def main(archive_path=ARCHIVE):
                    "PYTHONPATH": str(directory / "src")}
             for task in ("setup", "ci"):
                 subprocess.run(["mise", "run", task], cwd=directory, env=env, check=True)
-    print("PASS extracted candidate installs locked dependencies and rebuilds from its own sources")
+    print(f"PASS extracted {expected_status} archive installs locked dependencies and rebuilds from its own sources")
 
 
 if __name__ == "__main__":
@@ -75,7 +89,9 @@ if __name__ == "__main__":
         import argparse
         parser = argparse.ArgumentParser(description=__doc__)
         parser.add_argument("archive", nargs="?", type=Path, default=ARCHIVE)
-        main(parser.parse_args().archive)
+        parser.add_argument("--expected-status", choices=("candidate", "accepted-local"), default="candidate")
+        args = parser.parse_args()
+        main(args.archive, args.expected_status)
     except (OSError, ValueError, BadZipFile, subprocess.CalledProcessError) as error:
         print(f"ERROR {error}", file=sys.stderr)
         sys.exit(1)

@@ -235,14 +235,14 @@ depends = ["adapters:wezterm", "variants:build"]
 run = "python3 scripts/check_wezterm.py"
 
 [tasks."release:library"]
-description = "Prepare the complete-library local candidate with native bundles and notices"
+description = "Build the accepted complete-library local release with native bundles and notices"
 depends = ["build", "storybook:build", "accessibility:report"]
 run = "python3 scripts/package_library.py"
 
 [tasks."test:library"]
 description = "Verify and rebuild the complete-library archive in an isolated directory"
 depends = ["release:library"]
-run = "python3 scripts/check_candidate.py dist/release/fjord-library-1.0.0-rc.1.zip"
+run = "python3 scripts/check_candidate.py dist/release/fjord-library-1.0.0.zip --expected-status accepted-local"
 
 [tasks."test:kde"]
 description = "Build and capture isolated previews using existing KDE/Qt tools"
