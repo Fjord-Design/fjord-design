@@ -37,7 +37,7 @@
       "minimumContrast": null
     },
     "surface-pressed": {
-      "token": "semantic.color.bg-active",
+      "token": "semantic.color.bg-pressed",
       "kind": "fill",
       "description": "Neutral pressed state.",
       "backgrounds": [],
@@ -311,6 +311,13 @@
         "semantic.color.danger"
       ],
       "minimumContrast": 4.5
+    },
+    "surface-selected": {
+      "token": "semantic.color.bg-selected",
+      "kind": "fill",
+      "description": "Neutral persistent selection; combine with a visible marker.",
+      "backgrounds": [],
+      "minimumContrast": null
     }
   },
   "states": {

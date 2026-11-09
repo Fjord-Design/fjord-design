@@ -121,7 +121,7 @@ def check_bindings(tokens):
             raise TokenError(f"{path}: reference crosses the token hierarchy")
 
 
-def number(value):
+def is_finite_number(value):
     return type(value) in (int, float) and math.isfinite(value)
 
 
@@ -167,10 +167,10 @@ class Resolver:
             components = value["components"]
             if value["colorSpace"] != "srgb" or not isinstance(components, list) or len(components) != 3:
                 fail("Fjord colours require srgb and three components")
-            if not all(number(c) and 0 <= c <= 1 for c in components):
+            if not all(is_finite_number(c) and 0 <= c <= 1 for c in components):
                 fail("srgb components must be finite numbers from 0 to 1")
             alpha = value.get("alpha", 1)
-            if not number(alpha) or not 0 <= alpha <= 1:
+            if not is_finite_number(alpha) or not 0 <= alpha <= 1:
                 fail("alpha must be a finite number from 0 to 1")
             if "hex" in value and (not isinstance(value["hex"], str) or not re.fullmatch(r"#[0-9a-fA-F]{6}", value["hex"])):
                 fail("hex fallback must use #RRGGBB")
@@ -179,22 +179,22 @@ class Resolver:
         elif kind in ("dimension", "duration"):
             object_fields(("value", "unit"))
             units = ("px", "rem") if kind == "dimension" else ("ms", "s")
-            if not number(value["value"]) or value["unit"] not in units:
+            if not is_finite_number(value["value"]) or value["unit"] not in units:
                 fail(f"{kind} requires a finite value and unit in {units}")
             if kind == "duration" and value["value"] < 0:
                 fail("duration cannot be negative")
         elif kind == "number":
-            if not number(value):
+            if not is_finite_number(value):
                 fail("expected a finite number")
         elif kind == "fontWeight":
-            if not number(value) or not 1 <= value <= 1000:
+            if not is_finite_number(value) or not 1 <= value <= 1000:
                 fail("Fjord font weights must be numbers from 1 to 1000")
         elif kind == "fontFamily":
             names = [value] if isinstance(value, str) else value
             if not isinstance(names, list) or not names or any(not isinstance(n, str) or not n.strip() for n in names):
                 fail("fontFamily requires a family name or a non-empty list of names")
         elif kind == "cubicBezier":
-            if not isinstance(value, list) or len(value) != 4 or not all(number(n) for n in value):
+            if not isinstance(value, list) or len(value) != 4 or not all(is_finite_number(n) for n in value):
                 fail("cubicBezier requires four finite numbers")
             if not 0 <= value[0] <= 1 or not 0 <= value[2] <= 1:
                 fail("cubicBezier x coordinates must be between 0 and 1")

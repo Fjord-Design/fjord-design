@@ -19,14 +19,14 @@ class FoundationCliTests(unittest.TestCase):
             shutil.copytree(ROOT / directory, self.root / directory)
 
     def cli(self, command, *arguments):
-        return subprocess.run([sys.executable, "-m", "fjord_tokens", command,
+        return subprocess.run([sys.executable, "-m", "fjord", command,
                                "--root", str(self.root), *map(str, arguments)],
                               cwd=self.root, capture_output=True, text=True)
 
     def test_validate_checks_assets_without_documentation_or_implementations(self):
         result = self.cli("validate")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("430 contrast pairs", result.stdout)
+        self.assertIn("481 contrast pairs", result.stdout)
         self.assertIn("9 font faces and 16 icons with pinned licences", result.stdout)
         self.assertFalse((self.root / "dist").exists())
 
@@ -66,6 +66,16 @@ class FoundationCliTests(unittest.TestCase):
                 result = self.cli(command, *arguments)
                 self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.cli("validate").returncode, 1)
+
+    def test_build_and_dtcg_export_match(self):
+        build = self.root / "build.json"
+        exported = self.root / "export.json"
+        for command, args in (("build", ["--output", build]),
+                              ("export", ["--format", "dtcg", "--output", exported])):
+            result = self.cli(command, *args)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("Wrote night:", result.stdout)
+        self.assertEqual(build.read_bytes(), exported.read_bytes())
 
     def test_build_and_export_cannot_replace_source_assets_through_symlinks(self):
         target = self.root / "assets/icons/info.svg"

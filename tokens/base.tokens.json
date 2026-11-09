@@ -2,7 +2,7 @@
   "$extensions": {
     "org.xerrion.fjord": {
       "schemaVersion": 2,
-      "contractVersion": "0.3.0",
+      "contractVersion": "0.4.0",
       "dtcgVersion": "2025.10",
       "name": "Fjord",
       "designSeeds": {
@@ -67,22 +67,22 @@
         },
         "padding-block": {
           "$type": "dimension",
-          "$value": "{semantic.spacing.space-2}",
+          "$value": "{semantic.spacing.step-2}",
           "$description": "Primary button padding block."
         },
         "padding-inline": {
           "$type": "dimension",
-          "$value": "{semantic.spacing.space-4}",
+          "$value": "{semantic.spacing.step-4}",
           "$description": "Primary button padding inline."
         },
         "pressed-background": {
           "$type": "color",
-          "$value": "{semantic.color.accent-hover}",
+          "$value": "{semantic.color.accent-pressed}",
           "$description": "Primary button pressed background."
         },
         "radius": {
           "$type": "dimension",
-          "$value": "{semantic.radius.radius-full}",
+          "$value": "{semantic.radius.full}",
           "$description": "Primary button radius."
         }
       }
@@ -3500,30 +3500,66 @@
     "radius": {
       "radius-control": {
         "$type": "dimension",
+        "$value": "{semantic.radius.control}",
+        "$description": "Legacy radius role.",
+        "$deprecated": "Use {semantic.radius.control}."
+      },
+      "radius-full": {
+        "$type": "dimension",
+        "$value": "{semantic.radius.full}",
+        "$description": "Legacy radius role.",
+        "$deprecated": "Use {semantic.radius.full}."
+      },
+      "radius-none": {
+        "$type": "dimension",
+        "$value": "{semantic.radius.none}",
+        "$description": "Legacy radius role.",
+        "$deprecated": "Use {semantic.radius.none}."
+      },
+      "radius-panel": {
+        "$type": "dimension",
+        "$value": "{semantic.radius.panel}",
+        "$description": "Legacy radius role.",
+        "$deprecated": "Use {semantic.radius.panel}."
+      },
+      "radius-window": {
+        "$type": "dimension",
+        "$value": "{semantic.radius.window}",
+        "$description": "Legacy radius role.",
+        "$deprecated": "Use {semantic.radius.window}."
+      },
+      "radius-xs": {
+        "$type": "dimension",
+        "$value": "{semantic.radius.xs}",
+        "$description": "Legacy radius role.",
+        "$deprecated": "Use {semantic.radius.xs}."
+      },
+      "control": {
+        "$type": "dimension",
         "$value": "{primitive.radius.radius-control}",
         "$description": "Inputs, selects, list items, icon tiles."
       },
-      "radius-full": {
+      "full": {
         "$type": "dimension",
         "$value": "{primitive.radius.radius-full}",
         "$description": "Buttons, toggles, badges, tabs (pill), switches, avatars: every control you press is round."
       },
-      "radius-none": {
+      "none": {
         "$type": "dimension",
         "$value": "{primitive.radius.radius-none}",
         "$description": "Window chrome, terminal and editor panes, title bars: windows are square."
       },
-      "radius-panel": {
+      "panel": {
         "$type": "dimension",
         "$value": "{primitive.radius.radius-panel}",
         "$description": "Cards, alerts, code blocks, tables, the drawer top."
       },
-      "radius-window": {
+      "window": {
         "$type": "dimension",
         "$value": "{primitive.radius.radius-window}",
         "$description": "Floating windows, dialogs, menus, popovers, toasts - square with the corner just softened."
       },
-      "radius-xs": {
+      "xs": {
         "$type": "dimension",
         "$value": "{primitive.radius.radius-xs}",
         "$description": "Checkboxes, kbd caps, menu items, tooltips, code spans."
@@ -3532,50 +3568,110 @@
     "spacing": {
       "space-1": {
         "$type": "dimension",
+        "$value": "{semantic.spacing.step-1}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-1}."
+      },
+      "space-10": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-10}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-10}."
+      },
+      "space-12": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-12}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-12}."
+      },
+      "space-16": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-16}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-16}."
+      },
+      "space-2": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-2}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-2}."
+      },
+      "space-3": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-3}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-3}."
+      },
+      "space-4": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-4}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-4}."
+      },
+      "space-5": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-5}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-5}."
+      },
+      "space-6": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-6}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-6}."
+      },
+      "space-8": {
+        "$type": "dimension",
+        "$value": "{semantic.spacing.step-8}",
+        "$description": "Legacy spacing role.",
+        "$deprecated": "Use {semantic.spacing.step-8}."
+      },
+      "step-1": {
+        "$type": "dimension",
         "$value": "{primitive.spacing.space-1}",
         "$description": "Icon-to-text in tight places, menu padding."
       },
-      "space-10": {
+      "step-10": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-10}",
         "$description": "Empty-state padding, page gutters on wide screens."
       },
-      "space-12": {
+      "step-12": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-12}",
         "$description": "Between page regions."
       },
-      "space-16": {
+      "step-16": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-16}",
         "$description": "Hero spacing."
       },
-      "space-2": {
+      "step-2": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-2}",
         "$description": "Gap between related controls; button icon gap."
       },
-      "space-3": {
+      "step-3": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-3}",
         "$description": "Control inner padding, list row padding."
       },
-      "space-4": {
+      "step-4": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-4}",
         "$description": "Default gap and card/body padding."
       },
-      "space-5": {
+      "step-5": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-5}",
         "$description": "Dialog and card horizontal padding."
       },
-      "space-6": {
+      "step-6": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-6}",
         "$description": "Between groups inside a panel."
       },
-      "space-8": {
+      "step-8": {
         "$type": "dimension",
         "$value": "{primitive.spacing.space-8}",
         "$description": "Between sections."
@@ -3583,6 +3679,186 @@
     },
     "typography": {
       "type-body": {
+        "$type": "typography",
+        "$value": "{semantic.typography.body}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.body}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Fjord keeps the screen quiet so the work can be loud."
+          }
+        }
+      },
+      "type-body-strong": {
+        "$type": "typography",
+        "$value": "{semantic.typography.body-strong}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.body-strong}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Unsaved changes"
+          }
+        }
+      },
+      "type-caption": {
+        "$type": "typography",
+        "$value": "{semantic.typography.caption}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.caption}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "12 Oct · 14:32"
+          }
+        }
+      },
+      "type-code": {
+        "$type": "typography",
+        "$value": "{semantic.typography.code}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.code}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "const fjord = (x) => x !== null;"
+          }
+        }
+      },
+      "type-code-italic": {
+        "$type": "typography",
+        "$value": "{semantic.typography.code-italic}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.code-italic}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "italic",
+            "sample": "// comments read like prose"
+          }
+        }
+      },
+      "type-code-small": {
+        "$type": "typography",
+        "$value": "{semantic.typography.code-small}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.code-small}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "git switch -c theme/aurora"
+          }
+        }
+      },
+      "type-display": {
+        "$type": "typography",
+        "$value": "{semantic.typography.display}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.display}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Rolig, kølig, nordisk"
+          }
+        }
+      },
+      "type-label": {
+        "$type": "typography",
+        "$value": "{semantic.typography.label}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.label}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Display name"
+          }
+        }
+      },
+      "type-lead": {
+        "$type": "typography",
+        "$value": "{semantic.typography.lead}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.lead}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "A calm, cool theme for work and play."
+          }
+        }
+      },
+      "type-overline": {
+        "$type": "typography",
+        "$value": "{semantic.typography.overline}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.overline}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "SECTION"
+          }
+        }
+      },
+      "type-small": {
+        "$type": "typography",
+        "$value": "{semantic.typography.small}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.small}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Last synced 4 minutes ago"
+          }
+        }
+      },
+      "type-title-1": {
+        "$type": "typography",
+        "$value": "{semantic.typography.title-1}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.title-1}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Workspace settings"
+          }
+        }
+      },
+      "type-title-2": {
+        "$type": "typography",
+        "$value": "{semantic.typography.title-2}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.title-2}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Appearance"
+          }
+        }
+      },
+      "type-title-3": {
+        "$type": "typography",
+        "$value": "{semantic.typography.title-3}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.title-3}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Terminal profile"
+          }
+        }
+      },
+      "type-title-4": {
+        "$type": "typography",
+        "$value": "{semantic.typography.title-4}",
+        "$description": "Legacy typography role.",
+        "$deprecated": "Use {semantic.typography.title-4}.",
+        "$extensions": {
+          "org.xerrion.fjord": {
+            "fontStyle": "normal",
+            "sample": "Recent projects"
+          }
+        }
+      },
+      "body": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.sans}",
@@ -3605,7 +3881,7 @@
           }
         }
       },
-      "type-body-strong": {
+      "body-strong": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.sans}",
@@ -3628,7 +3904,7 @@
           }
         }
       },
-      "type-caption": {
+      "caption": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.sans}",
@@ -3651,7 +3927,7 @@
           }
         }
       },
-      "type-code": {
+      "code": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.mono}",
@@ -3674,7 +3950,7 @@
           }
         }
       },
-      "type-code-italic": {
+      "code-italic": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.mono}",
@@ -3697,7 +3973,7 @@
           }
         }
       },
-      "type-code-small": {
+      "code-small": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.mono}",
@@ -3720,7 +3996,7 @@
           }
         }
       },
-      "type-display": {
+      "display": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.display}",
@@ -3743,7 +4019,7 @@
           }
         }
       },
-      "type-label": {
+      "label": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.sans}",
@@ -3766,7 +4042,7 @@
           }
         }
       },
-      "type-lead": {
+      "lead": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.sans}",
@@ -3789,7 +4065,7 @@
           }
         }
       },
-      "type-overline": {
+      "overline": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.sans}",
@@ -3812,7 +4088,7 @@
           }
         }
       },
-      "type-small": {
+      "small": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.sans}",
@@ -3835,7 +4111,7 @@
           }
         }
       },
-      "type-title-1": {
+      "title-1": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.display}",
@@ -3858,7 +4134,7 @@
           }
         }
       },
-      "type-title-2": {
+      "title-2": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.display}",
@@ -3881,7 +4157,7 @@
           }
         }
       },
-      "type-title-3": {
+      "title-3": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.display}",
@@ -3904,7 +4180,7 @@
           }
         }
       },
-      "type-title-4": {
+      "title-4": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{semantic.font.display}",
@@ -4037,34 +4313,34 @@
       },
       "page-gutter": {
         "$type": "dimension",
-        "$value": "{semantic.spacing.space-4}",
+        "$value": "{semantic.spacing.step-4}",
         "$description": "Page padding below the small breakpoint."
       },
       "page-gutter-wide": {
         "$type": "dimension",
-        "$value": "{semantic.spacing.space-8}",
+        "$value": "{semantic.spacing.step-8}",
         "$description": "Page padding from the small breakpoint."
       }
     },
     "density": {
       "gap-comfortable": {
         "$type": "dimension",
-        "$value": "{semantic.spacing.space-4}",
+        "$value": "{semantic.spacing.step-4}",
         "$description": "Density changes spacing while retaining text size and line height."
       },
       "padding-comfortable": {
         "$type": "dimension",
-        "$value": "{semantic.spacing.space-5}",
+        "$value": "{semantic.spacing.step-5}",
         "$description": "Density changes spacing while retaining text size and line height."
       },
       "gap-compact": {
         "$type": "dimension",
-        "$value": "{semantic.spacing.space-3}",
+        "$value": "{semantic.spacing.step-3}",
         "$description": "Density changes spacing while retaining text size and line height."
       },
       "padding-compact": {
         "$type": "dimension",
-        "$value": "{semantic.spacing.space-3}",
+        "$value": "{semantic.spacing.step-3}",
         "$description": "Density changes spacing while retaining text size and line height."
       }
     }

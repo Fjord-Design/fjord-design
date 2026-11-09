@@ -6,8 +6,8 @@ import sys
 import tempfile
 import unittest
 
-from fjord_tokens.dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color, nest, read_json
-from fjord_tokens.project import Project, check_contrast, metadata, validate_project
+from fjord.dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color, nest, read_json
+from fjord.project import Project, check_contrast, metadata, validate_project
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,12 +39,12 @@ class DtcgTests(unittest.TestCase):
         return file
 
     def cli(self, *arguments):
-        return subprocess.run([sys.executable, "-m", "fjord_tokens", *map(str, arguments)],
+        return subprocess.run([sys.executable, "-m", "fjord", *map(str, arguments)],
                               cwd=self.root, capture_output=True, text=True)
 
     def test_all_modes_pass_without_documentation_or_implementations(self):
         report = validate_project(self.root)
-        self.assertEqual(report.contrast_checks, 430)
+        self.assertEqual(report.contrast_checks, 481)
         self.assertGreater(report.tokens, 140)
 
     def test_shadow_has_typed_fields_and_inset(self):
@@ -58,21 +58,21 @@ class DtcgTests(unittest.TestCase):
 
     def test_typography_and_font_metadata(self):
         composed = Project(self.root).compose("night")
-        display = composed.values["semantic.typography.type-display"]
+        display = composed.values["semantic.typography.display"]
         self.assertEqual(display["fontSize"], {"value": 40, "unit": "px"})
         self.assertEqual(display["letterSpacing"], {"value": -0.4, "unit": "px"})
         self.assertEqual(display["lineHeight"], 1.2)
         self.assertEqual(display["fontFamily"][0], "Raleway")
-        italic = composed.tokens["semantic.typography.type-code-italic"]["$extensions"][EXTENSION]
+        italic = composed.tokens["semantic.typography.code-italic"]["$extensions"][EXTENSION]
         self.assertEqual(italic["fontStyle"], "italic")
-        self.assertEqual(len([p for p in composed.tokens if p.startswith("semantic.typography.")]), 15)
+        self.assertEqual(len([p for p in composed.tokens if p.startswith("semantic.typography.")]), 30)
 
     def test_order_is_base_mode_theme_then_overrides(self):
-        path = "semantic.spacing.space-4"
+        path = "semantic.spacing.step-4"
         theme = self.layer("theme.json", path, "dimension", {"value": 12, "unit": "px"})
         document = read_json(theme)
         document["semantic"]["density"] = {"gap-compact": {
-            "$type": "dimension", "$value": "{semantic.spacing.space-2}",
+            "$type": "dimension", "$value": "{semantic.spacing.step-2}",
             "$description": "Keep compact density within the overridden comfortable gap."}}
         theme.write_text(json.dumps(document))
         first = self.layer("first.json", path, "dimension", {"value": 10, "unit": "px"})
@@ -132,14 +132,14 @@ class DtcgTests(unittest.TestCase):
             Project(self.root).compose("night", overrides=[layer])
 
     def test_invalid_earlier_layer_cannot_be_hidden(self):
-        first = self.layer("first.json", "semantic.spacing.space-4", "dimension", None)
-        last = self.layer("last.json", "semantic.spacing.space-4", "dimension", {"value": 12, "unit": "px"})
+        first = self.layer("first.json", "semantic.spacing.step-4", "dimension", None)
+        last = self.layer("last.json", "semantic.spacing.step-4", "dimension", {"value": 12, "unit": "px"})
         with self.assertRaisesRegex(TokenError, "dimension requires fields"):
             Project(self.root).compose("night", overrides=[first, last])
 
     def test_invalid_semantic_dimensions_cannot_be_hidden(self):
-        first = self.layer("first.json", "semantic.spacing.space-4", "dimension", {"value": -1, "unit": "px"})
-        last = self.layer("last.json", "semantic.spacing.space-4", "dimension", {"value": 12, "unit": "px"})
+        first = self.layer("first.json", "semantic.spacing.step-4", "dimension", {"value": -1, "unit": "px"})
+        last = self.layer("last.json", "semantic.spacing.step-4", "dimension", {"value": 12, "unit": "px"})
         with self.assertRaisesRegex(TokenError, "must not be negative"):
             Project(self.root).compose("night", overrides=[first, last])
 
@@ -168,7 +168,7 @@ class DtcgTests(unittest.TestCase):
                     Project(self.root).compose("night", overrides=[layer])
 
     def test_wrong_alias_type_fails(self):
-        layer = self.layer("override.json", "semantic.color.accent", "color", "{semantic.spacing.space-4}")
+        layer = self.layer("override.json", "semantic.color.accent", "color", "{semantic.spacing.step-4}")
         with self.assertRaisesRegex(TokenError, "expected color"):
             Project(self.root).compose("night", overrides=[layer])
 
@@ -258,11 +258,40 @@ class DtcgTests(unittest.TestCase):
 
     def test_deprecation_alias_stays_usable_and_reports_warning(self):
         self.patch("tokens/base.tokens.json", "semantic.spacing.deprecated-gap", {
-            "$type": "dimension", "$value": "{semantic.spacing.space-4}",
-            "$description": "Deprecated gap.", "$deprecated": "Use {semantic.spacing.space-4}."})
+            "$type": "dimension", "$value": "{semantic.spacing.step-4}",
+            "$description": "Deprecated gap.", "$deprecated": "Use {semantic.spacing.step-4}."})
         report = validate_project(self.root)
-        self.assertEqual(len(report.deprecated), 3)
+        self.assertEqual(sum("semantic.spacing.deprecated-gap" in item for item in report.deprecated), 3)
         self.assertEqual(Project(self.root).compose("day").values["semantic.spacing.deprecated-gap"]["value"], 16)
+
+    def test_legacy_roles_follow_new_roles_and_report_migration(self):
+        project = Project(self.root)
+        for mode in ("night", "day", "aurora"):
+            composed = project.compose(mode)
+            for old, new in (("semantic.radius.radius-window", "semantic.radius.window"),
+                             ("semantic.spacing.space-4", "semantic.spacing.step-4"),
+                             ("semantic.typography.type-body", "semantic.typography.body"),
+                             ("semantic.color.bg-active", "semantic.color.bg-pressed")):
+                with self.subTest(mode=mode, old=old):
+                    self.assertEqual(composed.values[old], composed.values[new])
+                    self.assertIn(new, composed.tokens[old]["$deprecated"])
+        composed = project.compose("night")
+        old_style = composed.tokens["semantic.typography.type-code-italic"]["$extensions"][EXTENSION]["fontStyle"]
+        self.assertEqual(old_style, composed.tokens["semantic.typography.code-italic"]["$extensions"][EXTENSION]["fontStyle"])
+        layer = self.layer("new-gap.json", "semantic.spacing.step-4", "dimension", {"value": 20, "unit": "px"})
+        composed = project.compose("night", overrides=[layer])
+        self.assertEqual(composed.values["semantic.spacing.space-4"]["value"], 20)
+
+    def test_pressed_and_selected_have_independent_roles(self):
+        layer = self.layer("selected.json", "semantic.color.bg-selected", "color", "{semantic.color.bg-surface}")
+        composed = Project(self.root).compose("night", overrides=[layer])
+        self.assertEqual(composed.values["semantic.color.bg-selected"], composed.values["semantic.color.bg-surface"])
+        self.assertNotEqual(composed.values["semantic.color.bg-selected"], composed.values["semantic.color.bg-pressed"])
+        check_contrast(composed)
+        layer = self.layer("pressed.json", "semantic.color.accent-pressed", "color", "{semantic.color.accent}")
+        composed = Project(self.root).compose("night", overrides=[layer])
+        self.assertEqual(composed.values["component.button.primary.pressed-background"], composed.values["semantic.color.accent"])
+        check_contrast(composed)
 
     def test_unknown_schema_or_contract_version_fails(self):
         path = self.root / "tokens/contract.json"
@@ -275,9 +304,9 @@ class DtcgTests(unittest.TestCase):
                     Project(self.root)
 
     def test_layers_require_compatible_metadata(self):
-        layer = self.layer("override.json", "semantic.spacing.space-4", "dimension", {"value": 8, "unit": "px"})
+        layer = self.layer("override.json", "semantic.spacing.step-4", "dimension", {"value": 8, "unit": "px"})
         document = read_json(layer)
-        document["$extensions"][EXTENSION]["contractVersion"] = "0.4.0"
+        document["$extensions"][EXTENSION]["contractVersion"] = "0.3.0"
         layer.write_text(json.dumps(document))
         with self.assertRaisesRegex(TokenError, "unsupported contract version"):
             Project(self.root).compose("night", overrides=[layer])

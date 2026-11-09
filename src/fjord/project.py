@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 import re
 
-from .contract import THEMES, mode_roles, required_roles
+from .contract import MODES, mode_roles, required_roles
 from .color import design_seed_values
 from .code_roles import check_syntax_distances, validate_bindings
 from .dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color, read_json
@@ -14,17 +14,17 @@ from .layout_rules import check_layout
 from .usage import load_usage, usage_pairs, validate_usage
 
 
-VERSION = "0.3.0"
+CONTRACT_VERSION = "0.4.0"
 SCHEMA_VERSION = 2
 
 
 def metadata():
-    return {"schemaVersion": SCHEMA_VERSION, "contractVersion": VERSION, "dtcgVersion": "2025.10"}
+    return {"schemaVersion": SCHEMA_VERSION, "contractVersion": CONTRACT_VERSION, "dtcgVersion": "2025.10"}
 
 
-def compatible(version):
-    if not isinstance(version, str) or not re.fullmatch(r"0\.3\.(0|[1-9][0-9]*)", version):
-        raise TokenError(f"unsupported contract version {version!r}; expected a 0.3.x contract")
+def check_contract_version(version):
+    if not isinstance(version, str) or not re.fullmatch(r"0\.4\.(0|[1-9][0-9]*)", version):
+        raise TokenError(f"unsupported contract version {version!r}; expected a 0.4.x contract")
 
 
 def check_metadata(document, source):
@@ -32,7 +32,7 @@ def check_metadata(document, source):
     metadata = extensions.get(EXTENSION) if isinstance(extensions, dict) else None
     if not isinstance(metadata, dict) or type(metadata.get("schemaVersion")) is not int or metadata["schemaVersion"] != SCHEMA_VERSION:
         raise TokenError(f"{source}: declare schemaVersion 2 in $extensions.{EXTENSION}")
-    compatible(metadata.get("contractVersion"))
+    check_contract_version(metadata.get("contractVersion"))
     if metadata.get("dtcgVersion") != "2025.10":
         raise TokenError(f"{source}: expected dtcgVersion 2025.10")
 
@@ -79,10 +79,10 @@ class Project:
         c = self.contract
         if not isinstance(c, dict) or type(c.get("schemaVersion")) is not int or c["schemaVersion"] != SCHEMA_VERSION:
             raise TokenError("tokens/contract.json: unsupported schemaVersion; expected 2")
-        compatible(c.get("version"))
+        check_contract_version(c.get("version"))
         if c.get("dtcgVersion") != "2025.10":
             raise TokenError("tokens/contract.json: expected dtcgVersion 2025.10")
-        if not isinstance(c.get("modes"), dict) or set(c["modes"]) != set(THEMES):
+        if not isinstance(c.get("modes"), dict) or set(c["modes"]) != set(MODES):
             raise TokenError("tokens/contract.json: declare night, day and aurora exactly once")
         if not isinstance(c.get("required"), dict):
             raise TokenError("tokens/contract.json: required must map token paths to types")
@@ -117,7 +117,7 @@ class Project:
             raise TokenError(f"[mode={mode}] {error}") from error
 
     def _compose(self, mode, theme=None, overrides=()):
-        if mode not in THEMES:
+        if mode not in MODES:
             raise TokenError(f"unknown mode {mode!r}; choose night, day or aurora")
         base_path = self.source(self.contract.get("base"))
         tokens = read_layer(base_path)
@@ -181,7 +181,7 @@ def contrast_pairs(composition):
     for name in ("background", "hover-background", "pressed-background"):
         key = prefix + "foreground", prefix + name
         pairs[key] = max(4.5, pairs.get(key, 0))
-    for surface in ("bg-sunken", "bg-base", "bg-surface", "bg-raised", "bg-hover", "bg-active"):
+    for surface in ("bg-sunken", "bg-base", "bg-surface", "bg-raised", "bg-hover", "bg-active", "bg-pressed", "bg-selected"):
         key = prefix + "focus-color", "semantic.color." + surface
         pairs[key] = max(3, pairs.get(key, 0))
     for (foreground, background), minimum in pairs.items():
@@ -210,7 +210,7 @@ def validate_project(root):
     check_metadata(base, base_path)
     design_seed_values(base["$extensions"][EXTENSION].get("designSeeds"))
     report = ValidationReport()
-    for mode in THEMES:
+    for mode in MODES:
         composed = project.compose(mode)
         report.tokens = len(composed.tokens)
         report.contrast_checks += check_contrast(composed)

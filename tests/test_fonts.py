@@ -5,8 +5,8 @@ import shutil
 import tempfile
 import unittest
 
-from fjord_tokens.dtcg import EXTENSION, TokenError
-from fjord_tokens.fonts import ROLES, asset_path, load_fonts
+from fjord.dtcg import EXTENSION, TokenError
+from fjord.fonts import ROLES, asset_path, load_fonts
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,7 +35,7 @@ class FontTests(unittest.TestCase):
         self.assertTrue(all(family["license"] == "OFL-1.1" for family in manifest["families"]))
 
     def test_typography_must_use_a_shared_semantic_font_stack(self):
-        self.edit("tokens/base.tokens.json", lambda data: data["semantic"]["typography"]["type-code"]["$value"].update(
+        self.edit("tokens/base.tokens.json", lambda data: data["semantic"]["typography"]["code"]["$value"].update(
             fontFamily=["Cascadia Code", "Unexpected fallback"]))
         with self.assertRaisesRegex(TokenError, "shared semantic font stacks"):
             load_fonts(self.root)
@@ -62,7 +62,7 @@ class FontTests(unittest.TestCase):
             load_fonts(self.root)
 
     def test_typography_cannot_request_an_unavailable_primary_weight(self):
-        self.edit("tokens/base.tokens.json", lambda data: data["semantic"]["typography"]["type-code"]["$value"].update(fontWeight=800))
+        self.edit("tokens/base.tokens.json", lambda data: data["semantic"]["typography"]["code"]["$value"].update(fontWeight=800))
         with self.assertRaisesRegex(TokenError, "no bundled primary face"):
             load_fonts(self.root)
 

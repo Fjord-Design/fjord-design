@@ -2,10 +2,10 @@
 
 import re
 
-from .dtcg import TokenError, number, read_json
+from .dtcg import TokenError, is_finite_number, read_json
 
 
-ROLE_NAMES = set('canvas surface surface-floating surface-sunken surface-hover surface-pressed text text-secondary text-help text-placeholder text-disabled border-divider border-control focus link link-hover accent-fill accent-label selected-fill selected-label text-selection-fill text-selection-label overlay-scrim overlay-surface overlay-text info info-fill success success-fill warning warning-fill danger danger-fill destructive-label'.split())
+ROLE_NAMES = set('canvas surface surface-floating surface-sunken surface-hover surface-pressed surface-selected text text-secondary text-help text-placeholder text-disabled border-divider border-control focus link link-hover accent-fill accent-label selected-fill selected-label text-selection-fill text-selection-label overlay-scrim overlay-surface overlay-text info info-fill success success-fill warning warning-fill danger danger-fill destructive-label'.split())
 STATE_NAMES = set('default hover pressed focus-visible selected disabled invalid loading'.split())
 TEXT_ROLES = set('text text-secondary text-help text-placeholder link link-hover accent-label selected-label text-selection-label overlay-text info success warning danger destructive-label'.split())
 
@@ -31,7 +31,7 @@ def load_usage(path):
             raise TokenError(f"usage.{name}: backgrounds must be a unique list")
         minimum = role.get("minimumContrast")
         floor = 4.5 if role["kind"] == "text" else 3 if role["kind"] in {"border", "focus"} else None
-        if floor is not None and (not backgrounds or not number(minimum) or minimum < floor):
+        if floor is not None and (not backgrounds or not is_finite_number(minimum) or minimum < floor):
             raise TokenError(f"usage.{name}: require backgrounds and minimum contrast {floor}:1")
         if floor is None and minimum is not None:
             raise TokenError(f"usage.{name}: this role has no text contrast exemption or threshold to override")
@@ -49,7 +49,7 @@ def load_usage(path):
         if name == "disabled":
             if minimum is not None or state["foreground"] != "semantic.color.ink-disabled":
                 raise TokenError("usage.states.disabled: reserve disabled text and its explicit exemption for unavailable controls")
-        elif not number(minimum) or minimum < 4.5 or state["foreground"] == "semantic.color.ink-disabled":
+        elif not is_finite_number(minimum) or minimum < 4.5 or state["foreground"] == "semantic.color.ink-disabled":
             raise TokenError(f"usage.states.{name}: active states require readable text at 4.5:1 or above")
     return usage
 

@@ -24,7 +24,7 @@ Fjord owns the shared design data, assets, inheritance and validation. Separate 
 ```text
 tokens/             Design values, modes, roles and contract
 assets/             Fonts, icons, brand sources and licences
-src/fjord_tokens/   Composition, validation and portable export
+src/fjord/   Composition, validation and portable export
 tests/              Foundation regression tests
 docs/               Design rules and consumer contract
 examples/           Theme and override files
@@ -42,10 +42,10 @@ dist/               Generated exports; ignored by Git
 | `mise run build` | Export every mode as DTCG, resolved JSON and CSS |
 | `mise run ci` | Run checks and build |
 
-The CLI provides `validate`, `build` and `export`. For example:
+The CLI provides `validate`, `build` and `export`. CLI `build` writes DTCG for one mode; `mise run build` exports all three formats for all modes. Font and icon checks run with `validate`, not token-only CLI builds. For example:
 
 ```sh
-mise exec -- python3 -m fjord_tokens export --mode day --format resolved \
+mise exec -- python3 -m fjord export --mode day --format resolved \
   --theme examples/themes/fern.tokens.json \
   --override examples/overrides/compact-spacing.tokens.json \
   --output dist/day-fern-compact.resolved.json

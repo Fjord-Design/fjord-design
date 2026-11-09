@@ -3,19 +3,19 @@
 from .dtcg import TokenError
 
 
-def dimension(value):
+def dimension_in_px(value):
     return value["value"] * (16 if value["unit"] == "rem" else 1)
 
 
 def check_layout(values):
     def value(group, name):
-        return dimension(values[f"semantic.{group}.{name}"])
+        return dimension_in_px(values[f"semantic.{group}.{name}"])
 
     for path, item in values.items():
         if path.startswith(("semantic.size.", "semantic.breakpoint.", "semantic.layout.", "semantic.density.")):
-            if dimension(item) < 0:
+            if dimension_in_px(item) < 0:
                 raise TokenError(f"{path}: layout dimensions must not be negative")
-            if path.startswith(("semantic.size.", "semantic.breakpoint.")) and dimension(item) == 0:
+            if path.startswith(("semantic.size.", "semantic.breakpoint.")) and dimension_in_px(item) == 0:
                 raise TokenError(f"{path}: sizes and breakpoints must be positive")
     for name in ("target-minimum", "control-compact", "control-comfortable"):
         if value("size", name) < 24:
@@ -36,7 +36,7 @@ def check_layout(values):
         raise TokenError("semantic.breakpoint: require positive, increasing sm, md and lg widths")
     if value("border-width", "border-focus") < 2:
         raise TokenError("semantic.border-width.border-focus: focus indicators must be at least 2 CSS pixels")
-    if dimension(values["component.button.primary.focus-width"]) < 2:
+    if dimension_in_px(values["component.button.primary.focus-width"]) < 2:
         raise TokenError("component.button.primary.focus-width: focus indicators must be at least 2 CSS pixels")
     levels = [values["semantic.z-index.z-" + name] for name in ("base", "sticky", "popover", "modal", "toast", "tooltip")]
     if any(first >= second for first, second in zip(levels, levels[1:])):

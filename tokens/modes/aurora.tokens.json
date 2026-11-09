@@ -2,7 +2,7 @@
   "$extensions": {
     "org.xerrion.fjord": {
       "schemaVersion": 2,
-      "contractVersion": "0.3.0",
+      "contractVersion": "0.4.0",
       "dtcgVersion": "2025.10"
     }
   },
@@ -115,8 +115,9 @@
       },
       "bg-active": {
         "$type": "color",
-        "$value": "{primitive.color.aurora.bg-active}",
-        "$description": "Pressed fill and the neutral selected row. Seed: oklch(35.00% 0.034 250) in Night."
+        "$value": "{semantic.color.bg-pressed}",
+        "$description": "Legacy neutral pressed background.",
+        "$deprecated": "Use {semantic.color.bg-pressed} for press or {semantic.color.bg-selected} for selection."
       },
       "bg-base": {
         "$type": "color",
@@ -412,6 +413,21 @@
         "$type": "color",
         "$value": "{primitive.color.aurora.warning-soft}",
         "$description": "Background of a warning alert/badge; text `warning` or `ink`."
+      },
+      "bg-pressed": {
+        "$type": "color",
+        "$value": "{primitive.color.aurora.bg-active}",
+        "$description": "Neutral background while a control is pressed."
+      },
+      "bg-selected": {
+        "$type": "color",
+        "$value": "{primitive.color.aurora.bg-active}",
+        "$description": "Neutral background for a persistently selected item."
+      },
+      "accent-pressed": {
+        "$type": "color",
+        "$value": "{semantic.color.accent-hover}",
+        "$description": "Accent fill while a primary action is pressed."
       }
     },
     "shadow": {

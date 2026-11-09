@@ -13,7 +13,7 @@ Read `mise.toml` before trusting it. The project uses the pinned Python runtime 
 | Location | Responsibility |
 | --- | --- |
 | `tokens/` | Design values, roles, modes and inheritance contract |
-| `src/fjord_tokens/`, `tests/` | Composition, validation, export and regression coverage |
+| `src/fjord/`, `tests/` | Composition, validation, export and regression coverage |
 | `assets/` | Fonts, icons, brand sources, provenance and licences |
 | `docs/`, `examples/` | Design rules and practical consumer guidance |
 | `scripts/inspect_fonts.py` | Native inspection when replacing font assets |

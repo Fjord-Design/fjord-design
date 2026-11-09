@@ -22,7 +22,7 @@ Night is the default mode. Each mode supplies complete values for the same token
 
 ## Colour
 
-**Surfaces, from deep to high:** `bg-sunken` (terminal wells, code blocks, slider tracks) → `bg-base` (page, window, editor) → `bg-surface` (panels, sidebars, cards, inputs) → `bg-raised` (menus, dialogs, toasts) → `bg-hover` → `bg-active` (pressed, neutral selection). In Night, `bg-hover` and `bg-active` are the two given seed colours oklch(32.95% 0.034 247) and oklch(35.00% 0.034 250).
+**Surfaces, from deep to high:** `bg-sunken` (terminal wells, code blocks, slider tracks) → `bg-base` (page, window, editor) → `bg-surface` (panels, sidebars, cards, inputs) → `bg-raised` (menus, dialogs, toasts) → `bg-hover` → `bg-pressed` (pressed) / `bg-selected` (neutral selection). In Night, `bg-hover` and `bg-pressed` are the two given seed colours oklch(32.95% 0.034 247) and oklch(35.00% 0.034 250).
 
 **Text:** `ink` for content, `ink-muted` for secondary text, `ink-subtle` for timestamps, placeholders and line numbers, `ink-disabled` only for disabled controls. Do not invent greys in between.
 
@@ -51,18 +51,18 @@ Night is the default mode. Each mode supplies complete values for the same token
 
 ## Typography
 
-- **Display** - Raleway, 600, with 700 for `type-title-4`: `type-display`, `type-title-1` … `type-title-4`. Headings and dialog titles only.
-- **Text** - Noto Sans (Open Sans fallback): `type-lead`, `type-body` (15/24), `type-body-strong`, `type-small`, `type-label`, `type-caption`, `type-overline`. UI defaults to 14px (`text-md`); reading text to `type-body`.
-- **Code** - Self-hosted Cascadia Code, upright and standard slanted italic, weights 200 to 700, falling back to Fira Code: `type-code` (14/22), `type-code-small`, `type-code-italic`. Ligatures default to on; handwritten cursive defaults to off. Users can change either preference independently. Fira's upright fallback retains readable comments.
+- **Display** - Raleway, 600, with 700 for `title-4`: `display`, `title-1` … `title-4`. Headings and dialog titles only.
+- **Text** - Noto Sans (Open Sans fallback): `lead`, `body` (15/24), `body-strong`, `small`, `label`, `caption`, `overline`. UI defaults to 14px (`text-md`); reading text to `body`.
+- **Code** - Self-hosted Cascadia Code, upright and standard slanted italic, weights 200 to 700, falling back to Fira Code: `code` (14/22), `code-small`, `code-italic`. Ligatures default to on; handwritten cursive defaults to off. Users can change either preference independently. Fira's upright fallback retains readable comments.
 - Sentence case for everything except `overline` (uppercase, +0.08em tracking).
-- A little air: body line height 1.6, 16px default gap. Comfortable controls have a 40px minimum height; compact controls use 34px. Editors may go denser (13-14px); reading surfaces may use 17px `type-lead`.
+- A little air: body line height 1.6, 16px default gap. Comfortable controls have a 40px minimum height; compact controls use 34px. Editors may go denser (13-14px); reading surfaces may use 17px `lead`.
 
 The complete scale is in `semantic.typography` and `semantic.font-size`; size roles run from `text-2xs` (11px) to `text-3xl` (24px). [Font sources](../assets/fonts/README.md) include the original licences. Preserve readable fallbacks, allow text enlargement and keep long labels and paths wrapping.
 
 ## Space, shape and depth
 
-- **Spacing** is a 4px grid: `space-1` (4) … `space-16` (64). `space-4` is the default gap; dialog and card padding is `space-5`.
-- **Square windows, round controls.** `radius-none` for window chrome and editor/terminal panes, `radius-window` (2px) for floating windows, dialogs and menus, `radius-panel` (4px) for cards, alerts and code blocks, `radius-control` (6px) for inputs, and `radius-full` for everything you press: buttons, toggles, tabs (pill), badges, switches, avatars.
+- **Spacing** is a 4px grid: `step-1` (4) … `step-16` (64). `step-4` is the default gap; dialog and card padding is `step-5`.
+- **Square windows, round controls.** Under `semantic.radius`, use `none` for window chrome and editor/terminal panes, `window` (2px) for floating windows, dialogs and menus, `panel` (4px) for cards, alerts and code blocks, `control` (6px) for inputs, and `full` for everything you press: buttons, toggles, tabs (pill), badges, switches, avatars.
 - **Borders** are `border-hairline` (1px). Selected markers and focus are `border-active` / `border-focus` (2px).
 - **Elevation:** `shadow-sm` (buttons), `shadow-raised` (cards), `shadow-overlay` (anything floating), `shadow-pressed` (wells). The scrim behind modals uses the `scrim` colour and its alpha value, without blur.
 
