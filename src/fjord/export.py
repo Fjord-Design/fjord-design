@@ -16,12 +16,12 @@ def resolved_document(composition):
     }
 
 
-def number(value):
+def format_number(value):
     return str(value)
 
 
 def dimension(value):
-    return number(value["value"]) + value["unit"]
+    return format_number(value["value"]) + value["unit"]
 
 
 def css_value(kind, value):
@@ -32,9 +32,9 @@ def css_value(kind, value):
     if kind == "fontFamily":
         return family_css(value)
     if kind in ("fontWeight", "number"):
-        return number(value)
+        return format_number(value)
     if kind == "cubicBezier":
-        return "cubic-bezier(" + ", ".join(map(number, value)) + ")"
+        return "cubic-bezier(" + ", ".join(map(format_number, value)) + ")"
     if kind == "shadow":
         return ", ".join(("inset " if item.get("inset") else "")
                          + " ".join(dimension(item[key]) for key in ("offsetX", "offsetY", "blur", "spread"))

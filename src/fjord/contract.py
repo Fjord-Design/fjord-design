@@ -1,16 +1,16 @@
 """Required token roles, mode names and component bindings."""
 
-THEMES = ("night", "day", "aurora")
-SURFACES = "bg-sunken bg-base bg-surface bg-raised bg-hover bg-active".split()
+MODES = ("night", "day", "aurora")
+SURFACES = "bg-sunken bg-base bg-surface bg-raised bg-hover bg-active bg-pressed bg-selected".split()
 ANSI = ("ansi-black ansi-red ansi-green ansi-yellow ansi-blue ansi-magenta "
         "ansi-cyan ansi-white ansi-bright-black ansi-bright-red ansi-bright-green "
         "ansi-bright-yellow ansi-bright-blue ansi-bright-magenta ansi-bright-cyan "
         "ansi-bright-white").split()
 REQUIRED = {
     "color": set((
-        "bg-sunken bg-base bg-surface bg-raised bg-hover bg-active bg-inverse "
+        "bg-sunken bg-base bg-surface bg-raised bg-hover bg-active bg-pressed bg-selected bg-inverse "
         "line line-strong ink ink-muted ink-subtle ink-disabled ink-inverse "
-        "accent accent-hover accent-soft accent-ink on-accent focus-ring selection "
+        "accent accent-hover accent-pressed accent-soft accent-ink on-accent focus-ring selection "
         "frost aurora lilac sage fern latte foam rose info success warning danger "
         "info-soft success-soft warning-soft danger-soft on-danger "
         "syn-comment syn-keyword syn-string syn-function syn-type syn-variable "
@@ -20,8 +20,8 @@ REQUIRED = {
         "chart-5 chart-6 chart-grid scrim"
     ).split() + ANSI),
     "font-size": set("text-2xs text-xs text-sm text-md text-base text-lg text-xl text-2xl text-3xl".split()),
-    "spacing": set("space-1 space-2 space-3 space-4 space-5 space-6 space-8 space-10 space-12 space-16".split()),
-    "radius": set("radius-none radius-window radius-xs radius-panel radius-control radius-full".split()),
+    "spacing": set("step-1 step-2 step-3 step-4 step-5 step-6 step-8 step-10 step-12 step-16 space-1 space-2 space-3 space-4 space-5 space-6 space-8 space-10 space-12 space-16".split()),
+    "radius": set("none window xs panel control full radius-none radius-window radius-xs radius-panel radius-control radius-full".split()),
     "shadow": set("shadow-sm shadow-raised shadow-overlay shadow-pressed".split()),
     "border-width": set("border-hairline border-focus border-active".split()),
     "duration": set("duration-none duration-fast duration-base duration-slow".split()),
@@ -60,6 +60,7 @@ def required_roles():
     roles = {f"semantic.{group}.{name}": GROUP_TYPES[group]
              for group, names in REQUIRED.items() for name in names}
     roles.update({f"component.button.primary.{name}": kind for name, kind in COMPONENT_TYPES.items()})
+    roles.update({f"semantic.typography.{name}": "typography" for name in "display title-1 title-2 title-3 title-4 lead body body-strong label small caption overline code code-small code-italic".split()})
     roles.update({f"semantic.font.{name}": "fontFamily" for name in ("sans", "display", "mono")})
     return roles
 

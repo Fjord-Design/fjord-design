@@ -6,12 +6,12 @@ from pathlib import Path
 import re
 import struct
 
-from .dtcg import EXTENSION, TokenError, number, read_json
+from .dtcg import EXTENSION, TokenError, is_finite_number, read_json
 from .project import Project
 
 
-ROLES = ("type-display type-title-1 type-title-2 type-title-3 type-title-4 type-lead type-body "
-         "type-body-strong type-label type-small type-caption type-overline type-code type-code-small type-code-italic").split()
+ROLES = ("display title-1 title-2 title-3 title-4 lead body "
+         "body-strong label small caption overline code code-small code-italic").split()
 FAMILIES = {"Noto Sans", "Raleway", "Cascadia Code", "Open Sans", "Fira Code"}
 GENERIC = {"system-ui", "sans-serif", "serif", "monospace", "ui-monospace", "-apple-system"}
 
@@ -114,10 +114,10 @@ def load_fonts(root):
                 raise TokenError(f"{path}: share typography values and styles across all modes")
             matches = [face for family in families if family["family"] == value["fontFamily"][0]
                        for face in family["faces"] if face["style"] == style]
-            if (not number(value["fontWeight"]) or not matches
+            if (not is_finite_number(value["fontWeight"]) or not matches
                     or not any(face["weight"][0] <= value["fontWeight"] <= face["weight"][1] for face in matches)):
                 raise TokenError(f"{path}: no bundled primary face supports its style and weight")
-            if value["fontSize"]["value"] <= 0 or not number(value["lineHeight"]) or value["lineHeight"] <= 0:
+            if value["fontSize"]["value"] <= 0 or not is_finite_number(value["lineHeight"]) or value["lineHeight"] <= 0:
                 raise TokenError(f"{path}: font size and line height must be positive")
     return manifest
 

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import math
 import re
 
-from .dtcg import TokenError, number
+from .dtcg import TokenError, is_finite_number
 
 
 SEED = re.compile(r"oklch\(([0-9]+(?:\.[0-9]+)?)%\s+([0-9]+(?:\.[0-9]+)?)\s+(-?[0-9]+(?:\.[0-9]+)?)\)")
@@ -35,7 +35,7 @@ def design_seed_values(source):
 
 def validate_oklch(value):
     if (not isinstance(value, (tuple, list)) or len(value) != 3
-            or not all(number(v) for v in value)
+            or not all(is_finite_number(v) for v in value)
             or not 0 <= value[0] <= 1 or not 0 <= value[1] <= 1):
         raise TokenError("Fjord OKLCH requires finite L in [0,1], C in [0,1] and hue in degrees")
 

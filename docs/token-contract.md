@@ -1,6 +1,6 @@
 # Token contract
 
-Use `mise run check` before accepting a token change. The source contract is `tokens/contract.json`, schema version 2, contract version 0.3.0. The `*.tokens.json` files use the [DTCG Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/).
+Use `mise run check` before accepting a token change. The source contract is `tokens/contract.json`, schema version 2, contract version 0.4.0. The `*.tokens.json` files use the [DTCG Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/).
 
 ## Names and ownership
 
@@ -57,8 +57,8 @@ Aliases use complete `{token.path}` references, including typed fields inside co
 | Order | Layer | Contract |
 | --- | --- | --- |
 | 1 | `base.tokens.json` | Primitives, shared semantic tokens and component bindings |
-| 2 | Exactly one `modes/<mode>.tokens.json` | All 81 semantic colour roles and four semantic shadow roles |
-| 3 | Default `themes/fjord.tokens.json`, or explicit `--theme` | Optional identity changes at existing semantic or component paths |
+| 2 | Exactly one `modes/<mode>.tokens.json` | All 84 semantic colour roles and four semantic shadow roles |
+| 3 | Default `themes/fjord.tokens.json`, or explicit `--theme` | Optional theme changes at existing semantic or component paths |
 | 4 | Repeated `--override` files, left to right | Allowed local changes; the last supplied token definition wins |
 
 Night is selected only when the CLI receives no mode. A mode cannot inherit missing values from Night or from base. Base is forbidden from defining mode-specific semantic colour or shadow roles. Each mode must supply its complete set, even when some values are shared through explicit aliases.
@@ -69,13 +69,13 @@ Override rules:
 2. Override only existing `semantic` or `component` paths. Primitive changes belong in the source palette. Add new roles to the source contract before referencing them from an override.
 3. Preserve the token's type. Unknown paths, `null` deletion markers and malformed values fail. An invalid layer cannot be hidden by a later layer.
 4. Resolve aliases against the composed graph after each layer. Component and derived semantic values follow the final alias target. The Python composition result records the winning layer in `provenance`.
-5. Declare schema version 2 and a compatible `0.3.x` contract in `$extensions.org.xerrion.fjord`. See the example files for complete metadata. Missing or incompatible metadata fails.
+5. Declare schema version 2 and a compatible `0.4.x` contract in `$extensions.org.xerrion.fjord`. See the example files for complete metadata. Missing or incompatible metadata fails.
 
-The selected mode's final contrast is checked after composition. `validate` checks the default modes and shared assets. `build` first runs that default project validation, then checks the requested theme and overrides for the selected mode. A Night-only colour override is not automatically approved for Day or Aurora.
+The selected mode's final contrast is checked after composition. `validate` checks the default modes and shared assets. CLI `build` and `export` validate the default token project and the requested composition; they do not validate font or icon files. Run `mise run validate` to check assets. A Night-only colour override is not automatically approved for Day or Aurora.
 
 ## Validation and output
 
-The validator rejects duplicate JSON keys, non-finite numbers, invalid names, missing descriptions, unsupported types, missing required roles and malformed typed values. Required roles are declared in the source contract, with baseline roles protected in `src/fjord_tokens/contract.py`. New custom groups or app-specific token namespaces require an explicit contract change.
+The validator rejects duplicate JSON keys, non-finite numbers, invalid names, missing descriptions, unsupported types, missing required roles and malformed typed values. Required roles are declared in the source contract, with baseline roles protected in `src/fjord/contract.py`. New custom groups or app-specific token namespaces require an explicit contract change.
 
 Contrast uses unrounded sRGB components. Text requires 4.5:1; the specified focus and control-border pairs require 3:1. Comments on `bg-base` require 5:1, increased to 7.5:1 in Night. The primary button's default, hover, pressed and focus bindings are checked after overrides. Editor, terminal, Git, diagnostic and diff bindings add checks for their actual surfaces. Alpha is rejected in checked foreground/background pairs. The translucent scrim and shadow layers remain supported outside those pairs. ANSI black has a background role in dark modes; its text contrast is checked in Day. Disabled text and decorative dividers are excluded.
 
@@ -93,6 +93,6 @@ Builds preserve aliases and include all referenced tokens in a single DTCG docum
 
 ## Compatibility
 
-Source layers declare DTCG `2025.10`, schema `2` and a supported `0.3.x` token contract. Token paths, types, alias rules and merge order are public data contracts. A breaking token change requires a new minor version while the contract is below `1.0`, with affected paths and required consumer changes documented. Use `$deprecated` with a replacement path before removing a role, keeping its type and alias valid throughout the supported contract family.
+Source layers declare DTCG `2025.10`, schema `2` and a supported `0.4.x` token contract. Token paths, types, alias rules and merge order are public data contracts. A breaking token change requires a new minor version while the contract is below `1.0`, with affected paths and required consumer changes documented. Use `$deprecated` with a replacement path before removing a role, keeping its type and alias valid throughout the supported contract family.
 
-The foundation-only scope retains this serialized token contract. Removed CLI commands and implementation packages are a separate breaking delivery change recorded in the [changelog](../CHANGELOG.md).
+Contract 0.4 retains deprecated aliases for the earlier spacing, radius, typography and `bg-active` roles. See the [migration guide](consumer-guide.md#migrate-from-contract-03) before updating a consumer.

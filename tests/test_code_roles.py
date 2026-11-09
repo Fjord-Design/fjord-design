@@ -1,10 +1,10 @@
 from pathlib import Path
 import unittest
 
-from fjord_tokens.code_roles import ROLES, check_syntax_distances, oklab, syntax_distances, validate_bindings
-from fjord_tokens.contract import ANSI, THEMES
-from fjord_tokens.dtcg import TokenError, color_from_hex
-from fjord_tokens.project import Project, check_contrast
+from fjord.code_roles import ROLES, check_syntax_distances, oklab, syntax_distances, validate_bindings
+from fjord.contract import ANSI, MODES
+from fjord.dtcg import TokenError, color_from_hex
+from fjord.project import Project, check_contrast
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class CodeRoleTests(unittest.TestCase):
     def test_every_binding_resolves_in_every_mode(self):
         project = Project(ROOT)
-        for mode in THEMES:
+        for mode in MODES:
             with self.subTest(mode=mode):
                 composed = project.compose(mode)
                 validate_bindings(composed)
@@ -45,7 +45,7 @@ class CodeRoleTests(unittest.TestCase):
             self.assertAlmostEqual(actual, reference, places=8)
 
     def test_syntax_distance_thresholds_pass_every_mode(self):
-        for mode in THEMES:
+        for mode in MODES:
             composed = Project(ROOT).compose(mode)
             self.assertEqual(len(list(syntax_distances(composed))), 36)
             check_syntax_distances(composed)

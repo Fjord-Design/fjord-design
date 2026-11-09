@@ -1,6 +1,14 @@
 # Changelog
 
-## Unreleased: design foundation only
+## Unreleased: contract 0.4 naming migration
+
+- Renamed the Python module from `fjord_tokens` to `fjord`; update imports and commands.
+- Added distinct neutral pressed and selected colours and an independently overridable `accent-pressed` role.
+- Added shorter semantic radius, spacing and typography paths. Previous paths and `bg-active` remain deprecated aliases in 0.4.
+- CLI `build` and `export --format dtcg` now emit identical metadata; `mise run build` exports all formats and modes. CLI success messages begin with `Wrote`.
+- Theme and override metadata must declare contract 0.4.x. See the [migration guide](docs/consumer-guide.md#migrate-from-contract-03).
+
+## Earlier unreleased scope reduction
 
 This is a breaking reduction of the project's delivery scope. The existing token names, values, schema `2`, contract `0.3.0` and `base → mode → theme → overrides` composition are retained.
 

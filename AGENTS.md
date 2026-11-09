@@ -4,7 +4,7 @@ Fjord contains the shared design foundation: tokens, inheritance, design rules, 
 
 ## Scope and ownership
 
-- Edit design values in `tokens/`, processing in `src/fjord_tokens/` and regression tests in `tests/`.
+- Edit design values in `tokens/`, processing in `src/fjord/` and regression tests in `tests/`.
 - Keep design and consumer guidance in `docs/`. Preserve original asset licences and provenance under `assets/`.
 - Keep the CLI limited to `validate`, `build` and `export`; keep default tasks independent of application runtimes.
 - Do not add component libraries, platform adapters, previews, catalogues or release infrastructure without a new scope decision.

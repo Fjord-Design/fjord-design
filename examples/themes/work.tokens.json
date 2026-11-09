@@ -2,7 +2,7 @@
   "$extensions": {
     "org.xerrion.fjord": {
       "schemaVersion": 2,
-      "contractVersion": "0.3.0",
+      "contractVersion": "0.4.0",
       "dtcgVersion": "2025.10"
     }
   },
@@ -11,27 +11,27 @@
       "accent": {
         "$type": "color",
         "$value": "{semantic.color.frost}",
-        "$description": "Work identity: accent."
+        "$description": "Work theme: accent."
       },
       "accent-hover": {
         "$type": "color",
         "$value": "{semantic.color.ansi-bright-blue}",
-        "$description": "Work identity: accent-hover."
+        "$description": "Work theme: accent-hover."
       },
       "accent-soft": {
         "$type": "color",
         "$value": "{semantic.color.info-soft}",
-        "$description": "Work identity: accent-soft."
+        "$description": "Work theme: accent-soft."
       },
       "accent-ink": {
         "$type": "color",
         "$value": "{semantic.color.info}",
-        "$description": "Work identity: accent-ink."
+        "$description": "Work theme: accent-ink."
       },
       "selection": {
         "$type": "color",
         "$value": "{semantic.color.info-soft}",
-        "$description": "Work identity: selection."
+        "$description": "Work theme: selection."
       }
     }
   }

@@ -5,9 +5,9 @@ import shutil
 import tempfile
 import unittest
 
-from fjord_tokens.dtcg import TokenError, nest
-from fjord_tokens.icons import load_icons
-from fjord_tokens.project import Project, metadata
+from fjord.dtcg import TokenError, nest
+from fjord.icons import load_icons
+from fjord.project import Project, metadata
 
 
 ROOT = Path(__file__).resolve().parents[1]

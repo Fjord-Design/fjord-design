@@ -4,8 +4,8 @@ import shutil
 import tempfile
 import unittest
 
-from fjord_tokens.dtcg import TokenError, nest
-from fjord_tokens.project import Project, check_contrast, metadata, validate_project
+from fjord.dtcg import TokenError, nest
+from fjord.project import Project, check_contrast, metadata, validate_project
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,9 +28,9 @@ class UsageTests(unittest.TestCase):
 
     def test_example_themes_and_overrides_preserve_shared_design_contract(self):
         project = Project(self.root)
-        self.assertEqual(len(project.usage["roles"]), 34)
+        self.assertEqual(len(project.usage["roles"]), 35)
         self.assertEqual(len(project.usage["states"]), 8)
-        self.assertEqual(validate_project(self.root).contrast_checks, 430)
+        self.assertEqual(validate_project(self.root).contrast_checks, 481)
         themes = [None, *sorted((self.root / "examples/themes").glob("*.tokens.json"))]
         overrides = sorted((self.root / "examples/overrides").glob("*.tokens.json"))
         for mode in ("night", "day", "aurora"):

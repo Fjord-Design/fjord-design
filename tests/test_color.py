@@ -4,9 +4,9 @@ import shutil
 import tempfile
 import unittest
 
-from fjord_tokens.color import design_seed_values, in_srgb_gamut, map_oklch_to_srgb, oklch_to_srgb, parse_oklch, srgb_to_oklab, srgb_to_oklch
-from fjord_tokens.dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color
-from fjord_tokens.project import Project, check_contrast, contrast_value, validate_project
+from fjord.color import design_seed_values, in_srgb_gamut, map_oklch_to_srgb, oklch_to_srgb, parse_oklch, srgb_to_oklab, srgb_to_oklch
+from fjord.dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color
+from fjord.project import Project, check_contrast, contrast_value, validate_project
 
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 
-from .contract import ANSI, SURFACES, THEMES
+from .contract import ANSI, SURFACES, MODES
 from .code_roles import ROLES
 
 
@@ -16,10 +16,10 @@ def contrast_rules(color_names):
     """Required pairs from the token contract and usage notes; no rounded thresholds."""
     rules = {}
 
-    def add(foreground, backgrounds, minimum, themes=THEMES):
+    def add(foreground, backgrounds, minimum, modes=MODES):
         for background in backgrounds:
-            for theme in themes:
-                key = (foreground, background, theme)
+            for mode in modes:
+                key = (foreground, background, mode)
                 rules[key] = max(minimum, rules.get(key, 0))
 
     for name in ("ink", "ink-muted", "accent", "accent-hover", "frost", "fern"):
@@ -29,7 +29,7 @@ def contrast_rules(color_names):
     add("focus-ring", SURFACES, 3)
     for foreground, background in (
         ("ink-inverse", "bg-inverse"), ("on-accent", "accent"),
-        ("on-accent", "accent-hover"), ("accent-ink", "accent-soft"),
+        ("on-accent", "accent-hover"), ("on-accent", "accent-pressed"), ("accent-ink", "accent-soft"),
         ("on-danger", "danger"),
     ):
         add(foreground, [background], 4.5)
@@ -42,7 +42,7 @@ def contrast_rules(color_names):
             add(name, ["bg-base", "bg-sunken", "bg-surface"], 4.5)
     add("syn-comment", ["bg-base"], 5)
     add("syn-comment", ["bg-base"], 7.5, ("night",))
-    # ANSI 0 is a background role in dark themes, not normal reading text.
+    # ANSI 0 is a background role in dark modes, not normal reading text.
     for name in ANSI[1:]:
         add(name, ["bg-base"], 4.5)
     add("ansi-black", ["bg-base"], 4.5, ("day",))

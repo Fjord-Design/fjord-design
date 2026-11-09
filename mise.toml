@@ -10,7 +10,7 @@ run = "python3 -m unittest discover -s tests -v"
 
 [tasks.validate]
 description = "Validate design tokens, contrast, fonts and icons"
-run = "python3 -m fjord_tokens validate"
+run = "python3 -m fjord validate"
 
 [tasks.check]
 description = "Check the shared design foundation"
@@ -18,7 +18,7 @@ depends = ["test", "validate"]
 
 [tasks.build]
 description = "Export DTCG, resolved JSON and token CSS for every mode"
-run = "set -e; for mode in night day aurora; do for format in dtcg resolved css; do python3 -m fjord_tokens export --mode \"$mode\" --format \"$format\"; done; done"
+run = "set -e; for mode in night day aurora; do for format in dtcg resolved css; do python3 -m fjord export --mode \"$mode\" --format \"$format\"; done; done"
 
 [tasks.ci]
 description = "Check and build the design foundation using Python only"

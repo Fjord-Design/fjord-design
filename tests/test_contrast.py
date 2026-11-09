@@ -1,8 +1,8 @@
 from pathlib import Path
 import unittest
 
-from fjord_tokens.dtcg import TokenError, color_from_hex
-from fjord_tokens.project import Project, check_contrast, contrast_value
+from fjord.dtcg import TokenError, color_from_hex
+from fjord.project import Project, check_contrast, contrast_value
 
 
 ROOT = Path(__file__).resolve().parents[1]
