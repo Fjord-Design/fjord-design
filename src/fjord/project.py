@@ -5,16 +5,16 @@ from dataclasses import dataclass, field
 from pathlib import Path
 import re
 
-from .contract import MODES, mode_roles, required_roles
+from .contract import MODES, SURFACES, mode_roles, required_roles
 from .color import design_seed_values
 from .code_roles import check_syntax_distances, validate_bindings
-from .dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color, read_json
+from .dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color, read_json, references
 from .quality import Report, contrast_rules
 from .layout_rules import check_layout
 from .usage import load_usage, usage_pairs, validate_usage
 
 
-CONTRACT_VERSION = "0.4.0"
+CONTRACT_VERSION = "0.5.0"
 SCHEMA_VERSION = 2
 
 
@@ -23,8 +23,8 @@ def metadata():
 
 
 def check_contract_version(version):
-    if not isinstance(version, str) or not re.fullmatch(r"0\.4\.(0|[1-9][0-9]*)", version):
-        raise TokenError(f"unsupported contract version {version!r}; expected a 0.4.x contract")
+    if not isinstance(version, str) or not re.fullmatch(r"0\.5\.(0|[1-9][0-9]*)", version):
+        raise TokenError(f"unsupported contract version {version!r}; expected a 0.5.x contract")
 
 
 def check_metadata(document, source):
@@ -50,11 +50,30 @@ class Composition:
     provenance: dict
     mode: str
     usage: dict
+    deprecated: list = field(default_factory=list)
 
 
 @dataclass
 class ValidationReport(Report):
     deprecated: list = field(default_factory=list)
+
+
+def _deprecated_uses(layer, source, deprecated, assignments=False):
+    """Keep prior metadata and diagnose uses in one applied input layer."""
+    assigned = deprecated.keys() & layer.keys() if assignments else set()
+    for path, token in layer.items():
+        if token.get("$deprecated"):
+            deprecated.setdefault(path, token["$deprecated"])
+    for path, token in layer.items():
+        targets = dict.fromkeys(references(token["$value"]))
+        if path in assigned:
+            targets[path] = None
+        for target in targets:
+            if target in deprecated:
+                reason = deprecated[target]
+                if reason is True:
+                    reason = "No replacement is declared."
+                yield f"{source}:{path}: uses deprecated role {target}; {reason}"
 
 
 def resolve_values(tokens):
@@ -120,24 +139,28 @@ class Project:
         if mode not in MODES:
             raise TokenError(f"unknown mode {mode!r}; choose night, day or aurora")
         base_path = self.source(self.contract.get("base"))
-        tokens = read_layer(base_path)
-        if set(tokens) & mode_roles():
+        base_tokens = read_layer(base_path)
+        if set(base_tokens) & mode_roles():
             raise TokenError("base must not define mode roles; each mode must supply its own complete values")
-        provenance = {path: "base" for path in tokens}
+        provenance = {path: "base" for path in base_tokens}
         mode_path = self.source(self.contract["modes"][mode])
         mode_tokens = read_layer(mode_path)
         if set(mode_tokens) != mode_roles():
             missing = sorted(mode_roles() - mode_tokens.keys())
             extra = sorted(mode_tokens.keys() - mode_roles())
             raise TokenError(f"{mode_path}: missing mode roles {missing}; unexpected roles {extra}")
-        tokens.update(mode_tokens)
+        tokens = {**base_tokens, **mode_tokens}
         provenance.update({path: f"mode:{mode}" for path in mode_tokens})
+        deprecated = {path: token["$deprecated"] for path, token in tokens.items() if token.get("$deprecated")}
+        warnings = list(_deprecated_uses(base_tokens, base_path, deprecated))
+        warnings.extend(_deprecated_uses(mode_tokens, mode_path, deprecated))
         self.check_required(tokens)
         values = resolve_values(tokens)
         theme_path = Path(theme) if theme is not None else self.source(self.contract.get("theme"))
         layers = [("theme", theme_path)] + [(f"override:{i + 1}", Path(p)) for i, p in enumerate(overrides)]
         for label, path in layers:
             patch = read_layer(path)
+            warnings.extend(_deprecated_uses(patch, path, deprecated, assignments=True))
             for name, token in patch.items():
                 if name not in tokens:
                     raise TokenError(f"{path}:{name}: unknown override path; add new roles to the source contract first")
@@ -149,7 +172,7 @@ class Project:
                 provenance[name] = f"{label}:{path.name}"
             self.check_required(tokens)
             values = resolve_values(tokens)
-        result = Composition(tokens, values, provenance, mode, self.usage)
+        result = Composition(tokens, values, provenance, mode, self.usage, list(dict.fromkeys(warnings)))
         validate_usage(self.usage, result)
         return result
 
@@ -181,7 +204,7 @@ def contrast_pairs(composition):
     for name in ("background", "hover-background", "pressed-background"):
         key = prefix + "foreground", prefix + name
         pairs[key] = max(4.5, pairs.get(key, 0))
-    for surface in ("bg-sunken", "bg-base", "bg-surface", "bg-raised", "bg-hover", "bg-active", "bg-pressed", "bg-selected"):
+    for surface in SURFACES:
         key = prefix + "focus-color", "semantic.color." + surface
         pairs[key] = max(3, pairs.get(key, 0))
     for (foreground, background), minimum in pairs.items():
@@ -214,6 +237,6 @@ def validate_project(root):
         composed = project.compose(mode)
         report.tokens = len(composed.tokens)
         report.contrast_checks += check_contrast(composed)
-        report.deprecated.extend(f"{mode}:{path}: {token['$deprecated']}" for path, token in composed.tokens.items()
-                                 if token.get("$deprecated"))
+        report.deprecated.extend(composed.deprecated)
+    report.deprecated = list(dict.fromkeys(report.deprecated))
     return report

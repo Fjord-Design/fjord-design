@@ -66,9 +66,9 @@ def main(argv=None):
     args = parser().parse_args(argv)
     try:
         report = validate_project(args.root)
-        for warning in report.deprecated:
-            print(f"WARN deprecated {warning}", file=sys.stderr)
         if args.command == "validate":
+            for warning in report.deprecated:
+                print(f"WARN deprecated {warning}", file=sys.stderr)
             from .fonts import load_fonts
             from .icons import load_icons
 
@@ -81,6 +81,8 @@ def main(argv=None):
             return 0
 
         composition = Project(args.root).compose(args.mode, args.theme, args.override)
+        for warning in composition.deprecated:
+            print(f"WARN deprecated {warning}", file=sys.stderr)
         forbidden = source_paths(args.root) + args.override + ([args.theme] if args.theme else [])
         from .export import export
 

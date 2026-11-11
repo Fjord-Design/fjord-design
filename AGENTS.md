@@ -14,7 +14,7 @@ Fjord contains the shared design foundation: tokens, inheritance, design rules, 
 
 Follow `docs/token-contract.md` and `docs/design-guidelines.md`. Each mode must be complete, component tokens must alias semantic roles, and overrides must preserve the declared types and validation rules. Keep source values and their meaning authoritative; implementations own target mappings and runtime behaviour.
 
-Use the Python standard library. Obtain permission before installing a missing runtime or library. Font maintenance may use the existing native inspection probe in `scripts/inspect_fonts.py`; ordinary checks must remain independent of native font tools.
+Use the Python standard library for runtime code. Native pytest and its dependencies are development-only: declare them in `pyproject.toml`, lock them in `uv.lock` and run them through the mise-pinned Python and uv tools. `mise run test` synchronizes the ignored `.venv` and runs pytest; the equivalent direct runner is `mise exec -- uv run --locked --python python3 -m pytest`. Keep mise's absolute `PYTHONPATH` for CLI subprocess tests and its uv interpreter preference. `mise exec -- uv sync --locked --python python3` provisions the environment without running tests. Obtain permission before installing a missing runtime or tool, or adding a dependency. Font maintenance may use the existing native inspection probe in `scripts/inspect_fonts.py`; ordinary checks must remain independent of native font tools.
 
 ## Verification and Git
 

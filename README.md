@@ -6,7 +6,7 @@ Fjord is a shared design foundation: colours, typography, layout rules, fonts an
 
 Run all commands from the `fjord-design` checkout root, the directory containing `mise.toml`, `tokens/`, `src/` and `assets/`.
 
-Use mise as a convenience. `mise.toml` pins Python 3.15.0, and the foundation uses Python's standard library only. It needs no application runtime or third-party Python libraries. Ask before installing a missing tool.
+Use [mise](https://mise.jdx.dev/) to run the project tasks. `mise.toml` pins Python 3.15.0 and uv 0.13.7. The foundation CLI and validation use only Python's standard library; pytest and its dependencies are development-only. Review `mise.toml` before trusting it, and obtain permission before installing a missing tool.
 
 ```sh
 mise run validate
@@ -44,17 +44,29 @@ The CSS variables are portable, not a component library. The consuming project c
 
 Night is the default, with dark blue surfaces and a frost-blue accent. Day uses pale blue-grey surfaces and a deep-blue accent; Aurora uses almost-black blue and teal. All three modes provide complete values for the same token names. Theme layers and overrides adapt the foundation without copying it: composition goes from base to one mode, a theme and then ordered overrides.
 
+Accent themes are independent of mode: Fern (green), Water (blue), Mountain (violet), Cabin (wood brown) and Hearth (ember-orange) work with `night`, `day` or `aurora`. Select one with `--theme examples/themes/{name}.tokens.json`, using the lower-case accent name. Without `--theme`, all default mode appearances stay unchanged. These themes change interaction and selection colours, not status, syntax, ANSI or chart colours.
+
 The [consumer guide](docs/consumer-guide.md) explains implementation and overrides, the [design guidelines](docs/design-guidelines.md) describe visual intent, and the [token contract](docs/token-contract.md) defines names, types and composition.
+
+The current token contract is `0.5.0`; source, theme and override layers must declare a compatible `0.5.x` version. Schema `2` and DTCG `2025.10` are unchanged. Contract 0.5 removes the 32 deprecated semantic roles and renames the primitive pressed-background paths without changing current design values. Old aliases, CSS properties and JSON paths are no longer exported. Follow the [0.5 migration guide](docs/consumer-guide.md#migrate-to-contract-05) before upgrading an existing consumer.
 
 ## Commands
 
 | Command | Result |
 | --- | --- |
-| `mise run test` | Run foundation regression tests |
+| `mise run test` | Sync locked development dependencies and run native pytest regression tests |
 | `mise run validate` | Validate sources and assets |
 | `mise run check` | Run tests and validation |
 | `mise run build` | Export every mode as DTCG, resolved JSON and CSS |
-| `mise run ci` | Run checks and build |
+| `mise run ci` | Sync test dependencies, run checks and build |
+
+`mise run test` uses native pytest through uv. The equivalent direct command is `mise exec -- uv run --locked --python python3 -m pytest`; mise supplies the pinned Python, uv discovery policy and absolute `PYTHONPATH` needed by CLI subprocess tests. uv creates or synchronizes the ignored local `.venv` from `uv.lock`, including pytest and its development dependencies. No runtime package is built or installed. To prepare that environment without running tests:
+
+```sh
+mise exec -- uv sync --locked --python python3
+```
+
+On a clean checkout, review `mise.toml`, run `mise trust`, then use `mise install` to install any missing pinned tools with approval. `UV_PYTHON_PREFERENCE=only-system` keeps uv on mise's Python instead of selecting a uv-managed interpreter. The GitHub Actions workflow installs the pinned tools with mise and runs `mise run ci`; the test task provisions its own locked dependencies.
 
 The CLI provides `validate`, `build` and `export`. CLI `build` writes DTCG for one mode; `mise run build` exports all three formats for all modes. Font and icon checks run with `validate`, not token-only builds.
 

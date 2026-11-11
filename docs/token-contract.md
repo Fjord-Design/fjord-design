@@ -1,6 +1,6 @@
 # Token contract
 
-Use `mise run check` before accepting a token change. The source contract is `tokens/contract.json`, schema version 2, contract version 0.4.0. The `*.tokens.json` files use the [DTCG Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/).
+Use `mise run check` before accepting a token change. The source contract is `tokens/contract.json`, schema version 2, contract version 0.5.0. The `*.tokens.json` files use the [DTCG Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/).
 
 ## Names and ownership
 
@@ -56,12 +56,16 @@ Aliases use complete `{token.path}` references, including typed fields inside co
 
 | Order | Layer | Contract |
 | --- | --- | --- |
-| 1 | `base.tokens.json` | Primitives, shared semantic tokens and component bindings |
-| 2 | Exactly one `modes/<mode>.tokens.json` | All 84 semantic colour roles and four semantic shadow roles |
-| 3 | Default `themes/fjord.tokens.json`, or explicit `--theme` | Optional theme changes at existing semantic or component paths |
+| 1 | `tokens/base.tokens.json` | Primitives, shared semantic tokens and component bindings |
+| 2 | Exactly one `tokens/modes/<mode>.tokens.json` | All 87 semantic colour roles and four semantic shadow roles |
+| 3 | Default `tokens/themes/fjord.tokens.json`, or explicit `--theme` | Optional theme changes at existing semantic or component paths |
 | 4 | Repeated `--override` files, left to right | Allowed local changes; the last supplied token definition wins |
 
 Night is selected only when the CLI receives no mode. A mode cannot inherit missing values from Night or from base. Base is forbidden from defining mode-specific semantic colour or shadow roles. Each mode must supply its complete set, even when some values are shared through explicit aliases.
+
+The `hearth`, `hearth-hover`, `hearth-soft` and `lilac-soft` colour roles remain primitive-backed in every mode. They supply the Hearth ember-orange family and the Mountain soft selection fill without changing existing role values. Current source and example metadata declares schema `2`, contract `0.5.0` and DTCG `2025.10`.
+
+The [selectable accent themes](consumer-guide.md#choose-an-accent) use `examples/themes/{name}.tokens.json` for `fern`, `water`, `mountain`, `cabin` and `hearth`, independently of mode. They alias `accent`, `accent-hover`, `accent-soft`, `accent-ink` and `selection`; `accent-pressed` still follows `accent-hover`, `focus-ring` follows `accent`, and `on-accent` remains mode-provided. They do not rewire status, syntax, ANSI or chart roles. Omitting `--theme` preserves each mode's default appearance.
 
 Override rules:
 
@@ -69,13 +73,15 @@ Override rules:
 2. Override only existing `semantic` or `component` paths. Primitive changes belong in the source palette. Add new roles to the source contract before referencing them from an override.
 3. Preserve the token's type. Unknown paths, `null` deletion markers and malformed values fail. An invalid layer cannot be hidden by a later layer.
 4. Resolve aliases against the composed graph after each layer. Component and derived semantic values follow the final alias target. The Python composition result records the winning layer in `provenance`.
-5. Declare schema version 2 and a compatible `0.4.x` contract in `$extensions.org.xerrion.fjord`. See the example files for complete metadata. Missing or incompatible metadata fails.
+5. Declare schema version 2 and a compatible `0.5.x` contract in `$extensions.org.xerrion.fjord`; current sources and examples use `0.5.0`. Missing or incompatible metadata fails. In particular, `0.4.x` and earlier layers are rejected rather than reinterpreted under the new contract.
 
 The selected mode's final contrast is checked after composition. `validate` checks the default modes and shared assets. CLI `build` and `export` validate the default token project and the requested composition; they do not validate font or icon files. Run `mise run validate` to check assets. A Night-only colour override is not automatically approved for Day or Aurora.
 
 ## Validation and output
 
 The validator rejects duplicate JSON keys, non-finite numbers, invalid names, missing descriptions, unsupported types, missing required roles and malformed typed values. Required roles are declared in the source contract, with baseline roles protected in `src/fjord/contract.py`. New custom groups or app-specific token namespaces require an explicit contract change.
+
+No definitions in Fjord's shipped sources, default theme or example layers are currently deprecated. Generic DTCG `$deprecated` metadata validation and use-based diagnostics remain supported for future deprecations. Diagnostics report actual use in supplied token inputs: aliases to deprecated roles, including references inside composite values, and explicit theme or override assignments to deprecated paths, even if the new definition omits or replaces `$deprecated`. Each applied layer is checked, including one later overridden. Warnings identify the source, deprecated role and replacement. Deprecated definitions alone do not produce warnings during validation, builds or exports. The CLI cannot inspect external consumers for deprecated or removed CSS properties or JSON paths.
 
 Contrast uses unrounded sRGB components. Text requires 4.5:1; the specified focus and control-border pairs require 3:1. Comments on `bg-base` require 5:1, increased to 7.5:1 in Night. The primary button's default, hover, pressed and focus bindings are checked after overrides. Editor, terminal, Git, diagnostic and diff bindings add checks for their actual surfaces. Alpha is rejected in checked foreground/background pairs. The translucent scrim and shadow layers remain supported outside those pairs. ANSI black has a background role in dark modes; its text contrast is checked in Day. Disabled text and decorative dividers are excluded.
 
@@ -93,6 +99,6 @@ Builds preserve aliases and include all referenced tokens in a single DTCG docum
 
 ## Compatibility
 
-Source layers declare DTCG `2025.10`, schema `2` and a supported `0.4.x` token contract. Token paths, types, alias rules and merge order are public data contracts. A breaking token change requires a new minor version while the contract is below `1.0`, with affected paths and required consumer changes documented. Use `$deprecated` with a replacement path before removing a role, keeping its type and alias valid throughout the supported contract family.
+Source layers declare DTCG `2025.10`, schema `2` and a supported `0.5.x` token contract. Token paths, types, alias rules and merge order are public data contracts. A breaking token change requires a new minor version while the contract is below `1.0`, with affected paths and required consumer changes documented. For a future deprecation, use `$deprecated` with a replacement path before removing a role, keeping its type and alias valid throughout the supported contract family.
 
-Contract 0.4 retains deprecated aliases for the earlier spacing, radius, typography and `bg-active` roles. See the [migration guide](consumer-guide.md#migrate-from-contract-03) before updating a consumer.
+Contract 0.5 removes all 32 deprecated semantic definitions: ten `spacing.space-*` roles, six `radius.radius-*` roles, fifteen `typography.type-*` roles and `color.bg-active`. Their aliases, CSS properties and JSON paths are no longer exported. The three `primitive.color.<mode>.bg-active` paths are also renamed to `bg-pressed`, retaining their original values. Current design values, default mode appearances, accent themes, schema and DTCG version are unchanged. Follow the [0.5 migration guide](consumer-guide.md#migrate-to-contract-05) for the complete old-to-new mappings and the distinction between pressed and selected backgrounds.

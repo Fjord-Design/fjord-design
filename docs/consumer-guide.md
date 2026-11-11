@@ -10,6 +10,28 @@ Run `mise run build` from the repository root. It validates the design and write
 
 The other modes use `day` and `aurora` in their filenames. These exports contain design data. Your implementation supplies components, layout, runtime preferences and target-specific configuration.
 
+## Choose an accent
+
+Mode and accent are independent: `--mode night`, `day` or `aurora` selects the surfaces and complete palette; `--theme` selects an accent layer. Each of these themes works with all three modes:
+
+| Accent | Colour | Theme path |
+| --- | --- | --- |
+| Fern | Green | `examples/themes/fern.tokens.json` |
+| Water | Blue | `examples/themes/water.tokens.json` |
+| Mountain | Violet | `examples/themes/mountain.tokens.json` |
+| Cabin | Wood brown | `examples/themes/cabin.tokens.json` |
+| Hearth | Ember-orange | `examples/themes/hearth.tokens.json` |
+
+For example, export Day with the Water accent:
+
+```sh
+mise exec -- python3 -m fjord export --mode day --format resolved \
+  --theme examples/themes/water.tokens.json \
+  --output dist/day-water.resolved.json
+```
+
+Change the mode and theme path to select any combination. Omit `--theme` to retain each mode's unchanged default appearance; Fern is an explicit theme, not a new default. These themes change `accent`, `accent-hover`, `accent-soft`, `accent-ink` and `selection`. `accent-pressed` follows `accent-hover`, `focus-ring` follows `accent`, and `on-accent` remains mode-provided. Status, syntax, ANSI and chart colours keep their mode values.
+
 ## Inherit and override
 
 Composition follows **base → mode → theme → overrides**. Omitted values remain inherited. Later layers can replace existing semantic or component token definitions while preserving their types. Aliases continue to follow the selected mode.
@@ -21,7 +43,7 @@ mise exec -- python3 -m fjord export --mode day --format resolved \
   --output dist/day-fern-compact.resolved.json
 ```
 
-Copy an example theme into your own project when creating a theme. Keep its `$extensions.org.xerrion.fjord` metadata and supply complete token definitions for the paths you change. Use aliases to semantic roles when a value should adapt to each mode. `--theme` replaces the default `tokens/themes/fjord.tokens.json` layer; repeat `--override` to apply further files in order.
+Copy an example theme into your own project when creating a theme. Keep its `$extensions.org.xerrion.fjord` metadata, currently contract `0.5.0`, schema `2` and DTCG `2025.10`, and supply complete token definitions for the paths you change. Only `0.5.x` layers are accepted; `0.4.x` and earlier files must be migrated. Use aliases to semantic roles when a value should adapt to each mode. `--theme` replaces the default `tokens/themes/fjord.tokens.json` layer; repeat `--override` to apply further files in order.
 
 Use `--mode night`, `day` or `aurora`; Night is the CLI default. Each requested composition validates its own contrast, so test every mode your implementation offers. The [token contract](token-contract.md) defines allowed overrides and failure behaviour.
 
@@ -70,15 +92,54 @@ Run `mise run validate` when changing design sources and `mise run ci` before co
 
 Record the Fjord contract version your implementation consumes. Verify your own mappings, asset paths, interactions and native rendering before releasing it. Implementation dependencies and releases remain in the consuming project.
 
-## Migrate from contract 0.3
+## Migrate to contract 0.5
 
-Use `python3 -m fjord` instead of `python3 -m fjord_tokens`, and update Python imports to `fjord`. Custom theme and override metadata must declare contract `0.4.0`; 0.3.x files are rejected until updated. Schema 2 and composition order are unchanged.
+Contract 0.5 is a breaking cutover from 0.4.x and earlier. It removes all 32 deprecated semantic roles and renames three primitive background paths. The modern roles, current design values, default mode appearances and five accent themes are unchanged. Each mode now supplies 87 semantic colour roles instead of 88.
 
-| Previous semantic role | Replacement |
-| --- | --- |
-| `radius.radius-<name>` | `radius.<name>` |
-| `spacing.space-<number>` | `spacing.step-<number>` |
-| `typography.type-<name>` | `typography.<name>` |
-| `color.bg-active` | `color.bg-pressed` for a press, `color.bg-selected` for persistent neutral selection |
+### Update layer metadata
 
-The old roles remain as deprecated aliases in 0.4; warnings identify their replacements. Move overrides to the replacement paths: overriding a deprecated alias does not change the new role. The new `color.accent-pressed` initially follows `accent-hover` and can be overridden independently. Re-export CSS and JSON, update bindings and verify each mode. Previous CSS property names remain available through the deprecated aliases.
+Source and example layers now declare contract `0.5.0`. Custom themes and overrides must use a compatible `0.5.x` version; `0.4.x` and earlier layers are rejected, even if they already use modern token paths. Update the Fjord metadata block after migrating the paths below:
+
+```json
+{
+  "$extensions": {
+    "org.xerrion.fjord": {
+      "schemaVersion": 2,
+      "contractVersion": "0.5.0",
+      "dtcgVersion": "2025.10"
+    }
+  }
+}
+```
+
+Schema `2`, DTCG `2025.10` and **base → mode → theme → overrides** composition are unchanged. Copy current metadata from an example rather than only changing the version of an otherwise incompatible layer.
+
+### Replace removed paths
+
+The following 32 removals are all within the `semantic` namespace. Replace both token definitions and every alias reference to them, including references inside typography and shadow composites:
+
+| Removed semantic paths | Replacement paths | Suffixes / meaning | Count |
+| --- | --- | --- | --- |
+| `semantic.spacing.space-<number>` | `semantic.spacing.step-<number>` | `1`, `2`, `3`, `4`, `5`, `6`, `8`, `10`, `12`, `16` | 10 |
+| `semantic.radius.radius-<name>` | `semantic.radius.<name>` | `none`, `window`, `xs`, `panel`, `control`, `full` | 6 |
+| `semantic.typography.type-<name>` | `semantic.typography.<name>` | `display`, `title-1`, `title-2`, `title-3`, `title-4`, `lead`, `body`, `body-strong`, `small`, `label`, `caption`, `overline`, `code`, `code-small`, `code-italic` | 15 |
+| `semantic.color.bg-active` | `semantic.color.bg-pressed` or `semantic.color.bg-selected` | Transient press or persistent neutral selection, respectively | 1 |
+
+Use `bg-pressed` while a control is pressed. Use `bg-selected` for an item that remains selected after the interaction. Accent-backed selection continues to use `accent-soft` and `accent-ink`; `selection` remains the text/editor selection role. `accent-pressed` continues to follow `accent-hover` unless overridden independently.
+
+The primitive rename is separate: replace `primitive.color.<mode>.bg-active` with `primitive.color.<mode>.bg-pressed` for each of `night`, `day` and `aurora`. The original primitive values are retained. Spacing and radius primitive names are unchanged; do not apply the semantic prefix removals to them.
+
+Move theme and override assignments to the modern semantic paths, not just alias targets. The supplied compact-spacing example uses `semantic.spacing.step-4`, and soft-windows uses `semantic.radius.window`. Removed paths are unknown roles, not compatibility aliases; references to them cannot resolve.
+
+### Update consumers and regenerate exports
+
+The removed aliases and their CSS custom properties, DTCG paths and resolved JSON keys are no longer exported. Update external bindings and mappings as well as token layers. CSS names still replace token-path dots with hyphens, so, for example, `--fjord-token-semantic-spacing-space-4` becomes `--fjord-token-semantic-spacing-step-4`. JSON lookups for `semantic.spacing.space-4` become `semantic.spacing.step-4`. Apply the same naming rule to the other removed paths and to the primitive background rename.
+
+For consumers predating the Python module rename, replace `python3 -m fjord_tokens` with `python3 -m fjord` and imports from `fjord_tokens` with `fjord`, retaining the relevant submodule names. The old module is not a compatibility entry point.
+
+Regenerate exports for every mode and theme your implementation offers, then verify its bindings, pressed and selected states and rendered output. The CLI cannot inspect external consumers for removed CSS properties or JSON paths.
+
+### Deprecation support remains available
+
+No definitions in Fjord's shipped sources, default theme or example layers are currently deprecated. Generic DTCG `$deprecated` metadata validation and use-based CLI diagnostics remain available for future deprecations. Aliases to deprecated roles, including references inside composites, and explicit theme or override assignments to deprecated paths produce warnings. Warnings identify the source, deprecated role and replacement; deprecated definitions alone do not produce warnings. This facility does not restore any removed 0.4 alias.
+

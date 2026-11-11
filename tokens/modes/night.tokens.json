@@ -2,7 +2,7 @@
   "$extensions": {
     "org.xerrion.fjord": {
       "schemaVersion": 2,
-      "contractVersion": "0.4.0",
+      "contractVersion": "0.5.0",
       "dtcgVersion": "2025.10"
     }
   },
@@ -112,12 +112,6 @@
         "$type": "color",
         "$value": "{primitive.color.night.aurora}",
         "$description": "Aurora teal. Functions/methods in code, the Aurora theme's accent, chart series 2."
-      },
-      "bg-active": {
-        "$type": "color",
-        "$value": "{semantic.color.bg-pressed}",
-        "$description": "Legacy neutral pressed background.",
-        "$deprecated": "Use {semantic.color.bg-pressed} for press or {semantic.color.bg-selected} for selection."
       },
       "bg-base": {
         "$type": "color",
@@ -244,6 +238,21 @@
         "$value": "{semantic.color.rose}",
         "$description": "Deleted lines/files."
       },
+      "hearth": {
+        "$type": "color",
+        "$value": "{primitive.color.night.hearth}",
+        "$description": "Warm terracotta for the Hearth accent theme; not a status colour."
+      },
+      "hearth-hover": {
+        "$type": "color",
+        "$value": "{primitive.color.night.hearth-hover}",
+        "$description": "Hover and pressed state of a Hearth accent fill or link."
+      },
+      "hearth-soft": {
+        "$type": "color",
+        "$value": "{primitive.color.night.hearth-soft}",
+        "$description": "Tinted Hearth selection fill; pair with `hearth` or `ink` text."
+      },
       "info": {
         "$type": "color",
         "$value": "{semantic.color.frost}",
@@ -257,7 +266,7 @@
       "ink": {
         "$type": "color",
         "$value": "{primitive.color.night.ink}",
-        "$description": "Primary text and solid icons on `bg-base`, `bg-surface`, `bg-raised`, `bg-hover`, `bg-active`."
+        "$description": "Primary text and solid icons on `bg-base`, `bg-surface`, `bg-raised`, `bg-hover`, `bg-pressed` and `bg-selected`."
       },
       "ink-disabled": {
         "$type": "color",
@@ -272,7 +281,7 @@
       "ink-muted": {
         "$type": "color",
         "$value": "{primitive.color.night.ink-muted}",
-        "$description": "Secondary text: descriptions, metadata, placeholder-free helper text. 4.5:1+ on every surface including `bg-active`."
+        "$description": "Secondary text: descriptions, metadata, placeholder-free helper text. 4.5:1+ on every surface including `bg-pressed` and `bg-selected`."
       },
       "ink-subtle": {
         "$type": "color",
@@ -288,6 +297,11 @@
         "$type": "color",
         "$value": "{primitive.color.night.lilac}",
         "$description": "Muted lilac. Keywords and storage in code, chart series 4. Cool counterweight to the café tones."
+      },
+      "lilac-soft": {
+        "$type": "color",
+        "$value": "{primitive.color.night.lilac-soft}",
+        "$description": "Tinted lilac selection fill for the Mountain accent theme; pair with `lilac` or `ink` text."
       },
       "line": {
         "$type": "color",
@@ -416,12 +430,12 @@
       },
       "bg-pressed": {
         "$type": "color",
-        "$value": "{primitive.color.night.bg-active}",
+        "$value": "{primitive.color.night.bg-pressed}",
         "$description": "Neutral background while a control is pressed."
       },
       "bg-selected": {
         "$type": "color",
-        "$value": "{primitive.color.night.bg-active}",
+        "$value": "{primitive.color.night.bg-pressed}",
         "$description": "Neutral background for a persistently selected item."
       },
       "accent-pressed": {

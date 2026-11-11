@@ -6,7 +6,7 @@ Work on a feature branch, preserve unrelated work and use focused conventional c
 mise run ci
 ```
 
-Read `mise.toml` before trusting it. The project uses the pinned Python runtime and its standard library. Obtain permission before installing a missing tool or library.
+Read `mise.toml` before trusting it; obtain permission before installing a missing tool or adding a dependency. Runtime code remains standard-library-only. `mise run test` runs native pytest with development-only dependencies pinned in `uv.lock`, automatically synchronizing the ignored `.venv`. See the [README test workflow](README.md#commands) for pinned tools, setup and direct runners.
 
 ## Where changes belong
 

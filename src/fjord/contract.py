@@ -1,17 +1,18 @@
 """Required token roles, mode names and component bindings."""
 
 MODES = ("night", "day", "aurora")
-SURFACES = "bg-sunken bg-base bg-surface bg-raised bg-hover bg-active bg-pressed bg-selected".split()
+SURFACES = "bg-sunken bg-base bg-surface bg-raised bg-hover bg-pressed bg-selected".split()
 ANSI = ("ansi-black ansi-red ansi-green ansi-yellow ansi-blue ansi-magenta "
         "ansi-cyan ansi-white ansi-bright-black ansi-bright-red ansi-bright-green "
         "ansi-bright-yellow ansi-bright-blue ansi-bright-magenta ansi-bright-cyan "
         "ansi-bright-white").split()
 REQUIRED = {
     "color": set((
-        "bg-sunken bg-base bg-surface bg-raised bg-hover bg-active bg-pressed bg-selected bg-inverse "
+        "bg-sunken bg-base bg-surface bg-raised bg-hover bg-pressed bg-selected bg-inverse "
         "line line-strong ink ink-muted ink-subtle ink-disabled ink-inverse "
         "accent accent-hover accent-pressed accent-soft accent-ink on-accent focus-ring selection "
         "frost aurora lilac sage fern latte foam rose info success warning danger "
+        "hearth hearth-hover hearth-soft lilac-soft "
         "info-soft success-soft warning-soft danger-soft on-danger "
         "syn-comment syn-keyword syn-string syn-function syn-type syn-variable "
         "syn-property syn-number syn-operator syn-punctuation syn-regex "
@@ -20,8 +21,8 @@ REQUIRED = {
         "chart-5 chart-6 chart-grid scrim"
     ).split() + ANSI),
     "font-size": set("text-2xs text-xs text-sm text-md text-base text-lg text-xl text-2xl text-3xl".split()),
-    "spacing": set("step-1 step-2 step-3 step-4 step-5 step-6 step-8 step-10 step-12 step-16 space-1 space-2 space-3 space-4 space-5 space-6 space-8 space-10 space-12 space-16".split()),
-    "radius": set("none window xs panel control full radius-none radius-window radius-xs radius-panel radius-control radius-full".split()),
+    "spacing": set("step-1 step-2 step-3 step-4 step-5 step-6 step-8 step-10 step-12 step-16".split()),
+    "radius": set("none window xs panel control full".split()),
     "shadow": set("shadow-sm shadow-raised shadow-overlay shadow-pressed".split()),
     "border-width": set("border-hairline border-focus border-active".split()),
     "duration": set("duration-none duration-fast duration-base duration-slow".split()),
