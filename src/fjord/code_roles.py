@@ -4,9 +4,9 @@ from dataclasses import dataclass
 from itertools import combinations
 from math import dist
 
-from .contract import ANSI
-from .color import srgb_to_oklab as oklab
-from .dtcg import TokenError
+from fjord.color import srgb_to_oklab as oklab
+from fjord.contract import ANSI
+from fjord.dtcg import TokenError
 
 
 @dataclass(frozen=True)
@@ -40,12 +40,22 @@ ROLES = {
     "diff-deleted-background": Role("diff-del-bg"),
     "diff-text": Role("ink", ("diff-add-bg", "warning-soft", "diff-del-bg")),
     "diff-added": Role("git-added", ("bg-base", "diff-add-bg"), marker="+ Added"),
-    "diff-changed": Role("git-modified", ("bg-base", "warning-soft"), marker="~ Changed"),
+    "diff-changed": Role(
+        "git-modified", ("bg-base", "warning-soft"), marker="~ Changed"
+    ),
     "diff-deleted": Role("git-removed", ("bg-base", "diff-del-bg"), marker="- Deleted"),
-    "diagnostic-error": Role("danger", ("bg-base", "bg-surface"), marker="E Error", emphasis="wavy"),
-    "diagnostic-warning": Role("warning", ("bg-base", "bg-surface"), marker="W Warning", emphasis="dashed"),
-    "diagnostic-info": Role("info", ("bg-base", "bg-surface"), marker="I Info", emphasis="solid"),
-    "diagnostic-hint": Role("ink-muted", ("bg-base", "bg-surface"), marker="H Hint", emphasis="dotted"),
+    "diagnostic-error": Role(
+        "danger", ("bg-base", "bg-surface"), marker="E Error", emphasis="wavy"
+    ),
+    "diagnostic-warning": Role(
+        "warning", ("bg-base", "bg-surface"), marker="W Warning", emphasis="dashed"
+    ),
+    "diagnostic-info": Role(
+        "info", ("bg-base", "bg-surface"), marker="I Info", emphasis="solid"
+    ),
+    "diagnostic-hint": Role(
+        "ink-muted", ("bg-base", "bg-surface"), marker="H Hint", emphasis="dotted"
+    ),
     "git-added": Role("git-added", ("bg-base",), marker="A Added"),
     "git-modified": Role("git-modified", ("bg-base",), marker="M Modified"),
     "git-deleted": Role("git-removed", ("bg-base",), marker="D Deleted"),
@@ -68,10 +78,24 @@ ROLES = {
     "prompt-error": Role("danger", ("bg-base",), marker="Exit"),
 }
 
-for name in ("comment", "keyword", "string", "number", "type", "function", "property",
-             "variable", "operator", "punctuation", "regex"):
-    ROLES[f"syntax-{name}"] = Role(f"syn-{name}", ("bg-base", "bg-sunken", "bg-surface"),
-                                  emphasis="italic" if name in ("comment", "keyword") else "")
+for name in (
+    "comment",
+    "keyword",
+    "string",
+    "number",
+    "type",
+    "function",
+    "property",
+    "variable",
+    "operator",
+    "punctuation",
+    "regex",
+):
+    ROLES[f"syntax-{name}"] = Role(
+        f"syn-{name}",
+        ("bg-base", "bg-sunken", "bg-surface"),
+        emphasis="italic" if name in ("comment", "keyword") else "",
+    )
 ROLES["syntax-text"] = Role("ink", ("bg-base", "bg-sunken", "bg-surface"))
 for name in ANSI:
     # Slot 0 is checked as text in Day by the colour contract.
@@ -85,12 +109,16 @@ def validate_bindings(composition):
     for name, role in ROLES.items():
         token = composition.tokens.get(role.token)
         if token is None or token.get("$type") != "color":
-            raise TokenError(f"{name} [{composition.mode}]: expected colour token {role.token}")
+            raise TokenError(
+                f"{name} [{composition.mode}]: expected colour token {role.token}"
+            )
 
 
 def syntax_distances(composition):
     for first, second in combinations(SEPARATED_SYNTAX, 2):
-        colors = [composition.values[f"semantic.color.syn-{name}"] for name in (first, second)]
+        colors = [
+            composition.values[f"semantic.color.syn-{name}"] for name in (first, second)
+        ]
         minimum = 7 if first in MAIN_SYNTAX and second in MAIN_SYNTAX else 5
         yield first, second, 100 * dist(*map(oklab, colors)), minimum
 
@@ -98,5 +126,7 @@ def syntax_distances(composition):
 def check_syntax_distances(composition):
     for first, second, distance, minimum in syntax_distances(composition):
         if distance < minimum:
-            raise TokenError(f"syn-{first} / syn-{second} [{composition.mode}]: "
-                             f"OKLab distance {distance:.6f} is below {minimum}; separate these syntax colours")
+            raise TokenError(
+                f"syn-{first} / syn-{second} [{composition.mode}]: "
+                f"OKLab distance {distance:.6f} is below {minimum}; separate these syntax colours"
+            )

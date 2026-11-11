@@ -2,20 +2,23 @@
 
 import argparse
 import json
-from pathlib import Path
 import sys
 import tempfile
+from pathlib import Path
 
-from .contract import MODES
-from .dtcg import TokenError
-from .project import Project, validate_project
-
+from fjord.contract import MODES
+from fjord.dtcg import TokenError
+from fjord.project import Project, validate_project
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 def write_json_output(path, document, forbidden):
-    write_text_output(path, json.dumps(document, ensure_ascii=False, indent=2, allow_nan=False) + "\n", forbidden)
+    write_text_output(
+        path,
+        json.dumps(document, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        forbidden,
+    )
 
 
 def write_text_output(path, content, forbidden):
@@ -24,7 +27,10 @@ def write_text_output(path, content, forbidden):
 
 def write_binary_output(path, content, forbidden):
     path = Path(path).resolve()
-    if any(path == p.resolve() or p.is_dir() and path.is_relative_to(p.resolve()) for p in forbidden):
+    if any(
+        path == p.resolve() or p.is_dir() and path.is_relative_to(p.resolve())
+        for p in forbidden
+    ):
         raise TokenError(f"{path}: build output must not replace token sources")
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = None
@@ -39,27 +45,70 @@ def write_binary_output(path, content, forbidden):
 
 
 def parser():
-    result = argparse.ArgumentParser(description="Validate and export the Fjord design foundation.", allow_abbrev=False)
+    result = argparse.ArgumentParser(
+        description="Validate and export the Fjord design foundation.",
+        allow_abbrev=False,
+    )
     commands = result.add_subparsers(dest="command", required=True)
-    validate = commands.add_parser("validate", help="check tokens, contrast, fonts, icons and licences", allow_abbrev=False)
+    validate = commands.add_parser(
+        "validate",
+        help="check tokens, contrast, fonts, icons and licences",
+        allow_abbrev=False,
+    )
     validate.add_argument("--root", type=Path, default=ROOT, help="project directory")
-    for name, help_text in (("build", "compose validated DTCG tokens for one mode"),
-                            ("export", "export validated tokens as DTCG, resolved JSON or CSS")):
+    for name, help_text in (
+        ("build", "compose validated DTCG tokens for one mode"),
+        ("export", "export validated tokens as DTCG, resolved JSON or CSS"),
+    ):
         command = commands.add_parser(name, help=help_text, allow_abbrev=False)
-        command.add_argument("--root", type=Path, default=ROOT, help="project directory")
+        command.add_argument(
+            "--root", type=Path, default=ROOT, help="project directory"
+        )
         command.add_argument("--mode", choices=MODES, default="night")
-        command.add_argument("--theme", type=Path, help="replace the default theme layer")
-        command.add_argument("--override", type=Path, action="append", default=[], help="override file; repeat in precedence order")
-        command.add_argument("--output", type=Path, help="output path; defaults to dist/ inside the project")
+        command.add_argument(
+            "--theme", type=Path, help="replace the default theme layer"
+        )
+        command.add_argument(
+            "--override",
+            type=Path,
+            action="append",
+            default=[],
+            help="override file; repeat in precedence order",
+        )
+        command.add_argument(
+            "--output",
+            type=Path,
+            help="output path; defaults to dist/ inside the project",
+        )
         if name == "export":
-            command.add_argument("--format", choices=("dtcg", "resolved", "css"), required=True)
+            command.add_argument(
+                "--format", choices=("dtcg", "resolved", "css"), required=True
+            )
     return result
 
 
 def source_paths(root):
-    return [root / name for name in ("tokens", "src", "docs", "assets", "examples", "tests", "scripts",
-                                     ".github", ".git", "README.md", "LICENSE", "AGENTS.md", "CONTRIBUTING.md",
-                                     "CHANGELOG.md", "mise.toml", ".gitignore")]
+    return [
+        root / name
+        for name in (
+            "tokens",
+            "src",
+            "docs",
+            "assets",
+            "examples",
+            "tests",
+            "scripts",
+            ".github",
+            ".git",
+            "README.md",
+            "LICENSE",
+            "AGENTS.md",
+            "CONTRIBUTING.md",
+            "CHANGELOG.md",
+            "mise.toml",
+            ".gitignore",
+        )
+    ]
 
 
 def main(argv=None):
@@ -75,24 +124,39 @@ def main(argv=None):
             fonts = load_fonts(args.root)
             icons = load_icons(args.root)
             faces = sum(len(family["faces"]) for family in fonts["families"])
-            print(f"PASS: {report.tokens} DTCG tokens per mode; {len(MODES)} modes; "
-                  f"{report.contrast_checks} contrast pairs in sRGB and HEX; "
-                  f"{faces} font faces and {len(icons['icons'])} icons with pinned licences.")
+            print(
+                f"PASS: {report.tokens} DTCG tokens per mode; {len(MODES)} modes; "
+                f"{report.contrast_checks} contrast pairs in sRGB and HEX; "
+                f"{faces} font faces and {len(icons['icons'])} icons with pinned licences."
+            )
             return 0
 
         composition = Project(args.root).compose(args.mode, args.theme, args.override)
         for warning in composition.deprecated:
             print(f"WARN deprecated {warning}", file=sys.stderr)
-        forbidden = source_paths(args.root) + args.override + ([args.theme] if args.theme else [])
+        forbidden = (
+            source_paths(args.root)
+            + args.override
+            + ([args.theme] if args.theme else [])
+        )
         from .export import export
 
+        prefix = "fjord"
         if args.command == "build":
             result = export(composition, "dtcg")
-            destination = args.output or args.root / "dist" / f"{args.mode}.tokens.json"
+            destination = (
+                args.output or args.root / "dist" / f"{prefix}.{args.mode}.tokens.json"
+            )
         else:
             result = export(composition, args.format)
-            suffix = {"dtcg": "dtcg.json", "resolved": "resolved.json", "css": "tokens.css"}[args.format]
-            destination = args.output or args.root / "dist" / f"{args.mode}.{suffix}"
+            suffix = {
+                "dtcg": "dtcg.json",
+                "resolved": "resolved.json",
+                "css": "tokens.css",
+            }[args.format]
+            destination = (
+                args.output or args.root / "dist" / f"{prefix}.{args.mode}.{suffix}"
+            )
         if isinstance(result, dict):
             write_json_output(destination, result, forbidden)
         else:
