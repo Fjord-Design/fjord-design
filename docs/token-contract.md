@@ -137,7 +137,9 @@ Night is selected only when the CLI receives no mode. A mode cannot inherit miss
 
 The `hearth`, `hearth-hover`, `hearth-soft` and `lilac-soft` colour roles remain primitive-backed in every mode. They supply the Hearth ember-orange family and the Mountain soft selection fill without changing existing role values. Current source and example metadata declares schema `2`, contract `0.5.0` and DTCG `2025.10`.
 
-The [selectable accent themes](consumer-guide.md#choose-an-accent) use `examples/themes/{name}.tokens.json` for `fern`, `water`, `mountain`, `cabin` and `hearth`, independently of mode. They alias `accent`, `accent-hover`, `accent-soft`, `accent-ink` and `selection`; `accent-pressed` still follows `accent-hover`, `focus-ring` follows `accent`, and `on-accent` remains mode-provided. They do not rewire status, syntax, ANSI or chart roles. Omitting `--theme` preserves each mode's default appearance.
+The [official built-in accent themes](consumer-guide.md#choose-an-accent) use `tokens/themes/{name}.tokens.json` for `fern`, `water`, `mountain`, `cabin` and `hearth`, independently of mode. They alias `accent`, `accent-hover`, `accent-soft`, `accent-ink` and `selection`; `accent-pressed` still follows `accent-hover`, `focus-ring` follows `accent`, and `on-accent` remains mode-provided. They do not rewire status, syntax, ANSI or chart roles. Omitting `--theme` preserves each mode's default appearance.
+
+`examples/themes/` contains the `gaming`, `work` and `soft-windows` customization examples, separate from the official themes in `tokens/themes/`. Copy these examples when authoring a custom theme; the same composition and override rules apply.
 
 Override rules:
 

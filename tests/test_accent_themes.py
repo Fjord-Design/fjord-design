@@ -22,7 +22,7 @@ THEMES = {
 def test_selected_accents_preserve_every_other_resolved_value(mode, theme, targets):
     project = Project(ROOT)
     original = project.compose(mode)
-    composed = project.compose(mode, ROOT / f"examples/themes/{theme}.tokens.json")
+    composed = project.compose(mode, ROOT / f"tokens/themes/{theme}.tokens.json")
     roles = {role: original.values[f"semantic.color.{target}"]
              for role, target in zip(ACCENT_ROLES, targets)}
     expected = dict(original.values)

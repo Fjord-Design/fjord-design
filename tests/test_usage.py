@@ -33,15 +33,18 @@ def test_usage_retains_required_roles_and_states(usage_root):
 
 
 @pytest.mark.parametrize("mode", ("night", "day", "aurora"))
-@pytest.mark.parametrize("theme_name", (
-    None, *sorted(path.name for path in (ROOT / "examples/themes").glob("*.tokens.json")),
-))
+@pytest.mark.parametrize("theme_path", (
+    None, *sorted(path.relative_to(ROOT)
+                  for directory in ("tokens/themes", "examples/themes")
+                  for path in (ROOT / directory).glob("*.tokens.json")
+                  if path != ROOT / "tokens/themes/fjord.tokens.json"),
+), ids=lambda path: path.name if path is not None else "base")
 @pytest.mark.parametrize("with_overrides", (False, True), ids=("no-overrides", "all-overrides"))
-def test_example_themes_and_overrides_preserve_shared_design_contract(usage_root, mode, theme_name, with_overrides):
+def test_themes_and_overrides_preserve_shared_design_contract(usage_root, mode, theme_path, with_overrides):
     project = Project(usage_root)
     original = project.compose(mode)
     bindings = {path: token for path, token in original.tokens.items() if path.startswith("component.")}
-    theme = usage_root / "examples/themes" / theme_name if theme_name is not None else None
+    theme = usage_root / theme_path if theme_path is not None else None
     overrides = sorted((usage_root / "examples/overrides").glob("*.tokens.json")) if with_overrides else []
     composition = project.compose(mode, theme, overrides)
     assert original.tokens.keys() == composition.tokens.keys()

@@ -44,7 +44,9 @@ The CSS variables are portable, not a component library. The consuming project c
 
 Night is the default, with dark blue surfaces and a frost-blue accent. Day uses pale blue-grey surfaces and a deep-blue accent; Aurora uses almost-black blue and teal. All three modes provide complete values for the same token names. Theme layers and overrides adapt the foundation without copying it: composition goes from base to one mode, a theme and then ordered overrides.
 
-Accent themes are independent of mode: Fern (green), Water (blue), Mountain (violet), Cabin (wood brown) and Hearth (ember-orange) work with `night`, `day` or `aurora`. Select one with `--theme examples/themes/{name}.tokens.json`, using the lower-case accent name. Without `--theme`, all default mode appearances stay unchanged. These themes change interaction and selection colours, not status, syntax, ANSI or chart colours.
+Official accent themes live in `tokens/themes/` alongside the default `fjord.tokens.json`. They are independent of mode: Fern (green), Water (blue), Mountain (violet), Cabin (wood brown) and Hearth (ember-orange) work with `night`, `day` or `aurora`. Select one with `--theme tokens/themes/{name}.tokens.json`, using the lower-case accent name. Without `--theme`, all default mode appearances stay unchanged. These themes change interaction and selection colours, not status, syntax, ANSI or chart colours.
+
+The `gaming`, `work` and `soft-windows` themes under `examples/themes/` are customization examples, not official accent themes.
 
 The [consumer guide](docs/consumer-guide.md) explains implementation and overrides, the [design guidelines](docs/design-guidelines.md) describe visual intent, and the [token contract](docs/token-contract.md) defines names, types and composition.
 
@@ -76,7 +78,7 @@ For example, this exports Day with the Fern theme and the supplied local overrid
 
 ```sh
 mise exec -- python3 -m fjord export --mode day --format resolved \
-  --theme examples/themes/fern.tokens.json \
+  --theme tokens/themes/fern.tokens.json \
   --override examples/overrides/compact-spacing.tokens.json \
   --output dist/day-fern-compact.resolved.json
 ```
@@ -88,12 +90,12 @@ The [fonts](assets/fonts/README.md) include their original OFL notices; the [ico
 Fjord owns shared design data and rules, assets, inheritance, portable exports and validation. Separate projects own CSS components, KDE themes, editor configurations and framework libraries, including installation, rendering and platform and accessibility tests.
 
 ```text
-tokens/      Design values, modes, roles and contract
+tokens/      Design values, modes, built-in themes, roles and contract
 assets/      Fonts, icons, brand sources and licences
 src/fjord/   Composition, validation and portable export
 tests/       Foundation regression tests
 docs/        Design rules and consumer contract
-examples/    Theme and override files
+examples/    Custom theme and override examples
 scripts/     Font inspection for asset maintenance
 dist/        Generated exports; ignored by Git
 ```

@@ -14,21 +14,21 @@ The DTCG export is a self-contained document for the selected mode. It preserves
 
 ## Choose an accent
 
-Mode and accent are independent: `--mode night`, `day` or `aurora` selects the surfaces and complete palette; `--theme` selects an accent layer. Each of these themes works with all three modes:
+Mode and accent are independent: `--mode night`, `day` or `aurora` selects the surfaces and complete palette; `--theme` selects an accent layer. The five official built-in accent themes live in `tokens/themes/` alongside the default `fjord.tokens.json`. Each works with all three modes:
 
 | Accent | Colour | Theme path |
 | --- | --- | --- |
-| Fern | Green | `examples/themes/fern.tokens.json` |
-| Water | Blue | `examples/themes/water.tokens.json` |
-| Mountain | Violet | `examples/themes/mountain.tokens.json` |
-| Cabin | Wood brown | `examples/themes/cabin.tokens.json` |
-| Hearth | Ember-orange | `examples/themes/hearth.tokens.json` |
+| Fern | Green | `tokens/themes/fern.tokens.json` |
+| Water | Blue | `tokens/themes/water.tokens.json` |
+| Mountain | Violet | `tokens/themes/mountain.tokens.json` |
+| Cabin | Wood brown | `tokens/themes/cabin.tokens.json` |
+| Hearth | Ember-orange | `tokens/themes/hearth.tokens.json` |
 
 For example, export Day with the Water accent:
 
 ```sh
 mise exec -- python3 -m fjord export --mode day --format resolved \
-  --theme examples/themes/water.tokens.json \
+  --theme tokens/themes/water.tokens.json \
   --output dist/day-water.resolved.json
 ```
 
@@ -40,12 +40,14 @@ Composition follows **base → mode → theme → overrides**. Omitted values re
 
 ```sh
 mise exec -- python3 -m fjord export --mode day --format resolved \
-  --theme examples/themes/fern.tokens.json \
+  --theme tokens/themes/fern.tokens.json \
   --override examples/overrides/compact-spacing.tokens.json \
   --output dist/day-fern-compact.resolved.json
 ```
 
-Copy an example theme into your own project when creating a theme. Keep its `$extensions.org.xerrion.fjord` metadata, currently contract `0.5.0`, schema `2` and DTCG `2025.10`, and supply complete token definitions for the paths you change. Only `0.5.x` layers are accepted; `0.4.x` and earlier files must be migrated. Use aliases to semantic roles when a value should adapt to each mode. `--theme` replaces the default `tokens/themes/fjord.tokens.json` layer; repeat `--override` to apply further files in order.
+To create a custom theme, copy one of the customization examples from `examples/themes/` into your own project: `gaming.tokens.json`, `work.tokens.json` or `soft-windows.tokens.json`.
+
+Keep its `$extensions.org.xerrion.fjord` metadata, currently contract `0.5.0`, schema `2` and DTCG `2025.10`, and supply complete token definitions for the paths you change. Only `0.5.x` layers are accepted; `0.4.x` and earlier files must be migrated. Use aliases to semantic roles when a value should adapt to each mode. `--theme` replaces the default `tokens/themes/fjord.tokens.json` layer; repeat `--override` to apply further files in order.
 
 Use `--mode night`, `day` or `aurora`; Night is the CLI default. Each requested composition validates its own contrast, so test every mode your implementation offers. The [token contract](token-contract.md) defines allowed overrides and failure behaviour.
 
@@ -147,6 +149,10 @@ Source and example layers now declare contract `0.5.0`. Custom themes and overri
 ```
 
 Schema `2`, DTCG `2025.10` and **base → mode → theme → overrides** composition are unchanged. Copy current metadata from an example rather than only changing the version of an otherwise incompatible layer.
+
+### Update accent theme file paths
+
+Select the official Fern, Water, Mountain, Cabin and Hearth accents from `tokens/themes/<name>.tokens.json`; their former `examples/themes/` paths have been removed. The `gaming`, `work` and `soft-windows` customization examples remain under `examples/themes/`. The default remains `tokens/themes/fjord.tokens.json`.
 
 ### Replace removed paths
 

@@ -13,7 +13,12 @@ from fjord.project import Project, metadata
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize("theme", (None, ROOT / "examples/themes/fern.tokens.json"), ids=("base", "fern"))
+@pytest.mark.parametrize("theme", (
+    None, *sorted(path
+                  for directory in ("tokens/themes", "examples/themes")
+                  for path in (ROOT / directory).glob("*.tokens.json")
+                  if path != ROOT / "tokens/themes/fjord.tokens.json"),
+), ids=lambda path: path.name if path is not None else "base")
 @pytest.mark.parametrize("mode", MODES)
 def test_formats_use_one_composition_and_are_deterministic(theme, mode):
     composed = Project(ROOT).compose(mode, theme)

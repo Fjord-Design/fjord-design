@@ -20,7 +20,7 @@ Fjord is a calm, cool, Nordic design foundation. Separate implementations apply 
 
 Night is the default mode. Each mode supplies complete values for the same token names; missing values cannot fall back to another mode. A consumer may offer an explicit System preference, mapping light to Day and dark to Night. Explicit choices take precedence; Aurora is never selected automatically.
 
-Modes define surfaces and the complete palette; accent themes choose interaction and selection colours independently. Fern is green, Water blue, Mountain violet, Cabin wood brown and Hearth ember-orange. Every accent works with every mode; omitting an accent theme preserves the default appearances above. Status, syntax, ANSI and chart colours retain their mode values. See the [accent theme paths and selection example](consumer-guide.md#choose-an-accent).
+Modes define surfaces and the complete palette; official accent themes in `tokens/themes/` choose interaction and selection colours independently. Fern is green, Water blue, Mountain violet, Cabin wood brown and Hearth ember-orange. Every accent works with every mode; omitting an accent theme preserves the default appearances above. Status, syntax, ANSI and chart colours retain their mode values. The `gaming`, `work` and `soft-windows` themes in `examples/themes/` are customization examples. See the [accent theme paths and selection example](consumer-guide.md#choose-an-accent).
 
 ## Colour
 
