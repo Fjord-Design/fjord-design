@@ -11,6 +11,11 @@ This section supersedes the 0.4 compatibility guidance in the historical entries
 - Retained generic DTCG `$deprecated` metadata validation and use-based CLI warnings for future deprecations. No definitions in shipped sources, the default theme or example layers are currently deprecated.
 - See the [0.5 migration guide](docs/consumer-guide.md#migrate-to-contract-05) for complete path mappings, layer metadata, consumer bindings and the earlier Python module rename.
 - Migrated regression tests from unittest to native pytest, with development-only dependencies locked by uv and Python/uv pinned through mise. `mise run test` now provisions the isolated `.venv` and runs pytest; `mise run ci` uses the same locked test environment. The foundation runtime remains standard-library-only.
+- Added local-document JSON Pointer `$ref` resolution for complete token values, nested properties, array elements and metadata, with RFC 6901 escaping, URI-fragment decoding and errors for malformed paths, missing targets, cycles and type mismatches. External files and network references remain unsupported.
+- Added alias-derived token types, reserved group `$root` tokens and local `$extends` group inheritance. Nested groups merge, while local token definitions replace inherited tokens in full; missing, token-valued and circular inheritance targets fail.
+- Preserved unknown root, group and token `$extensions` through composition and DTCG export. Generated Fjord metadata is merged without discarding the original design name, design seeds, asset manifests or unrelated vendor metadata.
+- Corrected shadow-array aliases: each element reference must resolve to a single shadow object. References to arrays and literal nested arrays are rejected instead of flattened; whole-token aliases to shadow arrays remain valid.
+- Distinguished authored composition fragments from self-contained DTCG exports and documented the repaired local reference behavior. Contract `0.5.0`, schema `2`, existing design values, accent/status behavior and intentional supported-type, sRGB and project-namespace limits are unchanged; these repairs do not claim universal DTCG conformance.
 
 ## Unreleased: contract 0.4 naming migration
 

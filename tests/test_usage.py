@@ -80,12 +80,27 @@ def test_unknown_or_primitive_usage_reference_is_rejected(usage_root):
         Project(usage_root).compose("night")
 
 
-def test_help_alias_cannot_rebind_to_disabled_text(usage_root):
+@pytest.mark.parametrize("value", [
+    pytest.param("{semantic.color.ink-disabled}", id="brace"),
+    pytest.param({"$ref": "#/semantic/color/ink-disabled/$value"}, id="json-pointer"),
+])
+def test_help_alias_cannot_rebind_to_disabled_text(usage_root, value):
     path = usage_root / "override.json"
     path.write_text(json.dumps(nest({"semantic.color.ink-muted": {
-        "$type": "color", "$value": "{semantic.color.ink-disabled}", "$description": "Invalid help rebinding."}}, metadata())))
+        "$type": "color", "$value": value, "$description": "Invalid help rebinding."}}, metadata())))
     with pytest.raises(TokenError, match="must not alias disabled text"):
         Project(usage_root).compose("night", overrides=[path])
+
+
+def test_later_override_cannot_hide_disabled_text_pointer_use(usage_root):
+    first = usage_root / "disabled.json"
+    last = usage_root / "repaired.json"
+    for path, value in ((first, {"$ref": "#/semantic/color/ink-disabled/$value"}),
+                        (last, "{semantic.color.ink-subtle}")):
+        path.write_text(json.dumps(nest({"semantic.color.ink-muted": {
+            "$type": "color", "$value": value, "$description": "Text usage layer."}}, metadata())))
+    with pytest.raises(TokenError, match="must not alias disabled text"):
+        Project(usage_root).compose("night", overrides=[first, last])
 
 
 def test_opaque_surface_policy_rejects_transparency(usage_root):

@@ -36,9 +36,10 @@ def css_value(kind, value):
     if kind == "cubicBezier":
         return "cubic-bezier(" + ", ".join(map(format_number, value)) + ")"
     if kind == "shadow":
+        layers = [value] if isinstance(value, dict) else value
         return ", ".join(("inset " if item.get("inset") else "")
                          + " ".join(dimension(item[key]) for key in ("offsetX", "offsetY", "blur", "spread"))
-                         + " " + hex_color(item["color"]) for item in value)
+                         + " " + hex_color(item["color"]) for item in layers)
     raise TokenError(f"unsupported CSS export type {kind}")
 
 
@@ -46,7 +47,7 @@ def css_document(composition):
     properties = {}
     for path in sorted(composition.values):
         kind, value = composition.tokens[path]["$type"], composition.values[path]
-        name = "--fjord-token-" + path.replace(".", "-")
+        name = "--fjord-token-" + path.replace(".", "-").replace("$", r"\$")
         values = {name: css_value(kind, value)} if kind != "typography" else {
             name + "-font-family": css_value("fontFamily", value["fontFamily"]),
             name + "-font-size": css_value("dimension", value["fontSize"]),

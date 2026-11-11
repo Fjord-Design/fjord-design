@@ -2,7 +2,7 @@
 
 import re
 
-from .dtcg import TokenError, is_finite_number, read_json
+from .dtcg import TokenError, is_finite_number, nest, read_json, references
 
 
 ROLE_NAMES = set('canvas surface surface-floating surface-sunken surface-hover surface-pressed surface-selected text text-secondary text-help text-placeholder text-disabled border-divider border-control focus link link-hover accent-fill accent-label selected-fill selected-label text-selection-fill text-selection-label overlay-scrim overlay-surface overlay-text info info-fill success success-fill warning warning-fill danger danger-fill destructive-label'.split())
@@ -79,12 +79,16 @@ def validate_usage(usage, composition):
             raise TokenError(f"usage.{name}: content surfaces must be opaque")
     active = [role["token"] for role in usage["roles"].values() if role["kind"] in {"text", "focus", "border"}]
     active.extend(state["foreground"] for name, state in usage["states"].items() if name != "disabled")
+    document = nest(composition.tokens)
     for original in active:
-        path = original
-        while path in composition.tokens:
+        pending = [original]
+        visited = set()
+        while pending:
+            path = pending.pop()
+            if path in visited:
+                continue
+            visited.add(path)
             if path == "semantic.color.ink-disabled":
                 raise TokenError(f"usage: {original} must not alias disabled text for active content or help")
-            value = composition.tokens[path]["$value"]
-            if not isinstance(value, str):
-                break
-            path = value[1:-1]
+            if path in composition.tokens:
+                pending.extend(references(composition.tokens[path]["$value"], context=document))

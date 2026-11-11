@@ -1,6 +1,5 @@
 """Load a token project, apply ordered layers and check resolved output."""
 
-from copy import deepcopy
 from dataclasses import dataclass, field
 from pathlib import Path
 import re
@@ -8,7 +7,7 @@ import re
 from .contract import MODES, SURFACES, mode_roles, required_roles
 from .color import design_seed_values
 from .code_roles import check_syntax_distances, validate_bindings
-from .dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color, read_json, references
+from .dtcg import EXTENSION, Resolver, TokenError, color_from_hex, flatten, hex_color, merge_documents, nest, read_json, references
 from .quality import Report, contrast_rules
 from .layout_rules import check_layout
 from .usage import load_usage, usage_pairs, validate_usage
@@ -37,10 +36,14 @@ def check_metadata(document, source):
         raise TokenError(f"{source}: expected dtcgVersion 2025.10")
 
 
-def read_layer(path):
+def _read_document(path):
     document = read_json(path)
     check_metadata(document, path)
-    return flatten(document, str(path))
+    return document
+
+
+def read_layer(path, context=None):
+    return flatten(_read_document(path), str(path), context=context)
 
 
 @dataclass
@@ -58,14 +61,16 @@ class ValidationReport(Report):
     deprecated: list = field(default_factory=list)
 
 
-def _deprecated_uses(layer, source, deprecated, assignments=False):
+def _deprecated_uses(layer, source, deprecated, assignments=False, context=None):
     """Keep prior metadata and diagnose uses in one applied input layer."""
     assigned = deprecated.keys() & layer.keys() if assignments else set()
-    for path, token in layer.items():
+    definitions = layer if context is None else context
+    for path, token in definitions.items():
         if token.get("$deprecated"):
             deprecated.setdefault(path, token["$deprecated"])
+    document = nest(definitions)
     for path, token in layer.items():
-        targets = dict.fromkeys(references(token["$value"]))
+        targets = dict.fromkeys(references(token["$value"], context=document))
         if path in assigned:
             targets[path] = None
         for target in targets:
@@ -139,41 +144,60 @@ class Project:
         if mode not in MODES:
             raise TokenError(f"unknown mode {mode!r}; choose night, day or aurora")
         base_path = self.source(self.contract.get("base"))
-        base_tokens = read_layer(base_path)
+        base_document = _read_document(base_path)
+        mode_path = self.source(self.contract["modes"][mode])
+        mode_document = _read_document(mode_path)
+        document = merge_documents(base_document, mode_document)
+        base_tokens = flatten(base_document, str(base_path), context=document)
         if set(base_tokens) & mode_roles():
             raise TokenError("base must not define mode roles; each mode must supply its own complete values")
-        provenance = {path: "base" for path in base_tokens}
-        mode_path = self.source(self.contract["modes"][mode])
-        mode_tokens = read_layer(mode_path)
+        mode_tokens = flatten(mode_document, str(mode_path), context=document)
         if set(mode_tokens) != mode_roles():
             missing = sorted(mode_roles() - mode_tokens.keys())
             extra = sorted(mode_tokens.keys() - mode_roles())
             raise TokenError(f"{mode_path}: missing mode roles {missing}; unexpected roles {extra}")
-        tokens = {**base_tokens, **mode_tokens}
+        tokens = flatten(document, str(mode_path))
+        provenance = {path: "base" for path in base_tokens}
         provenance.update({path: f"mode:{mode}" for path in mode_tokens})
         deprecated = {path: token["$deprecated"] for path, token in tokens.items() if token.get("$deprecated")}
-        warnings = list(_deprecated_uses(base_tokens, base_path, deprecated))
-        warnings.extend(_deprecated_uses(mode_tokens, mode_path, deprecated))
+        warnings = list(_deprecated_uses(base_tokens, base_path, deprecated, context=tokens))
+        warnings.extend(_deprecated_uses(mode_tokens, mode_path, deprecated, context=tokens))
         self.check_required(tokens)
         values = resolve_values(tokens)
+        result = Composition(tokens, values, provenance, mode, self.usage)
+        validate_usage(self.usage, result)
         theme_path = Path(theme) if theme is not None else self.source(self.contract.get("theme"))
         layers = [("theme", theme_path)] + [(f"override:{i + 1}", Path(p)) for i, p in enumerate(overrides)]
         for label, path in layers:
-            patch = read_layer(path)
-            warnings.extend(_deprecated_uses(patch, path, deprecated, assignments=True))
-            for name, token in patch.items():
+            patch_document = _read_document(path)
+            candidate_document = merge_documents(document, patch_document)
+            patch = flatten(patch_document, str(path), context=candidate_document)
+            for name in patch:
                 if name not in tokens:
                     raise TokenError(f"{path}:{name}: unknown override path; add new roles to the source contract first")
                 if name.split(".")[0] not in self.contract["overrideNamespaces"]:
                     raise TokenError(f"{path}:{name}: primitive overrides are forbidden")
+            candidate = flatten(candidate_document, str(path))
+            for name in candidate.keys() - tokens.keys():
+                raise TokenError(f"{path}:{name}: unknown override path; add new roles to the source contract first")
+            for name in tokens.keys() - candidate.keys():
+                raise TokenError(f"{path}:{name}: overrides must retain existing token paths")
+            for name, token in candidate.items():
                 if token["$type"] != tokens[name]["$type"]:
                     raise TokenError(f"{path}:{name}: type change is forbidden")
-                tokens[name] = deepcopy(token)
+                if name.split(".")[0] not in self.contract["overrideNamespaces"] and token != tokens[name]:
+                    raise TokenError(f"{path}:{name}: primitive overrides are forbidden")
+            self.check_required(candidate)
+            candidate_values = resolve_values(candidate)
+            for name, value in candidate_values.items():
+                if name.startswith("primitive.") and value != values[name]:
+                    raise TokenError(f"{path}:{name}: primitive overrides are forbidden")
+            warnings.extend(_deprecated_uses(patch, path, deprecated, assignments=True, context=candidate))
+            for name in patch:
                 provenance[name] = f"{label}:{path.name}"
-            self.check_required(tokens)
-            values = resolve_values(tokens)
-        result = Composition(tokens, values, provenance, mode, self.usage, list(dict.fromkeys(warnings)))
-        validate_usage(self.usage, result)
+            document, tokens, values = candidate_document, candidate, candidate_values
+            result = Composition(tokens, values, provenance, mode, self.usage, list(dict.fromkeys(warnings)))
+            validate_usage(self.usage, result)
         return result
 
 

@@ -1,6 +1,6 @@
 # Token contract
 
-Use `mise run check` before accepting a token change. The source contract is `tokens/contract.json`, schema version 2, contract version 0.5.0. The `*.tokens.json` files use the [DTCG Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/).
+Use `mise run check` before accepting a token change. The source contract is `tokens/contract.json`, schema version 2, contract version 0.5.0. The `*.tokens.json` files use Fjord's profile of the [DTCG Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/).
 
 ## Names and ownership
 
@@ -10,9 +10,9 @@ Use `mise run check` before accepting a token change. The source contract is `to
 | `semantic` | Portable roles consumed by themes and adapters | `semantic.color.accent` |
 | `component` | Component bindings to semantic roles | `component.button.primary.background` |
 
-Names use lower-case letters, digits and hyphens inside dot-separated group paths. Keep application-specific names and mappings in separate implementation projects. Every token has a type and a non-empty description. Groups may supply inherited `$type` and `$deprecated` metadata. A token cannot also contain child groups.
+Ordinary names use lower-case letters, digits and hyphens inside dot-separated group paths. The reserved token name `$root` is also allowed inside groups and remains explicit in token paths. Keep application-specific names and mappings in separate implementation projects. Every token must have an effective type and a non-empty description; the type may be declared, derived from a whole-token alias or inherited from a group. Groups may supply inherited `$type` and `$deprecated` metadata. A token cannot also contain child groups.
 
-Primitives can reference other primitives. Semantic roles can reference primitives or other semantic roles. Every component token must be a whole-token alias directly to a semantic role. Literal colours, dimensions and primitive aliases in component tokens fail validation.
+Primitives can reference other primitives. Semantic roles can reference primitives or other semantic roles. Every component token must be a whole-token alias directly to a semantic role, using either `{semantic.path}` or a local `$ref` to that role's complete `$value`. Literal colours, dimensions, primitive aliases and property-only references in component tokens fail validation. Both reference syntaxes obey the same namespace and type constraints.
 
 ```json
 {
@@ -32,7 +32,7 @@ Primitives can reference other primitives. Semantic roles can reference primitiv
 
 ## Format profile
 
-Fjord validates the subset of DTCG used by its sources. Supported types are `color`, `dimension`, `duration`, `number`, `fontFamily`, `fontWeight`, `cubicBezier`, `shadow` and `typography`. Source documents and built documents preserve DTCG aliases. This tool is not a validator for every feature of DTCG.
+Fjord validates the DTCG features used by its sources and the local-document reference and group behavior described below. Supported types are `color`, `dimension`, `duration`, `number`, `fontFamily`, `fontWeight`, `cubicBezier`, `shadow` and `typography`. DTCG exports preserve value aliases and metadata. This is a constrained project profile, not a claim of universal DTCG conformance: other token types and colour spaces remain unsupported, and Fjord's naming, description, namespace and role policies still apply.
 
 | Type | Fjord representation |
 | --- | --- |
@@ -48,11 +48,83 @@ Fjord validates the subset of DTCG used by its sources. Supported types are `col
 
 Letter spacing uses pixels, and line height is a ratio of the font size. `fontStyle` has no field in the supported DTCG typography composite; Fjord declares it in the token's `$extensions.org.xerrion.fjord.fontStyle`, alongside its text sample. Base metadata holds the design name, `designSeeds` and the `fontAssets`/`iconAssets` manifest references. The repository includes the pinned assets with original licences. The directory contract separately identifies `usage.json` for semantic meanings, states and pair thresholds.
 
+Unknown vendor `$extensions` are preserved at the document root, on groups and on tokens, including through flattening/nesting and DTCG export. Generated Fjord export metadata is merged into `$extensions.org.xerrion.fjord`, retaining the original design name, `designSeeds`, asset manifest references and unrelated extension data. See DTCG [§5.2.3](https://www.designtokens.org/tr/2025.10/format/#extensions) and [§6.3.2](https://www.designtokens.org/tr/2025.10/format/#extensions-0).
+
 Semantic spacing, radii and border widths must be non-negative. Semantic font sizes must be positive, and stacking order must be an integer. These role constraints are checked after each layer, including a layer later overridden by another file.
 
-Aliases use complete `{token.path}` references, including typed fields inside composites. Missing references, cycles and type mismatches fail. Unsupported `$ref` JSON Pointers, `$extends`, additional colour spaces and other DTCG types are rejected with an error. No external schema or remote data is fetched during validation.
+### References and types
+
+Use `{token.path}` for a complete token value, including references in typed composite fields. For example, `{semantic.spacing.step-2}` always selects that token's `$value`, not a property within it. A local JSON Pointer uses an object such as `{"$ref": "#/semantic/spacing/step-2/$value/value"}` to select an exact document location. Pointers can select whole `$value` objects, nested properties, array elements or metadata; the resulting value must match the type expected at the use site. See DTCG [§6.6](https://www.designtokens.org/tr/2025.10/format/#references-and-json-pointer-integration) and [§7.1–7.4](https://www.designtokens.org/tr/2025.10/format/#reference-syntax).
+
+This self-contained format example reuses the numeric part of a dimension. It illustrates parsing, not a complete Fjord project with all required roles and project metadata:
+
+```json
+{
+  "primitive": {
+    "spacing": {
+      "$type": "dimension",
+      "step": {
+        "$value": {"value": 8, "unit": "px"},
+        "$description": "Base spacing step."
+      },
+      "copy": {
+        "$value": {
+          "value": {"$ref": "#/primitive/spacing/step/$value/value"},
+          "unit": "px"
+        },
+        "$description": "Spacing using the base step's numeric value."
+      }
+    }
+  }
+}
+```
+
+Pointers follow [RFC 6901](https://www.rfc-editor.org/rfc/rfc6901): use `~0` for `~` and `~1` for `/` within a path segment, URI-fragment decoding for encoded characters, and zero-based indices when traversing arrays. Missing targets, malformed paths, cycles and type mismatches fail. References must stay in the local composed document; external files, URLs, remote schemas and network fetching are not supported.
+
+A token's explicit `$type` takes precedence. Without it, a whole-token alias derives its resolved target's type; otherwise the nearest containing group's `$type`, including one inherited through `$extends`, supplies the type. A token with no determinable type fails: Fjord does not guess types from arbitrary literal values or property-reference results. See DTCG [§5.2.2](https://www.designtokens.org/tr/2025.10/format/#type-0) and [§6.7](https://www.designtokens.org/tr/2025.10/format/#processing-rules).
+
+### Groups and `$root`
+
+A group can contain a `$root` token alongside variants. Reference it explicitly as `{group.$root}` or with a pointer ending in `/$root/$value`; a reference to the group itself is not a token alias. `$extends` accepts a brace reference to a group or a local JSON Pointer to that group. It inherits tokens, nested groups and group properties, including `$type`, `$deprecated` and `$extensions`. Nested groups merge, but a locally defined token replaces the entire inherited token definition. Missing targets, token targets and inheritance cycles fail. See DTCG [§6.1–6.4](https://www.designtokens.org/tr/2025.10/format/#groups).
+
+In this format example, `compact` replaces the root token and inherits `wide`. `"$extends": "#/primitive/spacing/regular"` is the equivalent pointer spelling:
+
+```json
+{
+  "primitive": {
+    "spacing": {
+      "$type": "dimension",
+      "regular": {
+        "$root": {
+          "$value": {"value": 8, "unit": "px"},
+          "$description": "Regular spacing."
+        },
+        "wide": {
+          "$value": {"value": 16, "unit": "px"},
+          "$description": "Wide spacing."
+        }
+      },
+      "compact": {
+        "$extends": "{primitive.spacing.regular}",
+        "$root": {
+          "$value": {"value": 4, "unit": "px"},
+          "$description": "Compact spacing."
+        }
+      }
+    }
+  }
+}
+```
+
+The compact root value is `{primitive.spacing.compact.$root}` or `{"$ref": "#/primitive/spacing/compact/$root/$value"}`. These format features do not add roles to the Fjord contract or permit a theme to introduce new token paths.
+
+### Shadow arrays
+
+A shadow value can be one shadow object or an ordered array of shadow objects and references. Each array-element reference must resolve to a **single shadow object**. Literal nested arrays and element references to shadow arrays are invalid; arrays are never expanded or flattened. A whole-token alias to an entire shadow array remains valid. See DTCG [§9.1](https://www.designtokens.org/tr/2025.10/format/#array-aliasing-in-composite-types) and [§9.6](https://www.designtokens.org/tr/2025.10/format/#shadow).
 
 ## Composition
+
+Authored base, mode, theme and override files are composition fragments. A fragment may reference tokens supplied by other layers and is not necessarily a self-contained DTCG interchange document. Fjord composes the hierarchical documents before flattening and resolving values: group trees and their metadata merge, while token definitions replace atomically. The built DTCG document is self-contained for the selected mode and includes the reference targets needed by its preserved aliases.
 
 | Order | Layer | Contract |
 | --- | --- | --- |
@@ -69,10 +141,10 @@ The [selectable accent themes](consumer-guide.md#choose-an-accent) use `examples
 
 Override rules:
 
-1. Replace a complete token definition, including its `$type`, `$value` and `$description`. Objects and arrays are replaced atomically. A partial shadow or typography object cannot merge with an earlier value.
+1. Replace a complete token definition, including `$value` and `$description`, with an explicit `$type` unless an alias or group supplies its effective type. Tokens, including composite objects and arrays in their values, are replaced atomically. Group containers merge; a partial shadow or typography object cannot merge with an earlier token value.
 2. Override only existing `semantic` or `component` paths. Primitive changes belong in the source palette. Add new roles to the source contract before referencing them from an override.
 3. Preserve the token's type. Unknown paths, `null` deletion markers and malformed values fail. An invalid layer cannot be hidden by a later layer.
-4. Resolve aliases against the composed graph after each layer. Component and derived semantic values follow the final alias target. The Python composition result records the winning layer in `provenance`.
+4. Resolve aliases against the composed graph after base and mode are combined, then after each theme or override. An alias in a fragment can use a target from the composed document; it does not fetch another file. Component and derived semantic values follow the final alias target, including an inferred type when `$type` is omitted. The Python composition result records in `provenance` the layer supplying each token definition or group inheritance declaration. Later changes to an alias or inheritance target update derived values without changing the dependent token's provenance.
 5. Declare schema version 2 and a compatible `0.5.x` contract in `$extensions.org.xerrion.fjord`; current sources and examples use `0.5.0`. Missing or incompatible metadata fails. In particular, `0.4.x` and earlier layers are rejected rather than reinterpreted under the new contract.
 
 The selected mode's final contrast is checked after composition. `validate` checks the default modes and shared assets. CLI `build` and `export` validate the default token project and the requested composition; they do not validate font or icon files. Run `mise run validate` to check assets. A Night-only colour override is not automatically approved for Day or Aurora.

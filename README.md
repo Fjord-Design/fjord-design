@@ -50,6 +50,8 @@ The [consumer guide](docs/consumer-guide.md) explains implementation and overrid
 
 The current token contract is `0.5.0`; source, theme and override layers must declare a compatible `0.5.x` version. Schema `2` and DTCG `2025.10` are unchanged. Contract 0.5 removes the 32 deprecated semantic roles and renames the primitive pressed-background paths without changing current design values. Old aliases, CSS properties and JSON paths are no longer exported. Follow the [0.5 migration guide](docs/consumer-guide.md#migrate-to-contract-05) before upgrading an existing consumer.
 
+Fjord supports local DTCG JSON Pointer `$ref` values, including property references, group `$extends`, explicit `$root` tokens and types derived from whole-token aliases. DTCG exports are self-contained and preserve root, group and token extension data; authored project layers may be composition fragments whose references resolve only after layering. The [format profile](docs/token-contract.md#format-profile) documents examples and limits: supported token types, sRGB colours and Fjord's naming, namespace and role policies still apply. External references are not fetched, and Fjord does not claim universal DTCG conformance.
+
 ## Commands
 
 | Command | Result |

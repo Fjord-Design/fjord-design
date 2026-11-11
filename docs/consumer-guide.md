@@ -10,6 +10,8 @@ Run `mise run build` from the repository root. It validates the design and write
 
 The other modes use `day` and `aurora` in their filenames. These exports contain design data. Your implementation supplies components, layout, runtime preferences and target-specific configuration.
 
+The DTCG export is a self-contained document for the selected mode. It preserves value aliases and unknown vendor `$extensions` at the root, group and token levels. Export metadata is merged with the original Fjord metadata, retaining the design name, design seeds and asset manifest references. Resolved JSON and CSS contain resolved values instead; they are not lossless DTCG interchange formats. Fjord still uses its [supported-type and sRGB profile](token-contract.md#format-profile), not every DTCG type or colour space.
+
 ## Choose an accent
 
 Mode and accent are independent: `--mode night`, `day` or `aurora` selects the surfaces and complete palette; `--theme` selects an accent layer. Each of these themes works with all three modes:
@@ -47,6 +49,38 @@ Copy an example theme into your own project when creating a theme. Keep its `$ex
 
 Use `--mode night`, `day` or `aurora`; Night is the CLI default. Each requested composition validates its own contrast, so test every mode your implementation offers. The [token contract](token-contract.md) defines allowed overrides and failure behaviour.
 
+### Write aliases in layers
+
+Prefer readable `{token.path}` aliases for whole-token reuse. A theme or override is an authored composition fragment: its targets may live in base, the selected mode or an earlier layer, rather than in that file. For example, this complete layer reasserts the existing primary-button binding without copying its mode-dependent colour:
+
+```json
+{
+  "$extensions": {
+    "org.xerrion.fjord": {
+      "schemaVersion": 2,
+      "contractVersion": "0.5.0",
+      "dtcgVersion": "2025.10"
+    }
+  },
+  "component": {
+    "button": {
+      "primary": {
+        "background": {
+          "$value": "{semantic.color.accent}",
+          "$description": "Primary button background."
+        }
+      }
+    }
+  }
+}
+```
+
+The omitted `$type` is derived from the alias target (`color`); it is not guessed from a literal value. A containing group's `$type` can also supply a type. Each replacement still needs its complete `$value` and non-empty `$description`, and its effective type must match the existing role. The fragment above is not a self-contained interchange document because it does not define `semantic.color.accent`; build or export the composed document before exchanging it with another DTCG tool.
+
+The equivalent whole-value pointer is `"$value": {"$ref": "#/semantic/color/accent/$value"}`. For property-level reuse, use a local JSON Pointer rather than extending a brace path into a value's fields. Pointers support nested properties, array indices and metadata, subject to the expected type and the same namespace rules as brace aliases. External files and URLs are not fetched. See the [pointer example and type rules](token-contract.md#references-and-types).
+
+Groups can use [`$root` and `$extends`](token-contract.md#groups-and-root) for explicit base tokens and local group inheritance. Nested groups merge, but a local token definition replaces an inherited token in full. These features do not relax the project contract: themes and overrides may only change existing semantic or component paths, cannot add primitive definitions, and must preserve required roles and types. Use the composed DTCG export, not an individual fragment, when another tool needs all reference targets.
+
 For an alias-preserving DTCG document for one mode, use CLI `build`. It produces the same document as `export --format dtcg`; the default filenames differ. `mise run build` calls `export` for all three modes and all three formats:
 
 ```sh
@@ -59,7 +93,7 @@ mise exec -- python3 -m fjord build --mode night \
 
 Use semantic roles such as `semantic.color.bg-base`, `semantic.color.ink` and `semantic.color.accent`. Component tokens bind those roles to design intent; their presence does not supply a component implementation.
 
-CSS property names start with `--fjord-token-` and replace token-path dots with hyphens. For example:
+CSS property names start with `--fjord-token-` and replace token-path dots with hyphens. A reserved `$root` path segment remains explicit and is escaped as `\$root` in CSS; it is not renamed to the ordinary name `root`. For example:
 
 ```css
 @import "./night.tokens.css";
@@ -70,7 +104,7 @@ body {
 }
 ```
 
-A typography composite expands into font-family, font-size, font-weight, letter-spacing and line-height properties. Shadows retain layer order; dimensions and durations retain their units. Colours become sRGB HEX, including alpha where applicable. Shared contrast checks cover original values and their rounded HEX representation. Resolved JSON preserves numeric precision and types.
+A typography composite expands into font-family, font-size, font-weight, letter-spacing and line-height properties. A shadow may be a single object or an ordered array; an alias used as an array element must resolve to one shadow object, never another array. Whole-token aliases to shadow arrays are valid, but nested arrays are rejected rather than flattened. Dimensions and durations retain their units. Colours become sRGB HEX, including alpha where applicable. Shared contrast checks cover original values and their rounded HEX representation. Resolved JSON preserves numeric precision and effective types, including alias-derived types.
 
 A consumer chooses how to scope styles or switch modes. KDE, Neovim, VS Code and other implementations translate semantic roles into their own target names. Record unsupported features and any substitutions instead of silently changing the shared source.
 
