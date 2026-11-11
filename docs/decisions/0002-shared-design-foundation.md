@@ -27,3 +27,8 @@ Token names, values, schema and layer order remain unchanged. Removing CLI comma
 Foundation checks must validate the retained token contract and assets, and build DTCG, resolved JSON and CSS for all three modes. They must not require implementation code, JavaScript dependencies, platform documentation or native applications. Consumers verify their own target behaviour.
 
 Revisit this decision if a proposed feature cannot be expressed as shared design data or validation without introducing a target-specific dependency.
+
+## Test-tooling update: 11 November 2026
+
+The owner approved native pytest for regression tests, with development-only dependencies locked by uv and run through mise. This updates the original test-tooling restriction, not the runtime boundary: the CLI, validation and exports still use only Python's standard library and require no application runtime.
+

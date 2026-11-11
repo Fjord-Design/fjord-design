@@ -2,8 +2,8 @@
 
 from dataclasses import dataclass
 
-from .contract import ANSI, SURFACES, MODES
-from .code_roles import ROLES
+from fjord.code_roles import ROLES
+from fjord.contract import ANSI, MODES, SURFACES
 
 
 @dataclass
@@ -28,15 +28,28 @@ def contrast_rules(color_names):
     add("line-strong", ["bg-base", "bg-surface"], 3)
     add("focus-ring", SURFACES, 3)
     for foreground, background in (
-        ("ink-inverse", "bg-inverse"), ("on-accent", "accent"),
-        ("on-accent", "accent-hover"), ("on-accent", "accent-pressed"), ("accent-ink", "accent-soft"),
+        ("ink-inverse", "bg-inverse"),
+        ("on-accent", "accent"),
+        ("on-accent", "accent-hover"),
+        ("on-accent", "accent-pressed"),
+        ("accent-ink", "accent-soft"),
         ("on-danger", "danger"),
     ):
         add(foreground, [background], 4.5)
     for status in ("info", "success", "warning", "danger"):
         add(status, [status + "-soft"], 4.5)
         add("ink", [status + "-soft"], 4.5)
-    add("ink", ["selection", "diff-add-bg", "diff-del-bg", "search-match", "search-match-current"], 4.5)
+    add(
+        "ink",
+        [
+            "selection",
+            "diff-add-bg",
+            "diff-del-bg",
+            "search-match",
+            "search-match-current",
+        ],
+        4.5,
+    )
     for name in sorted(color_names):
         if name.startswith("syn-"):
             add(name, ["bg-base", "bg-sunken", "bg-surface"], 4.5)

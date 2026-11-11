@@ -1,0 +1,38 @@
+{
+  "$extensions": {
+    "org.xerrion.fjord": {
+      "schemaVersion": 2,
+      "contractVersion": "0.5.0",
+      "dtcgVersion": "2025.10"
+    }
+  },
+  "semantic": {
+    "color": {
+      "accent": {
+        "$type": "color",
+        "$value": "{semantic.color.latte}",
+        "$description": "Cabin theme: accent."
+      },
+      "accent-hover": {
+        "$type": "color",
+        "$value": "{semantic.color.ansi-bright-yellow}",
+        "$description": "Cabin theme: accent-hover."
+      },
+      "accent-soft": {
+        "$type": "color",
+        "$value": "{semantic.color.warning-soft}",
+        "$description": "Cabin theme: accent-soft."
+      },
+      "accent-ink": {
+        "$type": "color",
+        "$value": "{semantic.color.latte}",
+        "$description": "Cabin theme: accent-ink."
+      },
+      "selection": {
+        "$type": "color",
+        "$value": "{semantic.color.warning-soft}",
+        "$description": "Cabin theme: selection."
+      }
+    }
+  }
+}

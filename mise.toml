@@ -1,12 +1,14 @@
 [tools]
 python = "3.15.0"
+uv = "0.13.7"
 
 [env]
+UV_PYTHON_PREFERENCE = "only-system"
 PYTHONPATH = "{{config_root}}/src"
 
 [tasks.test]
 description = "Test token inheritance, exports and design validation"
-run = "python3 -m unittest discover -s tests -v"
+run = "uv run --locked --python python3 -m pytest"
 
 [tasks.validate]
 description = "Validate design tokens, contrast, fonts and icons"
@@ -21,5 +23,5 @@ description = "Export DTCG, resolved JSON and token CSS for every mode"
 run = "set -e; for mode in night day aurora; do for format in dtcg resolved css; do python3 -m fjord export --mode \"$mode\" --format \"$format\"; done; done"
 
 [tasks.ci]
-description = "Check and build the design foundation using Python only"
+description = "Check and build the design foundation"
 run = ["mise run check", "mise run build"]
