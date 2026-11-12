@@ -1,26 +1,25 @@
 [tools]
-python = "3.15.0"
-uv = "0.13.7"
-
-[env]
-UV_PYTHON_PREFERENCE = "only-system"
-PYTHONPATH = "{{config_root}}/src"
+rust = { version = "1.99.1", components = "clippy,rustfmt" }
 
 [tasks.test]
 description = "Test token inheritance, exports and design validation"
-run = "uv run --locked --python python3 -m pytest"
+run = "cargo test --locked"
+
+[tasks.lint]
+description = "Check formatting and lints"
+run = ["cargo fmt --check", "cargo clippy --locked --all-targets -- -D warnings"]
 
 [tasks.validate]
 description = "Validate design tokens, contrast, fonts and icons"
-run = "python3 -m fjord validate"
+run = "cargo run --locked --release --quiet -- validate"
 
 [tasks.check]
 description = "Check the shared design foundation"
-depends = ["test", "validate"]
+depends = ["lint", "test", "validate"]
 
 [tasks.build]
 description = "Export DTCG, resolved JSON and token CSS for every mode"
-run = "set -e; for mode in night day aurora; do for format in dtcg resolved css; do python3 -m fjord export --mode \"$mode\" --format \"$format\"; done; done"
+run = "set -e; cargo build --locked --release --quiet; for mode in night day aurora; do for format in dtcg resolved css; do target/release/fjord export --mode \"$mode\" --format \"$format\"; done; done"
 
 [tasks.ci]
 description = "Check and build the design foundation"
