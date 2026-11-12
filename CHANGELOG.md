@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased: Rust runtime
+
+- Replaced the Python runtime and pytest suite with a Rust CLI (`fjord validate|build|export`); see [ADR 0003](docs/decisions/0003-rust-runtime.md). Python, uv and pytest are no longer required; `python3 -m fjord` is removed.
+- `validate` now checks every official theme for every mode, and reports every independent violation with a stable `[rule-id]`.
+- Default export filenames are `dist/fjord.<mode>.*`. CSS numbers are canonical (`15px`, not `15.0px`).
+- Output inside the project root is limited to `dist/` and never overwrites a supplied layer file. The default project root is discovered from the current directory.
+- Alias chains no longer have a length limit.
+
 ## Unreleased: contract 0.5 breaking cutover
 
 This section supersedes the 0.4 compatibility guidance in the historical entries below.

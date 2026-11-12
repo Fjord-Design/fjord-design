@@ -6,7 +6,7 @@ Fjord is a shared design foundation: colours, typography, layout rules, fonts an
 
 Run all commands from the `fjord-design` checkout root, the directory containing `mise.toml`, `tokens/`, `src/` and `assets/`.
 
-Use [mise](https://mise.jdx.dev/) to run the project tasks. `mise.toml` pins Python 3.15.0 and uv 0.13.7. The foundation CLI and validation use only Python's standard library; pytest and its dependencies are development-only. Review `mise.toml` before trusting it, and obtain permission before installing a missing tool.
+Use [mise](https://mise.jdx.dev/) to run the project tasks. `mise.toml` pins Rust 1.99.1 with clippy and rustfmt; the CLI is a Rust crate (`Cargo.toml`, `Cargo.lock`) with dependencies locked in `Cargo.lock`. Review `mise.toml` before trusting it, and obtain permission before installing a missing tool.
 
 ```sh
 mise run validate
@@ -19,9 +19,9 @@ The build writes nine files, one per mode and format, and prints `Wrote <mode>: 
 
 | Format | Night file | Contents |
 | --- | --- | --- |
-| DTCG | `dist/night.dtcg.json` | Typed tokens with aliases and metadata |
-| Resolved JSON | `dist/night.resolved.json` | Flat token paths with resolved and original values, types and source provenance |
-| CSS | `dist/night.tokens.css` | Generic CSS custom properties |
+| DTCG | `dist/fjord.night.dtcg.json` | Typed tokens with aliases and metadata |
+| Resolved JSON | `dist/fjord.night.resolved.json` | Flat token paths with resolved and original values, types and source provenance |
+| CSS | `dist/fjord.night.tokens.css` | Generic CSS custom properties |
 
 For Day and Aurora, replace `night` in each filename with `day` or `aurora`. `dist/` is generated and Git-ignored. Fonts, icons and brand sources are not copied there; they remain in `assets/` with their licences.
 
@@ -29,10 +29,10 @@ For Day and Aurora, replace `night` in each filename with `day` or `aurora`. `di
 
 A token is a named design value. Use semantic roles such as `semantic.color.bg-base`, `semantic.color.ink` and `semantic.color.accent` rather than copying palette values. Resolved JSON consumers can read the public `tokens` mapping and its `.value` entries.
 
-For example, with `night.tokens.css` next to your stylesheet:
+For example, with `fjord.night.tokens.css` next to your stylesheet:
 
 ```css
-@import "./night.tokens.css";
+@import "./fjord.night.tokens.css";
 
 body {
   background: var(--fjord-token-semantic-color-bg-base);
@@ -58,26 +58,21 @@ Fjord supports local DTCG JSON Pointer `$ref` values, including property referen
 
 | Command | Result |
 | --- | --- |
-| `mise run test` | Sync locked development dependencies and run native pytest regression tests |
+| `mise run test` | Run the Rust regression tests |
+| `mise run lint` | Check formatting and clippy lints |
 | `mise run validate` | Validate sources and assets |
-| `mise run check` | Run tests and validation |
+| `mise run check` | Run lint, tests and validation |
 | `mise run build` | Export every mode as DTCG, resolved JSON and CSS |
-| `mise run ci` | Sync test dependencies, run checks and build |
+| `mise run ci` | Run checks and build |
 
-`mise run test` uses native pytest through uv. The equivalent direct command is `mise exec -- uv run --locked --python python3 -m pytest`; mise supplies the pinned Python, uv discovery policy and absolute `PYTHONPATH` needed by CLI subprocess tests. uv creates or synchronizes the ignored local `.venv` from `uv.lock`, including pytest and its development dependencies. No runtime package is built or installed. To prepare that environment without running tests:
-
-```sh
-mise exec -- uv sync --locked --python python3
-```
-
-On a clean checkout, review `mise.toml`, run `mise trust`, then use `mise install` to install any missing pinned tools with approval. `UV_PYTHON_PREFERENCE=only-system` keeps uv on mise's Python instead of selecting a uv-managed interpreter. The GitHub Actions workflow installs the pinned tools with mise and runs `mise run ci`; the test task provisions its own locked dependencies.
+`mise run test` runs `cargo test --locked`. On a clean checkout, review `mise.toml`, run `mise trust`, then use `mise install` to install the pinned toolchain with approval. The GitHub Actions workflow installs the pinned tools with mise and runs `mise run ci`.
 
 The CLI provides `validate`, `build` and `export`. CLI `build` writes DTCG for one mode; `mise run build` exports all three formats for all modes. Font and icon checks run with `validate`, not token-only builds.
 
 For example, this exports Day with the Fern theme and the supplied local override:
 
 ```sh
-mise exec -- python3 -m fjord export --mode day --format resolved \
+target/release/fjord export --mode day --format resolved \
   --theme tokens/themes/fern.tokens.json \
   --override examples/overrides/compact-spacing.tokens.json \
   --output dist/day-fern-compact.resolved.json
@@ -92,7 +87,7 @@ Fjord owns shared design data and rules, assets, inheritance, portable exports a
 ```text
 tokens/      Design values, modes, built-in themes, roles and contract
 assets/      Fonts, icons, brand sources and licences
-src/fjord/   Composition, validation and portable export
+src/         Composition, validation and portable export (Rust)
 tests/       Foundation regression tests
 docs/        Design rules and consumer contract
 examples/    Custom theme and override examples

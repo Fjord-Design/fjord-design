@@ -4,9 +4,9 @@ Run `mise run build` from the repository root. It validates the design and write
 
 | Example output | Use |
 | --- | --- |
-| `dist/night.dtcg.json` | Typed tokens with aliases and metadata |
-| `dist/night.resolved.json` | Flat paths, resolved values, original values and source-layer provenance |
-| `dist/night.tokens.css` | Generic CSS custom properties |
+| `dist/fjord.night.dtcg.json` | Typed tokens with aliases and metadata |
+| `dist/fjord.night.resolved.json` | Flat paths, resolved values, original values and source-layer provenance |
+| `dist/fjord.night.tokens.css` | Generic CSS custom properties |
 
 The other modes use `day` and `aurora` in their filenames. These exports contain design data. Your implementation supplies components, layout, runtime preferences and target-specific configuration.
 
@@ -27,7 +27,7 @@ Mode and accent are independent: `--mode night`, `day` or `aurora` selects the s
 For example, export Day with the Water accent:
 
 ```sh
-mise exec -- python3 -m fjord export --mode day --format resolved \
+target/release/fjord export --mode day --format resolved \
   --theme tokens/themes/water.tokens.json \
   --output dist/day-water.resolved.json
 ```
@@ -39,7 +39,7 @@ Change the mode and theme path to select any combination. Omit `--theme` to reta
 Composition follows **base → mode → theme → overrides**. Omitted values remain inherited. Later layers can replace existing semantic or component token definitions while preserving their types. Aliases continue to follow the selected mode.
 
 ```sh
-mise exec -- python3 -m fjord export --mode day --format resolved \
+target/release/fjord export --mode day --format resolved \
   --theme tokens/themes/fern.tokens.json \
   --override examples/overrides/compact-spacing.tokens.json \
   --output dist/day-fern-compact.resolved.json
@@ -86,7 +86,7 @@ Groups can use [`$root` and `$extends`](token-contract.md#groups-and-root) for e
 For an alias-preserving DTCG document for one mode, use CLI `build`. It produces the same document as `export --format dtcg`; the default filenames differ. `mise run build` calls `export` for all three modes and all three formats:
 
 ```sh
-mise exec -- python3 -m fjord build --mode night \
+target/release/fjord build --mode night \
   --theme examples/themes/soft-windows.tokens.json \
   --output dist/night-soft.tokens.json
 ```
@@ -98,7 +98,7 @@ Use semantic roles such as `semantic.color.bg-base`, `semantic.color.ink` and `s
 CSS property names start with `--fjord-token-` and replace token-path dots with hyphens. A reserved `$root` path segment remains explicit and is escaped as `\$root` in CSS; it is not renamed to the ordinary name `root`. For example:
 
 ```css
-@import "./night.tokens.css";
+@import "./fjord.night.tokens.css";
 
 body {
   background: var(--fjord-token-semantic-color-bg-base);
@@ -175,7 +175,7 @@ Move theme and override assignments to the modern semantic paths, not just alias
 
 The removed aliases and their CSS custom properties, DTCG paths and resolved JSON keys are no longer exported. Update external bindings and mappings as well as token layers. CSS names still replace token-path dots with hyphens, so, for example, `--fjord-token-semantic-spacing-space-4` becomes `--fjord-token-semantic-spacing-step-4`. JSON lookups for `semantic.spacing.space-4` become `semantic.spacing.step-4`. Apply the same naming rule to the other removed paths and to the primitive background rename.
 
-For consumers predating the Python module rename, replace `python3 -m fjord_tokens` with `python3 -m fjord` and imports from `fjord_tokens` with `fjord`, retaining the relevant submodule names. The old module is not a compatibility entry point.
+The Python runtime has been replaced by the Rust `fjord` command; `python3 -m fjord` and `fjord_tokens` are not available.
 
 Regenerate exports for every mode and theme your implementation offers, then verify its bindings, pressed and selected states and rendered output. The CLI cannot inspect external consumers for removed CSS properties or JSON paths.
 

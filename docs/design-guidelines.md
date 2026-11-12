@@ -90,7 +90,7 @@ Preserve a 2px focus outline with a 2px offset. Keep focus visible and stable th
 
 ## Motion
 
-Functional only. `duration-fast` (120ms) for hover, press and menus; `duration-base` (180ms) for expanding, switching and dialogs; `duration-slow` (260ms) for sheets, drawers and slides. Use `easing-standard` by default and `easing-exit` when a separate exit curve helps. Spinners and skeleton shimmer stop under `prefers-reduced-motion`. No auto-advancing carousels or parallax. Respect reduced-motion preferences by stopping decorative movement while retaining visible status text. In forced-colour environments, preserve boundaries and focus with the platform’s system colours; do not depend on shadows or colour alone.
+Functional only. `duration-fast` (120ms) for hover, press and menus; `duration-base` (180ms) for expanding, switching and dialogs; `duration-slow` (260ms) for sheets, drawers and slides. No transition exceeds 300ms. Use `easing-standard` by default and `easing-exit` when a separate exit curve helps. Spinners and skeleton shimmer stop under `prefers-reduced-motion`. No auto-advancing carousels or parallax. Respect reduced-motion preferences by stopping decorative movement while retaining visible status text. In forced-colour environments, preserve boundaries and focus with the platform’s system colours; do not depend on shadows or colour alone.
 
 ## Logo
 

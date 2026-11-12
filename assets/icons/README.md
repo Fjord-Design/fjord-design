@@ -22,7 +22,7 @@ The [original MIT licence](LICENSE) belongs to Phosphor Icons and accompanies ev
 
 1. Select a stable official release and verify the archive against its registry integrity.
 2. Retain its licence and selected filled SVGs; update manifest provenance and hashes.
-3. From the fjord-design repository root, with mise and pinned Python 3.15.0 available, run `mise run ci` to validate the source assets and manifests. It runs checks, including tests and validation, then builds three formats for Night, Day and Aurora.
+3. From the fjord-design repository root, with mise available, run `mise run ci` to validate the source assets and manifests. It runs checks, including tests and validation, then builds three formats for Night, Day and Aurora.
 4. Inspect the icons in a consuming implementation at its supported sizes and system preferences.
 
 The validator permits static filled paths only.
