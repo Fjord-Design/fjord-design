@@ -38,10 +38,10 @@ All five families use OFL-1.1. Their original notices remain in each family dire
 
 1. Retrieve files from the recorded official sources. For Google Fonts, use the [CSS2 API](https://developers.google.com/fonts/docs/css2) for normal and italic variable ranges and retain its matching Latin `unicode-range`. For Cascadia and Fira, select the release archive entries in the manifest.
 2. Keep each original licence and update the manifest's source, style, weight, byte size and SHA-256 fields. Review reserved font names before making any font modification.
-3. From the fjord-design repository root, with mise, pinned Python 3.15.0 and an existing Fontconfig installation available, run:
+3. From the fjord-design repository root, with mise (Python 3.15.0 via `mise exec python@3.15.0`) and an existing Fontconfig installation available, run:
 
    ```sh
-   mise exec -- python3 scripts/inspect_fonts.py
+   mise exec python@3.15.0 -- python3 scripts/inspect_fonts.py
    ```
 
    Alternatively, with the pinned Python and Fontconfig already available, run `python3 scripts/inspect_fonts.py` from the same directory. The script uses `fc-scan` and the Fontconfig library to compare families, styles and variable weight ranges, test 103 glyphs and write [inspection.json](inspection.json). Ask before installing missing tools. A successful inspection of the supplied set prints `PASS inspected 9 WOFF2 files: family, style, variable weights and 103 glyphs`.

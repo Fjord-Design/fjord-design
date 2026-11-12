@@ -6,7 +6,7 @@ Fjord is a calm, cool, Nordic design foundation. Separate implementations apply 
 
 - **Calm first.** Colour is an accent, never a surface. Large areas are always one of the `bg-*` blues; the café and Nordic hues appear in small doses: a button, a badge, a line of code.
 - **Cool ground, warm sparks.** The ground is a cool dark blue (`bg-base`, seeded from oklch(20.88% 0.018 245)). Warmth comes from café tones (`latte`, `foam`) and `rose`, kept muted so they glow instead of shout.
-- **Discreet, but recognisably yours.** No neon, no synthwave gradients, no baroque ornament, no shabby texture. Personality lives in the combination: frost-blue interaction, café-toned code, square windows with round buttons.
+- **Discreet, but recognisably yours.** No neon, no synthwave gradients, no baroque ornament, no shabby texture. Personality lives in the combination: restrained interaction accents, café-toned code, square windows with round buttons.
 - **Clear contrast.** Every text token meets 4.5:1 on the surfaces its note names, in every mode. Comments in code are content: `syn-comment` holds 7.5:1 on `bg-base` in Night.
 - **Quiet depth.** Floating surfaces use `shadow-raised` or `shadow-overlay` with a faint top highlight. Keep panels and windows opaque, without blur. Separate regions with 1px hairlines and fill changes. A 3px `accent` edge marks the current navigation item; do not add it to cards or alerts.
 
@@ -19,6 +19,8 @@ Fjord is a calm, cool, Nordic design foundation. Separate implementations apply 
 | Aurora | `aurora` | Gaming and late nights. | Deeper, almost-black blue ground; aurora-teal `accent`; the palette a touch brighter. |
 
 Night is the default mode. Each mode supplies complete values for the same token names; missing values cannot fall back to another mode. A consumer may offer an explicit System preference, mapping light to Day and dark to Night. Explicit choices take precedence; Aurora is never selected automatically.
+
+Modes define surfaces and the complete palette; official accent themes in `tokens/themes/` choose interaction and selection colours independently. Fern is green, Water blue, Mountain violet, Cabin wood brown and Hearth ember-orange. Every accent works with every mode; omitting an accent theme preserves the default appearances above. Status, syntax, ANSI and chart colours retain their mode values. The `gaming`, `work` and `soft-windows` themes in `examples/themes/` are customization examples. See the [accent theme paths and selection example](consumer-guide.md#choose-an-accent).
 
 ## Colour
 
@@ -34,14 +36,15 @@ Night is the default mode. Each mode supplies complete values for the same token
 
 | Token | Role | Seed / note |
 | --- | --- | --- |
-| `frost` | Info, types, links | Cool frost blue |
-| `aurora` | Functions, Aurora accent | Teal |
-| `lilac` | Keywords | Muted lilac |
+| `frost` | Info, types, links, Water accent | Cool frost blue |
+| `aurora` | Functions, default Aurora accent | Teal |
+| `lilac` | Keywords, Mountain accent | Muted lilac; `lilac-soft` supplies its soft selection fill |
 | `sage` | Decorative green | Seed oklch(86.93% 0.028 130) |
-| `fern` | Success, git added | Stronger sibling of sage |
-| `latte` | Warning, numbers, ANSI yellow | Seed oklch(76.09% 0.065 71) |
+| `fern` | Success, git added, Fern accent | Stronger sibling of sage |
+| `latte` | Warning, numbers, ANSI yellow, Cabin accent | Seed oklch(76.09% 0.065 71) |
 | `foam` | Strings | Seed oklch(86.99% 0.028 46) |
 | `rose` | Tags, git removed, ANSI red | Seed oklch(75.93% 0.066 10) |
+| `hearth` | Hearth accent | Ember-orange; `hearth-hover` is its hover colour and `hearth-soft` its soft selection fill |
 
 **No yellow.** There is no true yellow anywhere. Where a platform demands one (ANSI yellow, "warning" in an IDE), use `latte`.
 
@@ -87,7 +90,7 @@ Preserve a 2px focus outline with a 2px offset. Keep focus visible and stable th
 
 ## Motion
 
-Functional only. `duration-fast` (120ms) for hover, press and menus; `duration-base` (180ms) for expanding, switching and dialogs; `duration-slow` (260ms) for sheets, drawers and slides. Use `easing-standard` by default and `easing-exit` when a separate exit curve helps. Spinners and skeleton shimmer stop under `prefers-reduced-motion`. No auto-advancing carousels or parallax. Respect reduced-motion preferences by stopping decorative movement while retaining visible status text. In forced-colour environments, preserve boundaries and focus with the platform’s system colours; do not depend on shadows or colour alone.
+Functional only. `duration-fast` (120ms) for hover, press and menus; `duration-base` (180ms) for expanding, switching and dialogs; `duration-slow` (260ms) for sheets, drawers and slides. No transition exceeds 300ms. Use `easing-standard` by default and `easing-exit` when a separate exit curve helps. Spinners and skeleton shimmer stop under `prefers-reduced-motion`. No auto-advancing carousels or parallax. Respect reduced-motion preferences by stopping decorative movement while retaining visible status text. In forced-colour environments, preserve boundaries and focus with the platform’s system colours; do not depend on shadows or colour alone.
 
 ## Logo
 
